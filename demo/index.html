@@ -20,9 +20,18 @@
   <body>
     <div class="vertical-section-container centered">
       <h3>Basic xtal-fetch demo</h3>
+      <link async rel="import" href="../../poly-prep/full-poly-prep.html">
+      <full-poly-prep>
+        <template>
+          <link async rel="import" href="../xtal-fetch.html">
+          <link async rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+          <link async rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+          <link async rel="import" href="../../polymer/lib/elements/dom-bind.html">
+        </template>
+      </full-poly-prep>
       <demo-snippet>
         <template>
-          <xtal-fetch></xtal-fetch>
+          <xtal-fetch fetch href="generated.json" as="text" insert-results></xtal-fetch>
         </template>
       </demo-snippet>
     </div>

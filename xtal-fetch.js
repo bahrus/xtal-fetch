@@ -159,11 +159,7 @@ var xtal;
             }
             customElements.define(XtalFetch.is, XtalFetch);
         }
-        customElements.whenDefined('dom-module').then(() => {
-            console.log('dom-module loaded.  Polymer.Element = ');
-            console.log(Polymer.Element);
-        });
-        customElements.whenDefined('xtal-ball').then(() => initXtalFetch());
+        customElements.whenDefined('poly-prep').then(() => initXtalFetch());
     })(elements = xtal.elements || (xtal.elements = {}));
 })(xtal || (xtal = {}));
 //# sourceMappingURL=xtal-fetch.js.map
