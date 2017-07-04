@@ -195,6 +195,13 @@ module xtal.elements{
         }
         customElements.define(XtalFetch.is, XtalFetch);
     }
-    customElements.whenDefined('poly-prep').then(() => initXtalFetch());
+    const syncFlag = 'xtal_elements_fetch_sync'
+    if(window[syncFlag]){
+        customElements.whenDefined('poly-prep-sync').then(() => initXtalFetch());
+        delete window[syncFlag];
+    }else{
+        customElements.whenDefined('poly-prep').then(() => initXtalFetch());
+    }
+    
     
 }
