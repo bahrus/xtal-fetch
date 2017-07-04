@@ -1,6 +1,8 @@
 # \<xtal-fetch\>
 
-Polymer based web component wrapper around the fetch api
+Polymer based web component wrapper around the fetch api.
+
+Allows for spawning multiple fetch requests tied to an array of entities.
 
 ## Install the Polymer-CLI
 
