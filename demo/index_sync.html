@@ -10,7 +10,7 @@
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../xtal-fetch.html">
+    <link rel="import" href="../xtal-fetch-sync.html">
     <link rel="import" href="../../polymer/lib/elements/dom-bind.html">
     <link rel="import" href="../../polymer/lib/elements/dom-repeat.html">
 
@@ -27,7 +27,7 @@
           <dom-bind>
             <template>
               <xtal-fetch fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch>
-              <template is="dom-repeat" items="{{people}}">
+              <template is="dom-repeat" items="[[people]]">
                 Name: [[item.name]] <br>
                 Email: [[item.email]] <br>
                 <hr>
