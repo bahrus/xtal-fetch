@@ -32,7 +32,7 @@
           <dom-bind>
             <template>
               <xtal-fetch fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch>
-              <template is="dom-repeat" items="{{people}}">
+              <template is="dom-repeat" items="[[people]]">
                 Name: [[item.name]] <br>
                 Email: [[item.email]] <br>
                 <hr>
