@@ -107,7 +107,9 @@ var xtal;
                                     href = href.replace(':' + key, entity[key]);
                                 }
                                 if (this.cacheResults) {
-                                    if (this.cachedResults[href]) {
+                                    const val = this.cachedResults[href];
+                                    if (val) {
+                                        entity[this.setPath] = val;
                                         return;
                                     }
                                 }
@@ -131,7 +133,9 @@ var xtal;
                         }
                         else {
                             if (this.cacheResults) {
-                                if (this.cachedResults[this.href]) {
+                                const val = this.cachedResults[this.href];
+                                if (val) {
+                                    _this['_setResult'](val);
                                     return;
                                 }
                             }

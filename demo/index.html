@@ -27,11 +27,21 @@
           <link async rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
           <link async rel="import" href="../../iron-demo-helpers/demo-snippet.html">
           <link async rel="import" href="../../polymer/lib/elements/dom-bind.html">
+          <link async rel="import" href="../../polymer/lib/elements/dom-repeat.html">
         </template>
       </full-poly-prep>
       <demo-snippet>
         <template>
-          <xtal-fetch fetch href="generated.json" as="text" insert-results></xtal-fetch>
+          <dom-bind>
+            <template>
+              <xtal-fetch fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch>
+              <template is="dom-repeat" items="{{people}}">
+                Name: [[item.name]] <br>
+                Email: [[item.email]] <br>
+                <hr>
+              </template>
+            </template>
+          </dom-bind>
         </template>
       </demo-snippet>
     </div>

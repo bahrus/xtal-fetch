@@ -16,6 +16,7 @@ module xtal.elements{
         setPath: string | polymer.PropObjectType,
     }
     function initXtalFetch(){
+
         class XtalFetch  extends xtal.elements['InitMerge'](Polymer.Element)  implements IXtalFetchProperties{
             /**
             * Fired  when a fetch has finished.
@@ -126,7 +127,9 @@ module xtal.elements{
                                 href = href.replace(':' + key, entity[key]);
                             }
                             if(this.cacheResults){
-                                if(this.cachedResults[href]){
+                                const val = this.cachedResults[href];
+                                if(val){
+                                    entity[this.setPath] = val;
                                     return;
                                 }
                             }
@@ -149,12 +152,15 @@ module xtal.elements{
                         })
                     }else{
                         if(this.cacheResults){
-                            if(this.cachedResults[this.href]){
+                            const val = this.cachedResults[this.href];
+                            if(val){
+                                _this['_setResult'](val);
                                 return;
                             }
                         }
                         fetch(this.href, this.reqInit).then(resp =>{
                             resp[_this.as]().then(val =>{
+                                
                                 if(this.cachedResults){
                                     this.cachedResults[this.href] = val;
                                 }
