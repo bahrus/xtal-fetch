@@ -3,6 +3,15 @@ var xtal;
     var elements;
     (function (elements) {
         function initXtalFetch() {
+            /**
+            * `xtal-fetch`
+            * Polymer based wrapper around the fetch api call.  Note:  IE11 requires a polyfill for fetch / promises
+            *
+            *
+            * @customElement
+            * @polymer
+            * @demo demo/index.html
+            */
             class XtalFetch extends xtal.elements['InitMerge'](Polymer.Element) {
                 constructor() {
                     super(...arguments);

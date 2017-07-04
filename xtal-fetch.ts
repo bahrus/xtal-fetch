@@ -16,7 +16,15 @@ module xtal.elements{
         setPath: string | polymer.PropObjectType,
     }
     function initXtalFetch(){
-
+        /**
+        * `xtal-fetch`
+        * Polymer based wrapper around the fetch api call.  Note:  IE11 requires a polyfill for fetch / promises
+        * 
+        *
+        * @customElement
+        * @polymer
+        * @demo demo/index.html
+        */
         class XtalFetch  extends xtal.elements['InitMerge'](Polymer.Element)  implements IXtalFetchProperties{
             /**
             * Fired  when a fetch has finished.
