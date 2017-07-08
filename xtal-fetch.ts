@@ -16,6 +16,8 @@ module xtal.elements{
         setPath: string | polymer.PropObjectType,
     }
     function initXtalFetch(){
+        console.log('in initXtalFetch');
+        if(customElements.get('xtal-fetch')) return;
         /**
         * `xtal-fetch`
         * Polymer based wrapper around the fetch api call.  Note:  IE11 requires a polyfill for fetch / promises
@@ -32,7 +34,7 @@ module xtal.elements{
             * @event fetch-complete
             */
             reqInit: RequestInit;
-            href: string; inEntities: any[]; result: object; forEach; fetch; setPath;cacheResults;
+            href: string; inEntities: any[]; result: object; forEach: string; fetch; setPath;cacheResults;
             as = 'text';
             _initialized = false;
             private _cachedResults: {[key:string] : any} = {};
@@ -131,9 +133,9 @@ module xtal.elements{
                         this.inEntities.forEach(entity => {
                             const keys = this.forEach.split(',');
                             let href = this.href;
-                            for(const key of keys){
+                            keys.forEach(key =>{
                                 href = href.replace(':' + key, entity[key]);
-                            }
+                            })
                             if(this.cacheResults){
                                 const val = this.cachedResults[href];
                                 if(val){
@@ -200,7 +202,13 @@ module xtal.elements{
         customElements.whenDefined('poly-prep-sync').then(() => initXtalFetch());
         delete window[syncFlag];
     }else{
-        customElements.whenDefined('poly-prep').then(() => initXtalFetch());
+        if(customElements.get('poly-prep') || customElements.get('full-poly-prep')){
+            initXtalFetch();
+        }else{
+            customElements.whenDefined('poly-prep').then(() => initXtalFetch());
+            customElements.whenDefined('full-poly-prep').then(() => initXtalFetch());
+        }
+    
     }
     
     

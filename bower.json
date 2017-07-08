@@ -4,7 +4,7 @@
   "main": "xtal-fetch.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
-    "poly-prep": "bahrus/poly-prep#^0.0.8"
+    "poly-prep": "bahrus/poly-prep#^0.0.10"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",

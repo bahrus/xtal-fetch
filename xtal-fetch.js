@@ -3,6 +3,9 @@ var xtal;
     var elements;
     (function (elements) {
         function initXtalFetch() {
+            console.log('in initXtalFetch');
+            if (customElements.get('xtal-fetch'))
+                return;
             /**
             * `xtal-fetch`
             * Polymer based wrapper around the fetch api call.  Note:  IE11 requires a polyfill for fetch / promises
@@ -112,9 +115,9 @@ var xtal;
                             this.inEntities.forEach(entity => {
                                 const keys = this.forEach.split(',');
                                 let href = this.href;
-                                for (const key of keys) {
+                                keys.forEach(key => {
                                     href = href.replace(':' + key, entity[key]);
-                                }
+                                });
                                 if (this.cacheResults) {
                                     const val = this.cachedResults[href];
                                     if (val) {
@@ -178,7 +181,13 @@ var xtal;
             delete window[syncFlag];
         }
         else {
-            customElements.whenDefined('poly-prep').then(() => initXtalFetch());
+            if (customElements.get('poly-prep') || customElements.get('full-poly-prep')) {
+                initXtalFetch();
+            }
+            else {
+                customElements.whenDefined('poly-prep').then(() => initXtalFetch());
+                customElements.whenDefined('full-poly-prep').then(() => initXtalFetch());
+            }
         }
     })(elements = xtal.elements || (xtal.elements = {}));
 })(xtal || (xtal = {}));
