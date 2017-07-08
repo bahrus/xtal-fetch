@@ -109,11 +109,14 @@ var xtal;
                         return;
                     if (this.href) {
                         const _this = this;
+                        let counter = 0;
                         if (this.forEach) {
                             if (!this.inEntities)
                                 return;
+                            const keys = this.forEach.split(',');
                             this.inEntities.forEach(entity => {
-                                const keys = this.forEach.split(',');
+                                entity['__xtal_idx'] = counter;
+                                counter++;
                                 let href = this.href;
                                 keys.forEach(key => {
                                     href = href.replace(':' + key, entity[key]);
@@ -130,6 +133,7 @@ var xtal;
                                         if (this.cacheResults)
                                             this.cachedResults[href] = val;
                                         entity[this.setPath] = val;
+                                        //const newEntity = Object.assign("{}", entity);
                                         const detail = {
                                             entity: entity,
                                             href: href

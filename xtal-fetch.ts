@@ -25,7 +25,7 @@ module xtal.elements{
         *
         * @customElement
         * @polymer
-        * @demo demo/index.html
+        * @demo demo/index_sync.html
         */
         class XtalFetch  extends xtal.elements['InitMerge'](Polymer.Element)  implements IXtalFetchProperties{
             /**
@@ -128,10 +128,13 @@ module xtal.elements{
                 if(!this.fetch) return;
                 if(this.href){
                     const _this = this;
+                    let counter = 0;
                     if(this.forEach){
                         if(!this.inEntities) return;
+                        const keys = this.forEach.split(',');
                         this.inEntities.forEach(entity => {
-                            const keys = this.forEach.split(',');
+                            entity['__xtal_idx'] = counter; counter++;
+                            
                             let href = this.href;
                             keys.forEach(key =>{
                                 href = href.replace(':' + key, entity[key]);
@@ -147,6 +150,7 @@ module xtal.elements{
                                 resp[_this.as]().then(val =>{
                                     if(this.cacheResults) this.cachedResults[href] = val;
                                     entity[this.setPath] = val;
+                                    //const newEntity = Object.assign("{}", entity);
                                     const detail = {
                                         entity: entity,
                                         href: href
