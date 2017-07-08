@@ -7,6 +7,12 @@
     <title>xtal-fetch demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script type="text/javascript">
+        if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)){
+          document.write('<script src="../IE11-polyfill.js"><\/script>');
+        }
+        
+    </script>
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
