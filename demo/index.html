@@ -29,7 +29,7 @@
       </full-poly-prep>
       <demo-snippet>
         <template>
-          <dom-bind>
+          <dom-module id="my-component">
             <template>
               <xtal-fetch fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch>
               <template is="dom-repeat" items="[[people]]">
@@ -37,8 +37,23 @@
                 Email: [[item.email]] <br>
                 <hr>
               </template>
+              <xtal-fetch as="json" fetch href="detail_:_id.json" for-each="_id" in-entities="[[people]]" 
+                set-path="detail_contents" on-fetch-complete="refreshDetail"></xtal-fetch>
+              <template id="detail" is="dom-repeat" items="[[people]]" mutable-data>
+                DetailContents: [[item.detail_contents.message]] <br>
+              </template>
             </template>
-          </dom-bind>
+          </dom-module>
+          <script>
+            class MyComponent extends Polymer.Element{
+              static get is(){return 'my-component';}
+              refreshDetail(){
+                this.$.detail.notifyPath('items');
+              }
+            }
+            customElements.define(MyComponent.is, MyComponent);
+          </script>
+          <my-component></my-component>
         </template>
       </demo-snippet>
     </div>
