@@ -12,6 +12,7 @@ module xtal.elements{
         inEntities: any[] | polymer.PropObjectType,
         insertResults: boolean | polymer.PropObjectType,
         reqInit: RequestInit| polymer.PropObjectType,
+        reqInitRequired: boolean | polymer.PropObjectType,
         result: any | polymer.PropObjectType,
         setPath: string | polymer.PropObjectType,
     }
@@ -33,7 +34,7 @@ module xtal.elements{
             *
             * @event fetch-complete
             */
-            reqInit: RequestInit;
+            reqInit: RequestInit; reqInitRequired: boolean;
             href: string; inEntities: any[]; result: object; forEach: string; fetch; setPath;cacheResults;
             as = 'text';
             _initialized = false;
@@ -102,7 +103,13 @@ module xtal.elements{
                     reqInit:{
                         type: Object
                     },
-                    
+                    /**
+                     * This prevents the fetch request from occurring until the reqInit has some 
+                     * defined value.
+                     */
+                    reqInitRequired:{
+                        type: Boolean
+                    },
                     
                     /**
                      * The expression for where to place the result.
@@ -126,6 +133,7 @@ module xtal.elements{
             loadNewUrl(){
                 if(!this._initialized) return;
                 if(!this.fetch) return;
+                if(this.reqInitRequired && !this.reqInit) return;
                 if(this.href){
                     const _this = this;
                     let counter = 0;

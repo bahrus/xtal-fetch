@@ -13,7 +13,7 @@ var xtal;
             *
             * @customElement
             * @polymer
-            * @demo demo/index.html
+            * @demo demo/index_sync.html
             */
             class XtalFetch extends xtal.elements['InitMerge'](Polymer.Element) {
                 constructor() {
@@ -85,6 +85,13 @@ var xtal;
                             type: Object
                         },
                         /**
+                         * This prevents the fetch request from occurring until the reqInit has some
+                         * defined value.
+                         */
+                        reqInitRequired: {
+                            type: Boolean
+                        },
+                        /**
                          * The expression for where to place the result.
                          */
                         result: {
@@ -106,6 +113,8 @@ var xtal;
                     if (!this._initialized)
                         return;
                     if (!this.fetch)
+                        return;
+                    if (this.reqInitRequired && !this.reqInit)
                         return;
                     if (this.href) {
                         const _this = this;
