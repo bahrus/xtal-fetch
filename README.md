@@ -2,7 +2,7 @@
 
 ## Single Requests
 
-\<xtal-fetch\> is a Polymer based web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer 1.0 dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by #iron-ajax#.
+\<xtal-fetch\> is a Polymer based web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer 1.0 dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
 
 All the evergreen browsers support fetch.  For IE11, a polyfill should be used.
 
@@ -22,7 +22,7 @@ It may seem somewhat redundant to need to add the fetch attribute (being that th
 
 This will prevent a (typically cancelled) request from going through, until the binding needed for the href is available. [Debouncing will also be added as a future enhancement]
 
-For more complex sanity checks / validation logic,the fetch property could, of course, refer to a computed property coming from the hosting [Polymer?] component (if applicable).
+For more complex sanity checks / validation logic, the fetch property could, of course, refer to a computed property coming from the hosting [Polymer?] component (if applicable).
 
 One can specify whether the result should be parsed as JSON, or left as text, using the "as" attribute:
 
@@ -66,7 +66,7 @@ It is often mistakenly assumed that the "fetch" api only supports get, not post.
 
 ```html
  <xtal-fetch fetch href="api/persistService/id/[[id]]" as="json" 
- result="{{people}}" reqInit="[[myRequestConfig]]" reqInitRequired></xatl-fetch>
+ result="{{people}}" req-init="[[myRequestConfig]]" req-init-required></xatl-fetch>
  ``` 
 
  Although this could be done with boilerplate code using the fetch property, it is such a common need that this additional attribute is added for this specific purpose. 
