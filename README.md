@@ -82,7 +82,7 @@ The syntax for this is meant to be readable:
               as="json"  set-path="purchase_detail" on-fetch-complete="refreshDetail"></xtal-fetch>
 ```
 
-#set-path# specifies the property name in each entity, used to store the fetched entity detail (json or text specified by "as" just like before).
+*set-path* specifies the property name in each entity, used to store the fetched entity detail (json or text specified by "as" just like before).
 
 Note that #xtal-fetch# issues a "fetch-complete" event after every fetch is completed.
 
