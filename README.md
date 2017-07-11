@@ -73,7 +73,7 @@ It is often mistakenly assumed that the "fetch" api only supports get, not post.
 
 ## Multiple requests
 
-\<xtal-fetch\> allows for spawning multiple fetch requests tied to an array of entities.  This is often usefull when drilling down from some parent entity ('customer', e.g.) to multiple 1-n relations ('purchases', e.g.)
+\<xtal-fetch\> allows for spawning multiple fetch requests tied to an array of entities.  This is often useful when drilling down from some parent entity ('customer', e.g.) to multiple 1-n relations ('purchases', e.g.)
 
 The syntax for this is meant to be readable:
 
