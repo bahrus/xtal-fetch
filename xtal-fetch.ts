@@ -17,7 +17,6 @@ module xtal.elements{
         setPath: string | polymer.PropObjectType,
     }
     function initXtalFetch(){
-        console.log('in initXtalFetch');
         if(customElements.get('xtal-fetch')) return;
         /**
         * `xtal-fetch`
@@ -80,7 +79,7 @@ module xtal.elements{
                      */
                     href:{
                         type: String,
-                        observer: 'loadNewUrl'
+                        observer: 'onFetchChange'
                     },
                     /**
                      * An array of entities that forEach keys will be plucked from.
@@ -129,6 +128,11 @@ module xtal.elements{
                         value: 'result'
                     }
                 }
+            }
+            onFetchChange(newVal, oldVal){
+                if(!newVal) return;
+                if(newVal && !oldVal) this.loadNewUrl();
+                if(!newVal && oldVal) this.loadNewUrl();
             }
             loadNewUrl(){
                 if(!this._initialized) return;

@@ -3,7 +3,6 @@ var xtal;
     var elements;
     (function (elements) {
         function initXtalFetch() {
-            console.log('in initXtalFetch');
             if (customElements.get('xtal-fetch'))
                 return;
             /**
@@ -61,7 +60,7 @@ var xtal;
                          */
                         href: {
                             type: String,
-                            observer: 'loadNewUrl'
+                            observer: 'onFetchChange'
                         },
                         /**
                          * An array of entities that forEach keys will be plucked from.
@@ -108,6 +107,14 @@ var xtal;
                             value: 'result'
                         }
                     };
+                }
+                onFetchChange(newVal, oldVal) {
+                    if (!newVal)
+                        return;
+                    if (newVal && !oldVal)
+                        this.loadNewUrl();
+                    if (!newVal && oldVal)
+                        this.loadNewUrl();
                 }
                 loadNewUrl() {
                     if (!this._initialized)
