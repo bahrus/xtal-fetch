@@ -49,7 +49,7 @@
                 <p>Test of binding in expression -- need to watch network monitor to see the effects</p>
               </div>
               <label>Search string: </label><input type="text" value="{{searchString::input}}">
-              <xtal-fetch fetch="[[searchString]]" href="generated.json?search=[[searchString]]"></xtal-fetch>
+              <xtal-fetch fetch="[[searchString]]" href="generated.json?search=[[searchString]]" debounce-duration="500"></xtal-fetch>
             </template>
           </dom-module>
           <script>

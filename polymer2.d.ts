@@ -7,9 +7,16 @@ declare module Polymer{
         attributeChangedCallback();
         resolveUrl(path: string);
         $;
-        debounce(name: string, fn: Function, timeInMilliSeconds: number);
+        //debounce(name: string, fn: Function, timeInMilliSeconds: number);
         importPath(path: string, fnSuccess: Function, fnError: Function);
         notifyPath(path: string);
+    }
+    export class Debouncer{
+        static debounce(debouncer: any, asyncModule: any, callback: any);
+    }
+
+    export class Async{
+        static microTask;
     }
 }
 

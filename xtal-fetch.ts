@@ -5,7 +5,7 @@ module xtal.elements{
     interface IXtalFetchProperties{
         as: string | polymer.PropObjectType,
         cacheResults: boolean | polymer.PropObjectType,
-        debounceTimeInMs: number | polymer.PropObjectType,
+        debounceDuration: number | polymer.PropObjectType,
         fetch: boolean | polymer.PropObjectType,
         forEach: string | polymer.PropObjectType,
         href: string | polymer.PropObjectType,
@@ -41,7 +41,7 @@ module xtal.elements{
             get cachedResults(){
                 return this._cachedResults;
             }
-            debounceTimeInMs: number;
+            debounceDuration: number;
             insertResults: boolean;
             static get is(){return 'xtal-fetch';}
             static get properties() : IXtalFetchProperties{
@@ -58,15 +58,16 @@ module xtal.elements{
                     cacheResults:{
                         type: Boolean
                     },
-                    debounceTimeInMs:{
-                        type: Number
+                    debounceDuration:{
+                        type: Number,
+                        observer: 'debounceDurationHandler'
                     },
                     /**
                      * Needs to be true for any request to be made.
                      */
                     fetch:{
                         type:Boolean,
-                        observer: 'loadNewUrl'
+                        observer: '__loadNewUrlDebouncer'
                     },
                     /**
                      * A comma delimited list of keys to pluck from in-entities
@@ -79,7 +80,7 @@ module xtal.elements{
                      */
                     href:{
                         type: String,
-                        observer: 'onFetchChange'
+                        observer: '__loadNewUrlDebouncer'
                     },
                     /**
                      * An array of entities that forEach keys will be plucked from.
@@ -87,7 +88,7 @@ module xtal.elements{
                      */
                     inEntities:{
                         type: Array,
-                        observer: 'loadNewUrl'
+                        observer: '__loadNewUrlDebouncer'
                     },
                     /**
                      * Place the contents of the fetch inside the tag itself.
@@ -129,11 +130,19 @@ module xtal.elements{
                     }
                 }
             }
-            onFetchChange(newVal, oldVal){
-                if(!newVal) return;
-                if(newVal && !oldVal) this.loadNewUrl();
-                if(!newVal && oldVal) this.loadNewUrl();
+            __loadNewUrlDebouncer = xtal.elements['debounce'](() => {
+                console.log('iah1');
+                this.loadNewUrl();
+            }, 0);
+
+            debounceDurationHandler(){
+                this.__loadNewUrlDebouncer = xtal.elements['debounce'](() => {
+                    console.log('iah2');
+                    this.loadNewUrl();
+                }, this.debounceDuration);
             }
+            
+           
             loadNewUrl(){
                 if(!this._initialized) return;
                 if(!this.fetch) return;
@@ -206,7 +215,7 @@ module xtal.elements{
                 super.connectedCallback();
                 this.init().then(() => {
                     this._initialized = true;
-                    this.loadNewUrl();
+                    //this.loadNewUrl();
                 });
             }
             

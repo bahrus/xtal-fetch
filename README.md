@@ -1,5 +1,7 @@
 # \<xtal-fetch\>
 
+
+
 ## Single Requests
 
 \<xtal-fetch\> is a Polymer based web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer 1.0 dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
@@ -20,7 +22,7 @@ It may seem somewhat redundant to need to add the fetch attribute (being that th
 <xtal-fetch fetch="[[myBinding]]" href="https://myDomain/myPath/[[myBinding]]"></xtal-fetch>
 ```
 
-This will prevent a (typically cancelled) request from going through, until the binding needed for the href is available. [Debouncing will also be added as a future enhancement]
+This will prevent a (typically cancelled) request from going through, until the binding needed for the href is available. Debouncing is also supported to help avoid duplicate calls due to complex bindings.
 
 For more complex sanity checks / validation logic, the fetch property could, of course, refer to a computed property coming from the hosting [Polymer?] component (if applicable).
 
@@ -40,7 +42,7 @@ The results of the fetch can be inserted inside the <xtal-fetch> tag, becoming a
 
 Note, though, that if using a relative path for href, it will be relative to the url of the hosting page, not the url of the component definition.
 
-But more typically, you will want to "post the results of the fetch to a place available to its peers (other nodes inside the containing web component)".  The last phrase is in quotes, because that isn't precisely what happens when one examines the nitty gritty, but this is the effect we essentially want to have.  If the containing component is also a Polymer component, then this  can be done by specifying a two-way binding path, and no boilerplate code is required in order to achieve the desired effect: 
+But more typically, you will want to "post the results of the fetch to a place available to its peers (other nodes inside the containing web component)".  The last phrase is in quotes, because that isn't precisely what happens when one examines the nitty gritty details, but this is the effect we essentially want to have.  If the containing component is also a Polymer component, then this  can be done by specifying a two-way binding path, and no boilerplate code is required in order to achieve the desired effect: 
 
 ```html
 <xtal-fetch fetch href="generated.json" as="json" result="{{people}}"></xtl-fetch>
@@ -88,6 +90,7 @@ Note that #xtal-fetch# issues a "fetch-complete" event after every fetch is comp
 
 One can enable caching  of the same href value using the cache-results attribute.  In the future, this will also consider the req-init property as well in determining whether a fresh request should be made.
 
+Like the Polymer iron-ajax inspiration, the *debounce-duration* attribute specifies how much to wait for the request to "settle down" before proceeding.
 ## Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.

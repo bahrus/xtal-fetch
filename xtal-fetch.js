@@ -20,6 +20,10 @@ var xtal;
                     this.as = 'text';
                     this._initialized = false;
                     this._cachedResults = {};
+                    this.__loadNewUrlDebouncer = xtal.elements['debounce'](() => {
+                        console.log('iah1');
+                        this.loadNewUrl();
+                    }, 0);
                 }
                 get cachedResults() {
                     return this._cachedResults;
@@ -39,15 +43,16 @@ var xtal;
                         cacheResults: {
                             type: Boolean
                         },
-                        debounceTimeInMs: {
-                            type: Number
+                        debounceDuration: {
+                            type: Number,
+                            observer: 'debounceDurationHandler'
                         },
                         /**
                          * Needs to be true for any request to be made.
                          */
                         fetch: {
                             type: Boolean,
-                            observer: 'loadNewUrl'
+                            observer: '__loadNewUrlDebouncer'
                         },
                         /**
                          * A comma delimited list of keys to pluck from in-entities
@@ -60,7 +65,7 @@ var xtal;
                          */
                         href: {
                             type: String,
-                            observer: 'onFetchChange'
+                            observer: '__loadNewUrlDebouncer'
                         },
                         /**
                          * An array of entities that forEach keys will be plucked from.
@@ -68,7 +73,7 @@ var xtal;
                          */
                         inEntities: {
                             type: Array,
-                            observer: 'loadNewUrl'
+                            observer: '__loadNewUrlDebouncer'
                         },
                         /**
                          * Place the contents of the fetch inside the tag itself.
@@ -108,13 +113,11 @@ var xtal;
                         }
                     };
                 }
-                onFetchChange(newVal, oldVal) {
-                    if (!newVal)
-                        return;
-                    if (newVal && !oldVal)
+                debounceDurationHandler() {
+                    this.__loadNewUrlDebouncer = xtal.elements['debounce'](() => {
+                        console.log('iah2');
                         this.loadNewUrl();
-                    if (!newVal && oldVal)
-                        this.loadNewUrl();
+                    }, this.debounceDuration);
                 }
                 loadNewUrl() {
                     if (!this._initialized)
@@ -189,7 +192,7 @@ var xtal;
                     super.connectedCallback();
                     this.init().then(() => {
                         this._initialized = true;
-                        this.loadNewUrl();
+                        //this.loadNewUrl();
                     });
                 }
             }
