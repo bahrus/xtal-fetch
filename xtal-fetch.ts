@@ -131,13 +131,11 @@ module xtal.elements{
                 }
             }
             __loadNewUrlDebouncer = xtal.elements['debounce'](() => {
-                console.log('iah1');
                 this.loadNewUrl();
             }, 0);
 
             debounceDurationHandler(){
                 this.__loadNewUrlDebouncer = xtal.elements['debounce'](() => {
-                    console.log('iah2');
                     this.loadNewUrl();
                 }, this.debounceDuration);
             }

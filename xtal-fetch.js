@@ -21,7 +21,6 @@ var xtal;
                     this._initialized = false;
                     this._cachedResults = {};
                     this.__loadNewUrlDebouncer = xtal.elements['debounce'](() => {
-                        console.log('iah1');
                         this.loadNewUrl();
                     }, 0);
                 }
@@ -115,7 +114,6 @@ var xtal;
                 }
                 debounceDurationHandler() {
                     this.__loadNewUrlDebouncer = xtal.elements['debounce'](() => {
-                        console.log('iah2');
                         this.loadNewUrl();
                     }, this.debounceDuration);
                 }
