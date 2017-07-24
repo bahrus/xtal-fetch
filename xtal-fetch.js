@@ -12,7 +12,7 @@ var xtal;
             *
             * @customElement
             * @polymer
-            * @demo demo/index_sync.html
+            * @demo demo/index.html
             */
             class XtalFetch extends xtal.elements['InitMerge'](Polymer.Element) {
                 constructor() {
@@ -42,9 +42,25 @@ var xtal;
                         cacheResults: {
                             type: Boolean
                         },
+                        /**
+                         * Time in milliseconds to wait for things to settle down before making fetch request
+                         */
                         debounceDuration: {
                             type: Number,
                             observer: 'debounceDurationHandler'
+                        },
+                        errorResponse: {
+                            type: Object,
+                            notify: true,
+                            readOnly: true
+                        },
+                        /**
+                         * Expression for where to place an error response text.
+                         */
+                        errorText: {
+                            type: Object,
+                            notify: true,
+                            readOnly: true
                         },
                         /**
                          * Needs to be true for any request to be made.
@@ -124,6 +140,8 @@ var xtal;
                         return;
                     if (this.reqInitRequired && !this.reqInit)
                         return;
+                    this['_setErrorText'](null);
+                    this['_setErrorResponse'](null);
                     if (this.href) {
                         const _this = this;
                         let counter = 0;
@@ -173,15 +191,25 @@ var xtal;
                                 }
                             }
                             fetch(this.href, this.reqInit).then(resp => {
-                                resp[_this.as]().then(val => {
-                                    if (this.cachedResults) {
-                                        this.cachedResults[this.href] = val;
-                                    }
-                                    _this['_setResult'](val);
-                                    if (typeof val === 'string' && this.insertResults) {
-                                        this.innerHTML = val;
-                                    }
-                                });
+                                this['_setErrorResponse'](resp);
+                                if (resp.status !== 200) {
+                                    resp['text']().then(val => {
+                                        this['_setErrorText'](val);
+                                    });
+                                }
+                                else {
+                                    resp[_this.as]().then(val => {
+                                        if (this.cachedResults) {
+                                            this.cachedResults[this.href] = val;
+                                        }
+                                        _this['_setResult'](val);
+                                        if (typeof val === 'string' && this.insertResults) {
+                                            this.innerHTML = val;
+                                        }
+                                    });
+                                }
+                            }).catch(err => {
+                                this['_setErrorResponse'](err);
                             });
                         }
                     }

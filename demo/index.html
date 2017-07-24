@@ -31,7 +31,8 @@
         <template>
           <dom-module id="my-component">
             <template>
-              <xtal-fetch fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch>
+              <xtal-fetch fetch href="generated.json" as="json" result="{{people}}" error-text="{{error}}"></xtal-fetch>
+              <div>[[error]]</div>
               <template is="dom-repeat" items="[[people]]">
                 Name: [[item.name]] <br>
                 Email: [[item.email]] <br>

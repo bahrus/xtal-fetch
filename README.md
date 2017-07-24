@@ -53,7 +53,35 @@ But more typically, you will want to "post the results of the fetch to a place a
 </template>
 ```
 
-Other non Polymer component containers will need to add event handlers to listen for change events, in order to achieve similar results (or leverage Polymer's PropertyEffects mixin).
+This is referred to as the mediator pattern.
+
+Other non Polymer component containers will need to add event handlers to listen for change events, in order to achieve similar results.  
+
+Or the non Polymer component components can apply the Polymer mixin to the class.  Since mixin's are quite flexible (unlike single inheritance) this should not impose too many constraints on what can be done with non Polymer components.
+
+The markup below is a simple example of how to use the Polymer mixin in order to achieve the mediator pattern effects.
+
+```html
+    <script>
+        function initMyComponents() {
+            class MyComponent extends Polymer.ElementMixin(HTMLElement) {
+                set myProp(val){
+                    this.innerHTML = val;
+                }
+            }
+            customElements.define('my-component', MyComponent);
+            class MyContainer extends Polymer.ElementMixin(HTMLElement) {
+                static get is(){return 'my-container';}
+                static get template() {
+                
+                }
+            }
+            customElements.define('my-container', MyContainer);
+        }
+        customElements.whenDefined('xtal-fetch').then(() => initMyComponents());
+    </script>
+    <my-container></my-container>
+```
 
 It is often mistakenly assumed that the "fetch" api only supports get, not post.  This is in fact **not** the case.  The second parameter of the fetch function is often referred to as the reqInit parameter, and it can specify a method of "post", request headers, and the body of a post request, and much more.  This component simply passes the reqInit property into the api, unaltered:
 

@@ -6,6 +6,8 @@ module xtal.elements{
         as: string | polymer.PropObjectType,
         cacheResults: boolean | polymer.PropObjectType,
         debounceDuration: number | polymer.PropObjectType,
+        errorText: string | polymer.PropObjectType,
+        errorResponse: object | polymer.PropObjectType,
         fetch: boolean | polymer.PropObjectType,
         forEach: string | polymer.PropObjectType,
         href: string | polymer.PropObjectType,
@@ -25,7 +27,7 @@ module xtal.elements{
         *
         * @customElement
         * @polymer
-        * @demo demo/index_sync.html
+        * @demo demo/index.html
         */
         class XtalFetch  extends xtal.elements['InitMerge'](Polymer.Element)  implements IXtalFetchProperties{
             /**
@@ -35,6 +37,7 @@ module xtal.elements{
             */
             reqInit: RequestInit; reqInitRequired: boolean;
             href: string; inEntities: any[]; result: object; forEach: string; fetch; setPath;cacheResults;
+            errorText;errorResponse;
             as = 'text';
             _initialized = false;
             private _cachedResults: {[key:string] : any} = {};
@@ -58,9 +61,25 @@ module xtal.elements{
                     cacheResults:{
                         type: Boolean
                     },
+                    /**
+                     * Time in milliseconds to wait for things to settle down before making fetch request
+                     */
                     debounceDuration:{
                         type: Number,
                         observer: 'debounceDurationHandler'
+                    },
+                    errorResponse:{
+                        type: Object,
+                        notify: true,
+                        readOnly: true
+                    },
+                    /**
+                     * Expression for where to place an error response text.
+                     */
+                    errorText:{
+                        type: Object,
+                        notify: true,
+                        readOnly: true
                     },
                     /**
                      * Needs to be true for any request to be made.
@@ -145,6 +164,8 @@ module xtal.elements{
                 if(!this._initialized) return;
                 if(!this.fetch) return;
                 if(this.reqInitRequired && !this.reqInit) return;
+                this['_setErrorText'](null);
+                this['_setErrorResponse'](null);
                 if(this.href){
                     const _this = this;
                     let counter = 0;
@@ -192,17 +213,27 @@ module xtal.elements{
                             }
                         }
                         fetch(this.href, this.reqInit).then(resp =>{
-                            resp[_this.as]().then(val =>{
-                                
-                                if(this.cachedResults){
-                                    this.cachedResults[this.href] = val;
-                                }
-                                _this['_setResult'](val);
-                                if(typeof val === 'string' && this.insertResults){
-                                    this.innerHTML = val;
-                                }
-                            });
+                            this['_setErrorResponse'](resp);
+                            if(resp.status !== 200){
+                                resp['text']().then(val =>{
+                                    this['_setErrorText'](val);
+                                })
+                            }else{
+                                resp[_this.as]().then(val =>{
+                                    
+                                    if(this.cachedResults){
+                                        this.cachedResults[this.href] = val;
+                                    }
+                                    _this['_setResult'](val);
+                                    if(typeof val === 'string' && this.insertResults){
+                                        this.innerHTML = val;
+                                    }
+                                });
+                            }
+
                             
+                        }).catch(err =>{
+                            this['_setErrorResponse'](err);
                         })
                     }
                     
