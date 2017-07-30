@@ -73,7 +73,10 @@ The markup below is a simple example of how to use the Polymer mixin in order to
             class MyContainer extends Polymer.ElementMixin(HTMLElement) {
                 static get is(){return 'my-container';}
                 static get template() {
-                
+                    return `
+                        <xtal-fetch fetch href="sampleHTMLFragment.html" result="{{myResult}}"></xtal-fetch>
+                        <my-component my-prop="[[myResult]]"></my-component>
+                    `;
                 }
             }
             customElements.define('my-container', MyContainer);
