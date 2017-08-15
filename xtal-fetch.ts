@@ -9,6 +9,7 @@ module xtal.elements{
         errorText: string | polymer.PropObjectType,
         errorResponse: object | polymer.PropObjectType,
         fetch: boolean | polymer.PropObjectType,
+        fetchInProgress: boolean | polymer.PropObjectType,
         forEach: string | polymer.PropObjectType,
         href: string | polymer.PropObjectType,
         inEntities: any[] | polymer.PropObjectType,
@@ -37,7 +38,7 @@ module xtal.elements{
             */
             reqInit: RequestInit; reqInitRequired: boolean;
             href: string; inEntities: any[]; result: object; forEach: string; fetch; setPath;cacheResults;
-            errorText;errorResponse;
+            errorText;errorResponse;fetchInProgress = false;
             as = 'text';
             _initialized = false;
             private _cachedResults: {[key:string] : any} = {};
@@ -87,6 +88,14 @@ module xtal.elements{
                     fetch:{
                         type:Boolean,
                         observer: '__loadNewUrlDebouncer'
+                    },
+                    /**
+                     * Path where to indicate that a fetch is in progress
+                     */
+                    fetchInProgress:{
+                        type:Boolean,
+                        notify: true,
+                        readOnly: true,
                     },
                     /**
                      * A comma delimited list of keys to pluck from in-entities
@@ -198,7 +207,7 @@ module xtal.elements{
                                     this.dispatchEvent(new CustomEvent('fetch-complete', {
                                         detail: detail,
                                         bubbles: true,
-                                        composed: true
+                                        composed: false,
                                     } as CustomEventInit));
                                 });
                             
@@ -212,7 +221,9 @@ module xtal.elements{
                                 return;
                             }
                         }
+                        this['_setFetchInProgress'](true);
                         fetch(this.href, this.reqInit).then(resp =>{
+                            this['_setFetchInProgress'](false);
                             this['_setErrorResponse'](resp);
                             if(resp.status !== 200){
                                 resp['text']().then(val =>{
@@ -234,6 +245,7 @@ module xtal.elements{
                             
                         }).catch(err =>{
                             this['_setErrorResponse'](err);
+                            this['_setFetchInProgress'](false);
                         })
                     }
                     

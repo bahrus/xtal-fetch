@@ -17,6 +17,7 @@ var xtal;
             class XtalFetch extends xtal.elements['InitMerge'](Polymer.Element) {
                 constructor() {
                     super(...arguments);
+                    this.fetchInProgress = false;
                     this.as = 'text';
                     this._initialized = false;
                     this._cachedResults = {};
@@ -68,6 +69,14 @@ var xtal;
                         fetch: {
                             type: Boolean,
                             observer: '__loadNewUrlDebouncer'
+                        },
+                        /**
+                         * Path where to indicate that a fetch is in progress
+                         */
+                        fetchInProgress: {
+                            type: Boolean,
+                            notify: true,
+                            readOnly: true,
                         },
                         /**
                          * A comma delimited list of keys to pluck from in-entities
@@ -176,7 +185,7 @@ var xtal;
                                         this.dispatchEvent(new CustomEvent('fetch-complete', {
                                             detail: detail,
                                             bubbles: true,
-                                            composed: true
+                                            composed: false,
                                         }));
                                     });
                                 });
@@ -190,7 +199,9 @@ var xtal;
                                     return;
                                 }
                             }
+                            this['_setFetchInProgress'](true);
                             fetch(this.href, this.reqInit).then(resp => {
+                                this['_setFetchInProgress'](false);
                                 this['_setErrorResponse'](resp);
                                 if (resp.status !== 200) {
                                     resp['text']().then(val => {
@@ -210,6 +221,7 @@ var xtal;
                                 }
                             }).catch(err => {
                                 this['_setErrorResponse'](err);
+                                this['_setFetchInProgress'](false);
                             });
                         }
                     }
