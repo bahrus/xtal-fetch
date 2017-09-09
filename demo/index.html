@@ -7,7 +7,19 @@
     <title>xtal-fetch demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-
+    <script type="text/javascript">
+        if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)){
+          document.write('<script src="../IE11-polyfill.js"><\/script>');
+        }
+        
+    </script>
+    <script async src="../xtal-fetch.js"></script>
+    <!-- <script type="module" src="../xtal-fetch.js"></script> -->
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    
+    <link rel="import" href="../../polymer/lib/elements/dom-bind.html">
+    <link rel="import" href="../../polymer/lib/elements/dom-repeat.html">
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -17,22 +29,12 @@
   <body>
     <div class="vertical-section-container centered">
       <h3>Basic xtal-fetch demo</h3>
-      <link async rel="import" href="../../poly-prep/full-poly-prep.html">
-      <full-poly-prep>
-        <template>
-          <link async rel="import" href="../xtal-fetch.html">
-          <link async rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-          <link async rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-          <link async rel="import" href="../../polymer/lib/elements/dom-bind.html">
-          <link async rel="import" href="../../polymer/lib/elements/dom-repeat.html">
-        </template>
-      </full-poly-prep>
       <demo-snippet>
         <template>
           <dom-module id="my-component">
+            
             <template>
-              <xtal-fetch fetch href="generated.json" as="json" result="{{people}}" error-text="{{error}}"></xtal-fetch>
-              <div>[[error]]</div>
+              <xtal-fetch fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch>
               <template is="dom-repeat" items="[[people]]">
                 Name: [[item.name]] <br>
                 Email: [[item.email]] <br>

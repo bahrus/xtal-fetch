@@ -1,24 +1,23 @@
-module xtal.elements{
-    // interface IFetchRequest{
-    //     credentials?: 'include' | 'omit'
-    // }
-    interface IXtalFetchProperties{
-        as: string | polymer.PropObjectType,
-        cacheResults: boolean | polymer.PropObjectType,
-        debounceDuration: number | polymer.PropObjectType,
-        errorText: string | polymer.PropObjectType,
-        errorResponse: object | polymer.PropObjectType,
-        fetch: boolean | polymer.PropObjectType,
-        fetchInProgress: boolean | polymer.PropObjectType,
-        forEach: string | polymer.PropObjectType,
-        href: string | polymer.PropObjectType,
-        inEntities: any[] | polymer.PropObjectType,
-        insertResults: boolean | polymer.PropObjectType,
-        reqInit: RequestInit| polymer.PropObjectType,
-        reqInitRequired: boolean | polymer.PropObjectType,
-        result: any | polymer.PropObjectType,
-        setPath: string | polymer.PropObjectType,
-    }
+export  interface IXtalFetchProperties{
+    as: string | polymer.PropObjectType,
+    cacheResults: boolean | polymer.PropObjectType,
+    debounceDuration: number | polymer.PropObjectType,
+    errorText: string | polymer.PropObjectType,
+    errorResponse: object | polymer.PropObjectType,
+    fetch: boolean | polymer.PropObjectType,
+    fetchInProgress: boolean | polymer.PropObjectType,
+    forEach: string | polymer.PropObjectType,
+    href: string | polymer.PropObjectType,
+    inEntities: any[] | polymer.PropObjectType,
+    insertResults: boolean | polymer.PropObjectType,
+    reqInit: RequestInit| polymer.PropObjectType,
+    reqInitRequired: boolean | polymer.PropObjectType,
+    result: any | polymer.PropObjectType,
+    setPath: string | polymer.PropObjectType,
+}
+
+(function () {    
+
     function initXtalFetch(){
         if(customElements.get('xtal-fetch')) return;
         /**
@@ -30,7 +29,7 @@ module xtal.elements{
         * @polymer
         * @demo demo/index.html
         */
-        class XtalFetch  extends xtal.elements['InitMerge'](Polymer.Element)  implements IXtalFetchProperties{
+        class XtalFetch  extends Polymer.Element  implements IXtalFetchProperties{
             /**
             * Fired  when a fetch has finished.
             *
@@ -40,7 +39,6 @@ module xtal.elements{
             href: string; inEntities: any[]; result: object; forEach: string; fetch; setPath;cacheResults;
             errorText;errorResponse;fetchInProgress = false;
             as = 'text';
-            _initialized = false;
             private _cachedResults: {[key:string] : any} = {};
             get cachedResults(){
                 return this._cachedResults;
@@ -96,6 +94,7 @@ module xtal.elements{
                         type:Boolean,
                         notify: true,
                         readOnly: true,
+                        reflectToAttribute: true,
                     },
                     /**
                      * A comma delimited list of keys to pluck from in-entities
@@ -158,19 +157,30 @@ module xtal.elements{
                     }
                 }
             }
-            __loadNewUrlDebouncer = xtal.elements['debounce'](() => {
+            debounce(func, wait, immediate?) {
+                var timeout;
+                return function() {
+                    var context = this, args = arguments;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function() {
+                        timeout = null;
+                        if (!immediate) func.apply(context, args);
+                    }, wait);
+                    if (immediate && !timeout) func.apply(context, args);
+                };
+            }
+            __loadNewUrlDebouncer = this.debounce(() => {
                 this.loadNewUrl();
             }, 0);
 
             debounceDurationHandler(){
-                this.__loadNewUrlDebouncer = xtal.elements['debounce'](() => {
+                this.__loadNewUrlDebouncer = this.debounce(() => {
                     this.loadNewUrl();
                 }, this.debounceDuration);
             }
             
            
             loadNewUrl(){
-                if(!this._initialized) return;
                 if(!this.fetch) return;
                 if(this.reqInitRequired && !this.reqInit) return;
                 this['_setErrorText'](null);
@@ -222,7 +232,8 @@ module xtal.elements{
                             }
                         }
                         this['_setFetchInProgress'](true);
-                        fetch(this.href, this.reqInit).then(resp =>{
+                        const href = this.href;
+                        fetch(href, this.reqInit).then(resp =>{
                             this['_setFetchInProgress'](false);
                             this['_setErrorResponse'](resp);
                             if(resp.status !== 200){
@@ -239,6 +250,14 @@ module xtal.elements{
                                     if(typeof val === 'string' && this.insertResults){
                                         this.innerHTML = val;
                                     }
+                                    const detail = {
+                                        href: href
+                                    }
+                                    this.dispatchEvent(new CustomEvent('fetch-complete', {
+                                        detail: detail,
+                                        bubbles: true,
+                                        composed: false,
+                                    } as CustomEventInit));
                                 });
                             }
 
@@ -252,30 +271,20 @@ module xtal.elements{
                 }
             }
 
-            connectedCallback(){
-                super.connectedCallback();
-                this.init().then(() => {
-                    this._initialized = true;
-                    //this.loadNewUrl();
-                });
-            }
+            
             
         }
         customElements.define(XtalFetch.is, XtalFetch);
     }
-    const syncFlag = 'xtal_elements_fetch_sync'
-    if(window[syncFlag]){
-        customElements.whenDefined('poly-prep-sync').then(() => initXtalFetch());
-        delete window[syncFlag];
-    }else{
-        if(customElements.get('poly-prep') || customElements.get('full-poly-prep')){
-            initXtalFetch();
-        }else{
-            customElements.whenDefined('poly-prep').then(() => initXtalFetch());
-            customElements.whenDefined('full-poly-prep').then(() => initXtalFetch());
+    function WaitForPolymer()
+    {
+        if ((typeof Polymer !== 'function') || (typeof Polymer.Element !== 'function')) {
+           setTimeout( WaitForPolymer, 100);
+           return;
         }
-    
+        initXtalFetch();
     }
+    WaitForPolymer();
     
     
-}
+})();

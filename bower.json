@@ -3,8 +3,7 @@
   "description": "Polymer based web component wrapper around the fetch api",
   "main": "xtal-fetch.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.0.0",
-    "poly-prep": "bahrus/poly-prep#^0.0.12"
+    "polymer": "Polymer/polymer#^2.0.0"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",

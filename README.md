@@ -110,7 +110,7 @@ It is often mistakenly assumed that the "fetch" api only supports get, not post.
 
 The syntax for this is meant to be readable:
 
-```hrml
+```html
 <xtal-fetch  fetch href="api/customer/[[id]]/purchase/:id" for-each="id" in-entities="[[purchases]]" 
               as="json"  set-path="purchase_detail" on-fetch-complete="refreshDetail"></xtal-fetch>
 ```
@@ -122,6 +122,11 @@ Note that #xtal-fetch# issues a "fetch-complete" event after every fetch is comp
 One can enable caching  of the same href value using the cache-results attribute.  In the future, this will also consider the req-init property as well in determining whether a fresh request should be made.
 
 Like the Polymer iron-ajax inspiration, the *debounce-duration* attribute specifies how much to wait for the request to "settle down" before proceeding.
+
+## Note on referencing \<xtal-fetch\>
+
+If you are already referencing Polymer.Element (directly or via Polymer) then you can just reference xtal-fetch via it's JavaScript file, xtal-fetch.js, either as a class js reference (async works fine as well) or as an ES6 module.  It has no other depenedencies.
+
 ## Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
