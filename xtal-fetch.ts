@@ -191,6 +191,8 @@ export  interface IXtalFetchProperties{
                     if(this.forEach){
                         if(!this.inEntities) return;
                         const keys = this.forEach.split(',');
+                        let remainingCalls = this.inEntities.length;
+                        this['_setFetchInProgress'](true);
                         this.inEntities.forEach(entity => {
                             entity['__xtal_idx'] = counter; counter++;
                             
@@ -202,11 +204,15 @@ export  interface IXtalFetchProperties{
                                 const val = this.cachedResults[href];
                                 if(val){
                                     entity[this.setPath] = val;
+                                    remainingCalls--;
+                                    if(remainingCalls === 0) this['_setFetchInProgress'](false);
                                     return;
                                 }
                             }
                             fetch(href, this.reqInit).then(resp =>{
                                 resp[_this.as]().then(val =>{
+                                    remainingCalls--;
+                                    if(remainingCalls === 0) this['_setFetchInProgress'](false);
                                     if(this.cacheResults) this.cachedResults[href] = val;
                                     entity[this.setPath] = val;
                                     //const newEntity = Object.assign("{}", entity);
@@ -219,6 +225,7 @@ export  interface IXtalFetchProperties{
                                         bubbles: true,
                                         composed: false,
                                     } as CustomEventInit));
+
                                 });
                             
                             })
