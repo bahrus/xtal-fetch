@@ -86,7 +86,8 @@
                      */
                     href: {
                         type: String,
-                        observer: '__loadNewUrlDebouncer'
+                        observer: '__loadNewUrlDebouncer',
+                        reflectToAttribute: true
                     },
                     /**
                      * An array of entities that forEach keys will be plucked from.
@@ -130,7 +131,8 @@
                      */
                     setPath: {
                         type: String,
-                        value: 'result'
+                        value: 'result',
+                        reflectToAttribute: true
                     }
                 };
             }
@@ -187,24 +189,31 @@
                                 }
                             }
                             fetch(href, this.reqInit).then(resp => {
-                                resp[_this.as]().then(val => {
-                                    remainingCalls--;
-                                    if (remainingCalls === 0)
-                                        this['_setFetchInProgress'](false);
-                                    if (this.cacheResults)
-                                        this.cachedResults[href] = val;
-                                    entity[this.setPath] = val;
-                                    //const newEntity = Object.assign("{}", entity);
-                                    const detail = {
-                                        entity: entity,
-                                        href: href
-                                    };
-                                    this.dispatchEvent(new CustomEvent('fetch-complete', {
-                                        detail: detail,
-                                        bubbles: true,
-                                        composed: false,
-                                    }));
-                                });
+                                if (resp.status !== 200) {
+                                    resp['text']().then(val => {
+                                        this['_setErrorText'](val);
+                                    });
+                                }
+                                else {
+                                    resp[_this.as]().then(val => {
+                                        remainingCalls--;
+                                        if (remainingCalls === 0)
+                                            this['_setFetchInProgress'](false);
+                                        if (this.cacheResults)
+                                            this.cachedResults[href] = val;
+                                        entity[this.setPath] = val;
+                                        //const newEntity = Object.assign("{}", entity);
+                                        const detail = {
+                                            entity: entity,
+                                            href: href
+                                        };
+                                        this.dispatchEvent(new CustomEvent('fetch-complete', {
+                                            detail: detail,
+                                            bubbles: true,
+                                            composed: false,
+                                        }));
+                                    });
+                                }
                             });
                         });
                     }
