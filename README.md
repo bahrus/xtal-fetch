@@ -64,7 +64,7 @@ The markup below is a simple example of how to use the Polymer mixin in order to
 ```html
     <script>
         function initMyComponents() {
-            class MyComponent extends Polymer.ElementMixin(HTMLElement) {
+            class MyComponent extends HTMLElement {
                 set myProp(val){
                     this.innerHTML = val;
                 }
@@ -117,7 +117,7 @@ The syntax for this is meant to be readable:
 
 *set-path* specifies the property name in each entity, used to store the fetched entity detail (json or text specified by "as" just like before).
 
-Note that #xtal-fetch# issues a "fetch-complete" event after every fetch is completed.
+Note that *xtal-fetch* issues a "fetch-complete" event after every fetch is completed.
 
 One can enable caching  of the same href value using the cache-results attribute.  In the future, this will also consider the req-init property as well in determining whether a fresh request should be made.
 
