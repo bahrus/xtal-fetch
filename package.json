@@ -27,7 +27,8 @@
     "@bower_components/stacky": "PolymerLabs/stacky#^1.3.0",
     "@bower_components/test-fixture": "polymerelements/test-fixture#^3.0.0-rc.1",
     "@bower_components/web-component-tester": "Polymer/web-component-tester#^6.0.0",
-    "@bower_components/webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+    "@bower_components/webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
+    "fs-extra": "^4.0.2"
   },
   "engines": {
     "yarn": ">= 1.0.0"
