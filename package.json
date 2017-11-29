@@ -1,0 +1,9 @@
+{
+  "name": "xtal-fetch",
+  "version": "0.0.16",
+  "description": "Polymer based component wrapper around the fetch method.",
+  "main": "xtal-fetch.html",
+  "repository": "https://github.com/bahrus/xtal-fetch",
+  "author": "bahrus <anderson.bruce.b@gmail.com>",
+  "license": "MIT"
+}
