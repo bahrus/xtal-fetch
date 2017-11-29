@@ -1,7 +1,21 @@
 {
+  "sources":[
+    "src/v0/xtal-fetch.html",
+    "src/v0/xtal-fetch.js"
+  ],
   "lint": {
     "rules": [
       "polymer-2"
     ]
-  }
+  },
+  "builds":[
+    {
+      "name": "ES5",
+      "js": {"minify": true, "compile": true}
+    },
+    {
+      "name": "ES6",
+      "js": {"minify": true, "compile": false}
+    }    
+  ]
 }
