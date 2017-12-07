@@ -265,6 +265,10 @@ export  interface IXtalFetchProperties{
                                     _this['_setResult'](val);
                                     if(typeof val === 'string' && this.insertResults){
                                         this.innerHTML = val;
+                                        this.dispatchEvent(new CustomEvent('dom-change', {
+                                            bubbles: true,
+                                            composed: true,
+                                        } as CustomEventInit));
                                     }
                                     const detail = {
                                         href: href

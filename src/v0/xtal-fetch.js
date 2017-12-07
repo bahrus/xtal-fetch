@@ -243,6 +243,10 @@
                                     _this['_setResult'](val);
                                     if (typeof val === 'string' && this.insertResults) {
                                         this.innerHTML = val;
+                                        this.dispatchEvent(new CustomEvent('dom-change', {
+                                            bubbles: true,
+                                            composed: true,
+                                        }));
                                     }
                                     const detail = {
                                         href: href
