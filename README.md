@@ -38,6 +38,8 @@ Then you can refer to this base URL thusly:
 <xtal-fetch base-link-id="myAPIBaseUrl"  href="myPath/[[myBinding]]"></xtal-fetch>
 ```
 
+The base url will be prepended to the href property.
+
 One can specify whether the result should be parsed as JSON, or left as text, using the "as" attribute:
 
 ```html
