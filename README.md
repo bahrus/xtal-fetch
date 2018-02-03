@@ -29,7 +29,7 @@ For more complex sanity checks / validation logic, the fetch property could, of 
 In the event that multiple xtal-fetch tags share the same base URL, xtal-fetch supports the use of the [link rel="preconnect"](https://w3c.github.io/resource-hints/#preconnect) tag to specify the base url.  A unique ID should be given to that link, inside the document.head tag:
 
 ```html
-<link rel="preload" id="myAPIBaseUrl" href="https://myDomain/api/">
+<link rel="preconnect" id="myAPIBaseUrl" href="https://myDomain/api/">
 ``` 
 
 Then you can refer to this base URL thusly:
