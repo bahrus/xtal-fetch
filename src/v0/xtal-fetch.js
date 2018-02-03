@@ -34,6 +34,14 @@
                         type: String
                     },
                     /**
+                     * Id of Link tag that has the base url connection
+                     * Suggested use:  https://w3c.github.io/resource-hints/#preconnect
+                     * The href attribute will be used to prepend the url property.
+                     */
+                    baseLinkId: {
+                        type: String,
+                    },
+                    /**
                      *
                      */
                     cacheResults: {
@@ -67,7 +75,7 @@
                         observer: '__loadNewUrlDebouncer'
                     },
                     /**
-                     * Path where to indicate that a fetch is in progress
+                     * Path / event name to notify that a fetch is in progress
                      */
                     fetchInProgress: {
                         type: Boolean,
@@ -137,9 +145,9 @@
                 };
             }
             debounce(func, wait, immediate) {
-                var timeout;
+                let timeout;
                 return function () {
-                    var context = this, args = arguments;
+                    const context = this, args = arguments;
                     clearTimeout(timeout);
                     timeout = setTimeout(function () {
                         timeout = null;
@@ -162,6 +170,7 @@
                     return;
                 this['_setErrorText'](null);
                 this['_setErrorResponse'](null);
+                const base = this.baseLinkId ? self[this.baseLinkId].href : '';
                 if (this.href) {
                     const _this = this;
                     let counter = 0;
@@ -174,7 +183,7 @@
                         this.inEntities.forEach(entity => {
                             entity['__xtal_idx'] = counter;
                             counter++;
-                            let href = this.href;
+                            let href = base + this.href;
                             keys.forEach(key => {
                                 href = href.replace(':' + key, entity[key]);
                             });
@@ -226,7 +235,7 @@
                             }
                         }
                         this['_setFetchInProgress'](true);
-                        const href = this.href;
+                        const href = base + this.href;
                         fetch(href, this.reqInit).then(resp => {
                             this['_setFetchInProgress'](false);
                             this['_setErrorResponse'](resp);

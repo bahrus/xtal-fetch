@@ -26,6 +26,18 @@ This will prevent a (typically cancelled) request from going through, until the 
 
 For more complex sanity checks / validation logic, the fetch property could, of course, refer to a computed property coming from the hosting [Polymer?] component (if applicable).
 
+In the event that multiple xtal-fetch tags share the same base URL, xtal-fetch supports the use of the [link rel="preconnect"](https://w3c.github.io/resource-hints/#preconnect) tag to specify the base url.  A unique ID should be given to that link, inside the document.head tag:
+
+```html
+<link rel="preload" id="myAPIBaseUrl" href="https://myDomain/api/">
+``` 
+
+Then you can refer to this base URL thusly:
+
+```html
+<xtal-fetch base-link-id="myAPIBaseUrl"  href="myPath/[[myBinding]]"></xtal-fetch>
+```
+
 One can specify whether the result should be parsed as JSON, or left as text, using the "as" attribute:
 
 ```html
