@@ -1,10 +1,9 @@
 # \<xtal-fetch\>
 
 
-
 ## Single Requests
 
-\<xtal-fetch\> is a Polymer based web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer 1.0 dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
+\<xtal-fetch\> is a dependency free, 1.8kb (gzipped and minified) web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
 
 All the evergreen browsers support fetch.  For IE11, a polyfill should be used.
 

@@ -1,289 +1,552 @@
 (function () {
-    function initXtalFetch() {
-        if (customElements.get('xtal-fetch'))
-            return;
-        /**
-        * `xtal-fetch`
-        * Polymer based wrapper around the fetch api call.  Note:  IE11 requires a polyfill for fetch / promises
-        *
-        *
-        * @customElement
-        * @polymer
-        * @demo demo/index.html
-        */
-        class XtalFetch extends Polymer.Element {
-            constructor() {
-                super(...arguments);
-                this.fetchInProgress = false;
-                this.as = 'text';
-                this._cachedResults = {};
-                this.__loadNewUrlDebouncer = this.debounce(() => {
-                    this.loadNewUrl();
-                }, 0);
+    const xtalFetch = 'xtal-fetch';
+    if (customElements.get(xtalFetch))
+        return;
+    const a$ = {
+        as: 'as',
+        baseLinkId: {
+            cc: 'baseLinkId',
+            sc: 'base-link-id',
+        },
+        cacheResults: {
+            cc: 'cacheResults',
+            sc: 'cache-results'
+        },
+        debounceDuration: {
+            cc: 'debounceDuration',
+            sc: 'debounce-duration'
+        },
+        fetch: 'fetch',
+        forEach: {
+            cc: 'forEach',
+            sc: 'for-each'
+        },
+        href: 'href',
+        inEntities: {
+            cc: 'inEntities',
+            sc: 'in-entities'
+        },
+        insertResults: {
+            cc: 'insertResults',
+            sc: 'insert-results'
+        },
+        reqInit: {
+            cc: 'reqInit',
+            sc: 'req-init'
+        },
+        reqInitRequired: {
+            cc: 'reqInitRequired',
+            sc: 'req-init-required'
+        },
+        setPath: {
+            cc: 'setPath',
+            sc: 'set-path'
+        }
+    };
+    const cc = {};
+    for (var key in a$) {
+        const val = a$[key];
+        if (val.sc) {
+            cc[val.sc] = '_' + val.cc;
+        }
+        else {
+            cc[val] = '_' + key;
+        }
+    }
+    const e$ = {
+        errorResponse: {
+            cc: 'errorRespone',
+            sc: 'error-response'
+        },
+        errorText: {
+            cc: 'errorText',
+            sc: 'error-text'
+        },
+        fetchInProgress: {
+            cc: 'fetchInProgress',
+            sc: 'fetch-in-progress'
+        },
+        result: 'result',
+    };
+    // interface IXtalFetchProperties { //becomes an export when we are ready
+    //     as: string,
+    //     [a$.baseLinkId.cc]: string,
+    //     [a$.cacheResults.cc]: boolean,
+    //     [a$.debounceDuration.cc]: number,
+    //     [e$.errorText.cc]: string,
+    //     [e$.errorResponse.cc]: object,
+    //     [a$.fetch]: boolean,
+    //     [e$.fetchInProgress.cc]: boolean,
+    //     [a$.forEach.cc]: string,
+    //     [a$.href]: string,
+    //     inEntities: any[],
+    //     [a$.insertResults.cc]: boolean,
+    //     [a$.reqInit.cc]: RequestInit,
+    //     [a$.req_init_required.cc]: boolean,
+    //     [e$.result]: any,
+    //     [a$.setPath.cc]: string,
+    // }
+    /**
+    * `xtal-fetch`
+    * Dependency free web component wrapper around the fetch api call.  Note:  IE11 requires a polyfill for fetch / promises
+    *
+    *
+    * @customElement
+    * @polymer
+    * @demo demo/index.html
+    */
+    class XtalFetch extends HTMLElement {
+        constructor() {
+            super(...arguments);
+            this._as = 'text';
+            this._cacheResults = false;
+            this._fetchInProgress = false;
+            this._cachedResults = {};
+            this.__loadNewUrlDebouncer = this.debounce(() => {
+                this.loadNewUrl();
+            }, 0);
+        }
+        get [a$.reqInit.cc]() {
+            return this._reqInit;
+        }
+        set [a$.reqInit.cc](val) {
+            this._reqInit = val;
+            this.__loadNewUrlDebouncer();
+        }
+        get [a$.reqInitRequired.cc]() {
+            return this._reqInitRequired;
+        }
+        set [a$.reqInitRequired.cc](val) {
+            if (val) {
+                this.setAttribute(a$.reqInitRequired.sc, '');
             }
-            get cachedResults() {
-                return this._cachedResults;
+            else {
+                this.removeAttribute(a$.reqInitRequired.sc);
             }
-            static get is() { return 'xtal-fetch'; }
-            static get properties() {
-                return {
-                    /**
-                     * Possible values are 'text' and 'json'
-                     */
-                    as: {
-                        type: String
-                    },
-                    /**
-                     * Id of Link tag that has the base url connection
-                     * Suggested use:  https://w3c.github.io/resource-hints/#preconnect
-                     * The href attribute will be used to prepend the url property.
-                     */
-                    baseLinkId: {
-                        type: String,
-                    },
-                    /**
-                     *
-                     */
-                    cacheResults: {
-                        type: Boolean
-                    },
-                    /**
-                     * Time in milliseconds to wait for things to settle down before making fetch request
-                     */
-                    debounceDuration: {
-                        type: Number,
-                        observer: 'debounceDurationHandler'
-                    },
-                    errorResponse: {
-                        type: Object,
-                        notify: true,
-                        readOnly: true
-                    },
-                    /**
-                     * Expression for where to place an error response text.
-                     */
-                    errorText: {
-                        type: Object,
-                        notify: true,
-                        readOnly: true
-                    },
-                    /**
-                     * Needs to be true for any request to be made.
-                     */
-                    fetch: {
-                        type: Boolean,
-                        observer: '__loadNewUrlDebouncer'
-                    },
-                    /**
-                     * Path / event name to notify that a fetch is in progress
-                     */
-                    fetchInProgress: {
-                        type: Boolean,
-                        notify: true,
-                        readOnly: true,
-                        reflectToAttribute: true,
-                    },
-                    /**
-                     * A comma delimited list of keys to pluck from in-entities
-                     */
-                    forEach: {
-                        type: String
-                    },
-                    /**
-                     * Base url
-                     */
-                    href: {
-                        type: String,
-                        observer: '__loadNewUrlDebouncer',
-                        reflectToAttribute: true
-                    },
-                    /**
-                     * An array of entities that forEach keys will be plucked from.
-                     * Fetch requests will be made iteratively (but in parallel) for each such entity
-                     */
-                    inEntities: {
-                        type: Array,
-                        observer: '__loadNewUrlDebouncer'
-                    },
-                    /**
-                     * Place the contents of the fetch inside the tag itself.
-                     */
-                    insertResults: {
-                        type: Boolean
-                    },
-                    /**
-                     * The second parameter of the fetch call.
-                     * See, e.g. https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
-                     */
-                    reqInit: {
-                        type: Object
-                    },
-                    /**
-                     * This prevents the fetch request from occurring until the reqInit has some
-                     * defined value.
-                     */
-                    reqInitRequired: {
-                        type: Boolean
-                    },
-                    /**
-                     * The expression for where to place the result.
-                     */
-                    result: {
-                        type: Object,
-                        notify: true,
-                        readOnly: true
-                    },
-                    /**
-                     * When looping through entities, calling fetch, place the results of the fetch in the path specified by this
-                     * property.
-                     */
-                    setPath: {
-                        type: String,
-                        value: 'result',
-                        reflectToAttribute: true
-                    }
-                };
+        }
+        get [a$.href]() {
+            return this._href;
+        }
+        set [a$.href](val) {
+            this.setAttribute(a$.href, val);
+        }
+        get [a$.inEntities.cc]() {
+            return this._inEntities;
+        }
+        set [a$.inEntities.cc](val) {
+            this._inEntities = val;
+            this.__loadNewUrlDebouncer();
+        }
+        get [e$.result]() {
+            return this._result;
+        }
+        set [e$.result](val) {
+            this._result = val;
+            this.de(e$.result, {
+                value: val,
+            });
+        }
+        get [a$.forEach.cc]() {
+            return this._forEach;
+        }
+        set [a$.forEach.cc](val) {
+            this.setAttribute(a$.forEach.sc, val);
+        }
+        get [a$.fetch]() {
+            return this._fetch;
+        }
+        set [a$.fetch](val) {
+            if (val) {
+                this.setAttribute(a$.fetch, '');
             }
-            debounce(func, wait, immediate) {
-                let timeout;
-                return function () {
-                    const context = this, args = arguments;
-                    clearTimeout(timeout);
-                    timeout = setTimeout(function () {
-                        timeout = null;
-                        if (!immediate)
-                            func.apply(context, args);
-                    }, wait);
-                    if (immediate && !timeout)
+            else {
+                this.removeAttribute(a$.fetch);
+            }
+        }
+        get [a$.setPath.cc]() {
+            return this._setPath;
+        }
+        set [a$.setPath.cc](val) {
+            this.setAttribute(a$.setPath.sc, val);
+        }
+        get [a$.as]() {
+            return this._as;
+        }
+        set [a$.as](val) {
+            this.setAttribute(a$.as, val);
+        }
+        get [a$.cacheResults.cc]() {
+            return this._cachedResults;
+        }
+        set [a$.cacheResults.cc](val) {
+            if (val) {
+                this.setAttribute(a$.cacheResults.sc, '');
+            }
+            else {
+                this.removeAttribute(a$.cacheResults.sc);
+            }
+        }
+        get [e$.errorText.cc]() {
+            return this._errorText;
+        }
+        set [e$.errorText.cc](val) {
+            this._errorText = val;
+            this.de(e$.errorText.sc, {
+                value: val
+            });
+        }
+        ;
+        get [e$.errorResponse.cc]() {
+            return this._errorResponse;
+        }
+        set [e$.errorResponse.cc](val) {
+            this._errorResponse = val;
+            this.de(e$.errorResponse.sc, {
+                value: val
+            });
+        }
+        get [e$.fetchInProgress.cc]() {
+            return this._fetchInProgress;
+        }
+        set [e$.fetchInProgress.cc](val) {
+            this._fetchInProgress = val;
+            this.de(e$.fetchInProgress.sc, {
+                value: val
+            });
+        }
+        get [a$.baseLinkId.cc]() {
+            return this._baseLinkId;
+        }
+        set [a$.baseLinkId.cc](val) {
+            this.setAttribute(a$.baseLinkId.sc, val);
+        }
+        get [a$.debounceDuration.cc]() {
+            return this._debounceDuration;
+        }
+        set [a$.debounceDuration.cc](val) {
+            this.setAttribute(a$.debounceDuration.sc, val.toString());
+        }
+        get [a$.insertResults.cc]() {
+            return this._insertResults;
+        }
+        set [a$.insertResults.cc](val) {
+            if (val) {
+                this.setAttribute(a$.insertResults.sc, '');
+            }
+            else {
+                this.removeAttribute(a$.insertResults.sc);
+            }
+        }
+        get cachedResults() {
+            return this._cachedResults;
+        }
+        static get is() { return xtalFetch; }
+        de(name, detail) {
+            const newEvent = new CustomEvent(name + '-changed', {
+                detail: detail,
+                bubbles: true,
+                composed: false,
+            });
+            this.dispatchEvent(newEvent);
+            return newEvent;
+        }
+        _upgradeProperty(prop) {
+            if (this.hasOwnProperty(prop)) {
+                let value = this[prop];
+                delete this[prop];
+                this[prop] = value;
+            }
+        }
+        connectedCallback() {
+            for (var key in a$) {
+                this._upgradeProperty(key);
+            }
+        }
+        static get observedAttributes() {
+            const returnObj = [];
+            for (var key in cc) {
+                returnObj.push(key);
+            }
+            return returnObj;
+        }
+        attributeChangedCallback(name, oldValue, newValue) {
+            const privateFieldName = cc[name];
+            switch (name) {
+                //string properties
+                case a$.as:
+                case a$.baseLinkId.sc:
+                case a$.forEach.sc:
+                case a$.href:
+                case a$.setPath.sc:
+                    this[privateFieldName] = newValue;
+                    break;
+                //boolean properties
+                case a$.cacheResults.sc:
+                case a$.fetch:
+                case a$.insertResults.sc:
+                case a$.reqInitRequired.sc:
+                    this[privateFieldName] = newValue !== null;
+                    break;
+                //numeric properties
+                case a$.debounceDuration.sc:
+                    this[privateFieldName] = parseInt(newValue);
+                    this.debounceDurationHandler();
+                    break;
+                //potentially small object properties
+                case a$.reqInit.sc:
+                    this[privateFieldName] = JSON.parse(newValue);
+                    break;
+            }
+            this.__loadNewUrlDebouncer();
+        }
+        // static get properties():  {
+        //     return {[
+        //         /**
+        //          * Id of Link tag that has the base url connection
+        //          * Suggested use:  https://w3c.github.io/resource-hints/#preconnect
+        //          * The href attribute will be used to prepend the url property. 
+        //          */
+        //         baseLinkId: {
+        //             type: String,
+        //         },
+        //         /**
+        //          * 
+        //          */
+        //         cacheResults: {
+        //             type: Boolean
+        //         },
+        //         /**
+        //          * Time in milliseconds to wait for things to settle down before making fetch request
+        //          */
+        //         debounceDuration: {
+        //             type: Number,
+        //             observer: 'debounceDurationHandler'
+        //         },
+        //         errorResponse: {
+        //             type: Object,
+        //             notify: true,
+        //             readOnly: true
+        //         },
+        //         /**
+        //          * Expression for where to place an error response text.
+        //          */
+        //         errorText: {
+        //             type: Object,
+        //             notify: true,
+        //             readOnly: true
+        //         },
+        //         /**
+        //          * Needs to be true for any request to be made.
+        //          */
+        //         fetch: {
+        //             type: Boolean,
+        //             observer: '__loadNewUrlDebouncer'
+        //         },
+        //         /**
+        //          * Path / event name to notify that a fetch is in progress
+        //          */
+        //         fetchInProgress: {
+        //             type: Boolean,
+        //             notify: true,
+        //             readOnly: true,
+        //             reflectToAttribute: true,
+        //         },
+        //         /**
+        //          * A comma delimited list of keys to pluck from in-entities
+        //          */
+        //         forEach: {
+        //             type: String
+        //         },
+        //         /**
+        //          * Base url
+        //          */
+        //         href: {
+        //             type: String,
+        //             observer: '__loadNewUrlDebouncer',
+        //             reflectToAttribute: true
+        //         },
+        //         /**
+        //          * An array of entities that forEach keys will be plucked from.
+        //          * Fetch requests will be made iteratively (but in parallel) for each such entity
+        //          */
+        //         inEntities: {
+        //             type: Array,
+        //             observer: '__loadNewUrlDebouncer'
+        //         },
+        //         /**
+        //          * Place the contents of the fetch inside the tag itself.
+        //          */
+        //         insertResults: {
+        //             type: Boolean
+        //         },
+        //         /**
+        //          * The second parameter of the fetch call.  
+        //          * See, e.g. https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
+        //          */
+        //         reqInit: {
+        //             type: Object
+        //         },
+        //         /**
+        //          * This prevents the fetch request from occurring until the reqInit has some 
+        //          * defined value.
+        //          */
+        //         reqInitRequired: {
+        //             type: Boolean
+        //         },
+        //         /**
+        //          * The expression for where to place the result.
+        //          */
+        //         result: {
+        //             type: Object,
+        //             notify: true,
+        //             readOnly: true
+        //         },
+        //         /**
+        //          * When looping through entities, calling fetch, place the results of the fetch in the path specified by this 
+        //          * property.
+        //          */
+        //         setPath: {
+        //             type: String,
+        //             value: 'result',
+        //             reflectToAttribute: true
+        //         }
+        //     }
+        // }
+        debounce(func, wait, immediate) {
+            let timeout;
+            return function () {
+                const context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    timeout = null;
+                    if (!immediate)
                         func.apply(context, args);
-                };
-            }
-            debounceDurationHandler() {
-                this.__loadNewUrlDebouncer = this.debounce(() => {
-                    this.loadNewUrl();
-                }, this.debounceDuration);
-            }
-            loadNewUrl() {
-                if (!this.fetch)
+                }, wait);
+                if (immediate && !timeout)
+                    func.apply(context, args);
+            };
+        }
+        debounceDurationHandler() {
+            this.__loadNewUrlDebouncer = this.debounce(() => {
+                this.loadNewUrl();
+            }, this._debounceDuration);
+        }
+        loadNewUrl() {
+            if (!this._fetch)
+                return;
+            if (this._reqInitRequired && !this._reqInit)
+                return;
+            if (!this._href)
+                return;
+            this[e$.errorText.cc] = null;
+            this[e$.errorResponse.cc] = null;
+            const base = this._baseLinkId ? self[this._baseLinkId].href : '';
+            const _this = this;
+            let counter = 0;
+            if (this._forEach) {
+                if (!this._inEntities)
                     return;
-                if (this.reqInitRequired && !this.reqInit)
-                    return;
-                this['_setErrorText'](null);
-                this['_setErrorResponse'](null);
-                const base = this.baseLinkId ? self[this.baseLinkId].href : '';
-                if (this.href) {
-                    const _this = this;
-                    let counter = 0;
-                    if (this.forEach) {
-                        if (!this.inEntities)
+                const keys = this._forEach.split(',');
+                let remainingCalls = this._inEntities.length;
+                //this['_setFetchInProgress'](true);
+                this[e$.fetchInProgress.cc] = true;
+                this._inEntities.forEach(entity => {
+                    entity['__xtal_idx'] = counter;
+                    counter++;
+                    let href = base + this._href;
+                    keys.forEach(key => {
+                        href = href.replace(':' + key, entity[key]);
+                    });
+                    if (this._cacheResults) {
+                        const val = this.cachedResults[href];
+                        if (val) {
+                            entity[this._setPath] = val;
+                            remainingCalls--;
+                            if (remainingCalls === 0)
+                                this[e$.fetchInProgress.cc] = false;
                             return;
-                        const keys = this.forEach.split(',');
-                        let remainingCalls = this.inEntities.length;
-                        this['_setFetchInProgress'](true);
-                        this.inEntities.forEach(entity => {
-                            entity['__xtal_idx'] = counter;
-                            counter++;
-                            let href = base + this.href;
-                            keys.forEach(key => {
-                                href = href.replace(':' + key, entity[key]);
+                        }
+                    }
+                    fetch(href, this._reqInit).then(resp => {
+                        if (resp.status !== 200) {
+                            resp['text']().then(val => {
+                                //this['_setErrorText'](val);
+                                this[e$.errorText.cc] = val;
                             });
-                            if (this.cacheResults) {
-                                const val = this.cachedResults[href];
-                                if (val) {
-                                    entity[this.setPath] = val;
-                                    remainingCalls--;
-                                    if (remainingCalls === 0)
-                                        this['_setFetchInProgress'](false);
-                                    return;
-                                }
-                            }
-                            fetch(href, this.reqInit).then(resp => {
-                                if (resp.status !== 200) {
-                                    resp['text']().then(val => {
-                                        this['_setErrorText'](val);
-                                    });
-                                }
-                                else {
-                                    resp[_this.as]().then(val => {
-                                        remainingCalls--;
-                                        if (remainingCalls === 0)
-                                            this['_setFetchInProgress'](false);
-                                        if (this.cacheResults)
-                                            this.cachedResults[href] = val;
-                                        entity[this.setPath] = val;
-                                        //const newEntity = Object.assign("{}", entity);
-                                        const detail = {
-                                            entity: entity,
-                                            href: href
-                                        };
-                                        this.dispatchEvent(new CustomEvent('fetch-complete', {
-                                            detail: detail,
-                                            bubbles: true,
-                                            composed: false,
-                                        }));
-                                    });
-                                }
+                        }
+                        else {
+                            resp[_this._as]().then(val => {
+                                remainingCalls--;
+                                if (remainingCalls === 0)
+                                    this[e$.fetchInProgress.cc] = false;
+                                if (this._cacheResults)
+                                    this.cachedResults[href] = val;
+                                entity[this._setPath] = val;
+                                //const newEntity = Object.assign("{}", entity);
+                                const detail = {
+                                    entity: entity,
+                                    href: href
+                                };
+                                this.dispatchEvent(new CustomEvent('fetch-complete', {
+                                    detail: detail,
+                                    bubbles: true,
+                                    composed: false,
+                                }));
                             });
+                        }
+                    });
+                });
+            }
+            else {
+                if (this._cacheResults) {
+                    const val = this.cachedResults[this._href];
+                    if (val) {
+                        _this[e$.result] = val;
+                        return;
+                    }
+                }
+                this[e$.fetchInProgress.cc] = true;
+                const href = base + this._href;
+                fetch(href, this._reqInit).then(resp => {
+                    this[e$.fetchInProgress.cc] = false;
+                    //this['_setFetchInProgress'](false);
+                    //this['_setErrorResponse'](resp);
+                    if (resp.status !== 200) {
+                        this[e$.errorResponse.cc] = resp;
+                        resp['text']().then(val => {
+                            this[e$.errorText.cc] = val;
                         });
                     }
                     else {
-                        if (this.cacheResults) {
-                            const val = this.cachedResults[this.href];
-                            if (val) {
-                                _this['_setResult'](val);
-                                return;
+                        resp[_this._as]().then(val => {
+                            if (this.cachedResults) {
+                                this.cachedResults[this._href] = val;
                             }
-                        }
-                        this['_setFetchInProgress'](true);
-                        const href = base + this.href;
-                        fetch(href, this.reqInit).then(resp => {
-                            this['_setFetchInProgress'](false);
-                            this['_setErrorResponse'](resp);
-                            if (resp.status !== 200) {
-                                resp['text']().then(val => {
-                                    this['_setErrorText'](val);
-                                });
+                            _this[e$.result] = val;
+                            if (typeof val === 'string' && this._insertResults) {
+                                this.innerHTML = val;
+                                this.dispatchEvent(new CustomEvent('dom-change', {
+                                    bubbles: true,
+                                    composed: true,
+                                }));
                             }
-                            else {
-                                resp[_this.as]().then(val => {
-                                    if (this.cachedResults) {
-                                        this.cachedResults[this.href] = val;
-                                    }
-                                    _this['_setResult'](val);
-                                    if (typeof val === 'string' && this.insertResults) {
-                                        this.innerHTML = val;
-                                        this.dispatchEvent(new CustomEvent('dom-change', {
-                                            bubbles: true,
-                                            composed: true,
-                                        }));
-                                    }
-                                    const detail = {
-                                        href: href
-                                    };
-                                    this.dispatchEvent(new CustomEvent('fetch-complete', {
-                                        detail: detail,
-                                        bubbles: true,
-                                        composed: false,
-                                    }));
-                                });
-                            }
-                        }).catch(err => {
-                            this['_setErrorResponse'](err);
-                            this['_setFetchInProgress'](false);
+                            const detail = {
+                                href: href
+                            };
+                            this.dispatchEvent(new CustomEvent('fetch-complete', {
+                                detail: detail,
+                                bubbles: true,
+                                composed: false,
+                            }));
                         });
                     }
-                }
+                }).catch(err => {
+                    this['_setErrorResponse'](err);
+                    this['_setFetchInProgress'](false);
+                });
             }
         }
-        customElements.define(XtalFetch.is, XtalFetch);
     }
-    function WaitForPolymer() {
-        if ((typeof Polymer !== 'function') || (typeof Polymer.Element !== 'function')) {
-            setTimeout(WaitForPolymer, 100);
-            return;
-        }
-        initXtalFetch();
-    }
-    WaitForPolymer();
+    customElements.define(XtalFetch.is, XtalFetch);
 })();
 //# sourceMappingURL=xtal-fetch.js.map
