@@ -1,9 +1,11 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/bahrus/xtal-fetch)
+
 # \<xtal-fetch\>
 
 
 ## Single Requests
 
-\<xtal-fetch\> is a dependency free, 1.8kb (gzipped and minified) web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
+\<xtal-fetch\> is a dependency free, 1.9kb (gzipped and minified) web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
 
 All the evergreen browsers support fetch.  For IE11, a polyfill should be used.
 
@@ -68,9 +70,15 @@ But more typically, you will want to "post the results of the fetch to a place a
 
 This is referred to as the mediator pattern.
 
-Other non Polymer component containers will need to add event handlers to listen for change events, in order to achieve similar results.  
+Other non Polymer component containers will need to add event handlers to listen for change events, in order to achieve similar results.
 
-Or the non Polymer component components can apply the Polymer mixin to the class.  Since mixin's are quite flexible (unlike single inheritance) this should not impose too many constraints on what can be done with non Polymer components.
+For example, preact:
+
+```JSX
+<xtal-fetch fetch href="generated.json" as="json" result-changed={this.setPeople}></xtl-fetch>>
+```  
+
+If creating a non Polymer web component, you can apply the Polymer mixin to the class.  Since mixin's are quite flexible (unlike single inheritance) this should not impose too many constraints on what can be done with non Polymer components.
 
 The markup below is a simple example of how to use the Polymer mixin in order to achieve the mediator pattern effects.
 
@@ -99,6 +107,12 @@ The markup below is a simple example of how to use the Polymer mixin in order to
     <my-container></my-container>
 ```
 
+## Caching
+
+xtal-fetch supports caching, by setting attribute/property cache-results/cacheResults to true.
+
+## Fine tuning
+
 It is often mistakenly assumed that the "fetch" api only supports get, not post.  This is in fact **not** the case.  The second parameter of the fetch function is often referred to as the reqInit parameter, and it can specify a method of "post", request headers, and the body of a post request, and much more.  This component simply passes the reqInit property into the api, unaltered:
 
  ```html
@@ -116,6 +130,12 @@ It is often mistakenly assumed that the "fetch" api only supports get, not post.
  ``` 
 
  Although this could be done with boilerplate code using the fetch property, it is such a common need that this additional attribute is added for this specific purpose. 
+
+The reqInit property is also an attribute, allowing you to specify common properties inline:
+
+```html
+<xtal-fetch fetch href="https://myDomain/myPath/mySubpath" reqInit='{"credentials": "same-origin"}' as="json"></xtal-fetch>
+```
 
 ## Multiple requests
 
@@ -136,9 +156,30 @@ One can enable caching  of the same href value using the cache-results attribute
 
 Like the Polymer iron-ajax inspiration, the *debounce-duration* attribute specifies how much to wait for the request to "settle down" before proceeding.
 
-## Note on referencing \<xtal-fetch\>
+## To use  \<xtal-fetch\>
 
-If you are already referencing Polymer.Element (directly or via Polymer) then you can just reference xtal-fetch via it's JavaScript file, xtal-fetch.js, either as a class js reference (async works fine as well) or as an ES6 module.  It has no other depenedencies.
+>bower install --save bahrus/xtal-fetch
+
+or
+
+>yarn add xtal-fetch
+
+or
+
+>npm install xtal-fetch
+
+or
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.21/build/ES6/xtal-fetch.js"></script>
+```
+
+or
+
+```html
+<script src="https://unpkg.com/xtal-fetch@0.0.21/build/ES6/xtal-fetch.js"></script>
+```
+
 
 ## Install the Polymer-CLI
 
