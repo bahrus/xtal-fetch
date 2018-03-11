@@ -2,8 +2,8 @@
   "entrypoint": "index.html",
   "fragments": [],
   "sources": [
-    "src\\v0\\xtal-fetch.html",
-    "src\\v0\\xtal-fetch.js",
+    "xtal-fetch.html",
+    "xtal-fetch.js",
     "index.html"
   ],
   "extraDependencies": [
