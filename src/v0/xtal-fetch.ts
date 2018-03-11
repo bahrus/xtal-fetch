@@ -333,122 +333,7 @@
             this.__loadNewUrlDebouncer();
 
         }
-        // static get properties():  {
-        //     return {[
 
-        //         /**
-        //          * Id of Link tag that has the base url connection
-        //          * Suggested use:  https://w3c.github.io/resource-hints/#preconnect
-        //          * The href attribute will be used to prepend the url property. 
-        //          */
-        //         baseLinkId: {
-        //             type: String,
-        //         },
-        //         /**
-        //          * 
-        //          */
-        //         cacheResults: {
-        //             type: Boolean
-        //         },
-        //         /**
-        //          * Time in milliseconds to wait for things to settle down before making fetch request
-        //          */
-        //         debounceDuration: {
-        //             type: Number,
-        //             observer: 'debounceDurationHandler'
-        //         },
-        //         errorResponse: {
-        //             type: Object,
-        //             notify: true,
-        //             readOnly: true
-        //         },
-        //         /**
-        //          * Expression for where to place an error response text.
-        //          */
-        //         errorText: {
-        //             type: Object,
-        //             notify: true,
-        //             readOnly: true
-        //         },
-        //         /**
-        //          * Needs to be true for any request to be made.
-        //          */
-        //         fetch: {
-        //             type: Boolean,
-        //             observer: '__loadNewUrlDebouncer'
-        //         },
-        //         /**
-        //          * Path / event name to notify that a fetch is in progress
-        //          */
-        //         fetchInProgress: {
-        //             type: Boolean,
-        //             notify: true,
-        //             readOnly: true,
-        //             reflectToAttribute: true,
-        //         },
-        //         /**
-        //          * A comma delimited list of keys to pluck from in-entities
-        //          */
-        //         forEach: {
-        //             type: String
-        //         },
-        //         /**
-        //          * Base url
-        //          */
-        //         href: {
-        //             type: String,
-        //             observer: '__loadNewUrlDebouncer',
-        //             reflectToAttribute: true
-        //         },
-        //         /**
-        //          * An array of entities that forEach keys will be plucked from.
-        //          * Fetch requests will be made iteratively (but in parallel) for each such entity
-        //          */
-        //         inEntities: {
-        //             type: Array,
-        //             observer: '__loadNewUrlDebouncer'
-        //         },
-        //         /**
-        //          * Place the contents of the fetch inside the tag itself.
-        //          */
-        //         insertResults: {
-        //             type: Boolean
-        //         },
-        //         /**
-        //          * The second parameter of the fetch call.  
-        //          * See, e.g. https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
-        //          */
-        //         reqInit: {
-        //             type: Object
-        //         },
-        //         /**
-        //          * This prevents the fetch request from occurring until the reqInit has some 
-        //          * defined value.
-        //          */
-        //         reqInitRequired: {
-        //             type: Boolean
-        //         },
-
-        //         /**
-        //          * The expression for where to place the result.
-        //          */
-        //         result: {
-        //             type: Object,
-        //             notify: true,
-        //             readOnly: true
-        //         },
-
-        //         /**
-        //          * When looping through entities, calling fetch, place the results of the fetch in the path specified by this 
-        //          * property.
-        //          */
-        //         setPath: {
-        //             type: String,
-        //             value: 'result',
-        //             reflectToAttribute: true
-        //         }
-        //     }
-        // }
         debounce(func, wait, immediate?) {
             let timeout;
             return function () {
@@ -486,7 +371,6 @@
                 if (!this._inEntities) return;
                 const keys = this._forEach.split(',');
                 let remainingCalls = this._inEntities.length;
-                //this['_setFetchInProgress'](true);
                 this[e$.fetchInProgress.cc] = true;
                 this._inEntities.forEach(entity => {
                     entity['__xtal_idx'] = counter; counter++;
@@ -506,7 +390,6 @@
                     fetch(href, this._reqInit).then(resp => {
                         if (resp.status !== 200) {
                             resp['text']().then(val => {
-                                //this['_setErrorText'](val);
                                 this[e$.errorText.cc] = val;
                             })
                         } else {
@@ -544,8 +427,6 @@
                 const href = base + this._href;
                 fetch(href, this._reqInit).then(resp => {
                     this[e$.fetchInProgress.cc] = false;
-                    //this['_setFetchInProgress'](false);
-                    //this['_setErrorResponse'](resp);
                     if (resp.status !== 200) {
                         this[e$.errorResponse.cc] = resp;
                         resp['text']().then(val => {
@@ -577,8 +458,9 @@
 
 
                 }).catch(err => {
-                    this['_setErrorResponse'](err);
-                    this['_setFetchInProgress'](false);
+                    this[e$.errorResponse.cc] = err;
+                    this[e$.fetchInProgress.cc] = false;
+                    
                 })
             }
 
