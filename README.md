@@ -2,6 +2,7 @@
 
 # \<xtal-fetch\>
 
+[Demo](demo/index.html)
 
 ## Single Requests
 

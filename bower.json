@@ -1,7 +1,7 @@
 {
   "name": "xtal-fetch",
   "description": "Polymer based web component wrapper around the fetch api",
-  "main": "src/v0/xtal-fetch.html",
+  "main": "xtal-fetch.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },
