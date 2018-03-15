@@ -118,7 +118,7 @@ It is often mistakenly assumed that the "fetch" api only supports get, not post.
 
  ```html
  <xtal-fetch fetch href="api/persistService/id/[[id]]" as="json" 
- result="{{people}}" reqInit="[[myRequestConfig]]"></xatl-fetch>
+ result="{{people}}" req-init="[[myRequestConfig]]"></xatl-fetch>
  ```
  
  myRequestConfig could be initialized inside the containing component, or come from another component that posts to "myRequestConfig".
@@ -135,7 +135,7 @@ It is often mistakenly assumed that the "fetch" api only supports get, not post.
 The reqInit property is also an attribute, allowing you to specify common properties inline:
 
 ```html
-<xtal-fetch fetch href="https://myDomain/myPath/mySubpath" reqInit='{"credentials": "same-origin"}' as="json"></xtal-fetch>
+<xtal-fetch fetch href="https://myDomain/myPath/mySubpath" req-init='{"credentials": "same-origin"}' as="json"></xtal-fetch>
 ```
 
 ## Multiple requests
