@@ -360,6 +360,7 @@
         loadNewUrl() {
             
             if (!this._fetch) return;
+            if(this.offsetParent === null) return;
             if (this._reqInitRequired && !this._reqInit) return;
             if (!this._href) return;
             this[e$.errorText.cc] = null;

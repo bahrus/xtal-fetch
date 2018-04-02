@@ -4,6 +4,7 @@
   "sources": [
     "xtal-fetch.html",
     "xtal-fetch.js",
+    "xtal-fetch-base.js",
     "index.html"
   ],
   "extraDependencies": [
