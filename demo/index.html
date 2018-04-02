@@ -36,7 +36,7 @@
             
             <template>
               <div>
-              <xtal-fetch-base disabled fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch-base>
+              <xtal-fetch-base fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch-base>
               <template is="dom-repeat" items="[[people]]">
                 Name: [[item.name]] <br>
                 Email: [[item.email]] <br>
