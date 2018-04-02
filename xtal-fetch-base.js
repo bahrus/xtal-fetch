@@ -1,6 +1,6 @@
 const fetch = 'fetch';
 const href = 'href';
-const block = 'block';
+const disabled = 'disabled';
 export class XtalFetchBase extends HTMLElement {
     constructor() {
         super(...arguments);
@@ -30,15 +30,15 @@ export class XtalFetchBase extends HTMLElement {
             this.removeAttribute(fetch);
         }
     }
-    get block() {
-        return this._block;
+    get disabled() {
+        return this._disabled;
     }
-    set block(val) {
+    set disabled(val) {
         if (val) {
-            this.setAttribute(block, '');
+            this.setAttribute(disabled, '');
         }
         else {
-            this.removeAttribute(block);
+            this.removeAttribute(disabled);
         }
     }
     get href() {
@@ -55,7 +55,7 @@ export class XtalFetchBase extends HTMLElement {
         this.de('result', val);
     }
     static get observedAttributes() {
-        return [fetch, href, block];
+        return [fetch, href, disabled];
     }
     _upgradeProperties(props) {
         props.forEach(prop => {
@@ -70,7 +70,7 @@ export class XtalFetchBase extends HTMLElement {
         switch (name) {
             //booleans
             case fetch:
-            case block:
+            case disabled:
                 this['_' + name] = newVal !== null;
                 break;
             default:
@@ -79,7 +79,7 @@ export class XtalFetchBase extends HTMLElement {
         this.onBasePropsChange();
     }
     onBasePropsChange() {
-        if (!this.fetch || !this.href || this.block)
+        if (!this.fetch || !this.href || this.disabled)
             return;
         this.do();
     }
@@ -92,7 +92,7 @@ export class XtalFetchBase extends HTMLElement {
         });
     }
     connectedCallback() {
-        this._upgradeProperties([fetch, href, block]);
+        this._upgradeProperties([fetch, href, disabled]);
     }
 }
 if (!customElements.get(XtalFetchBase.is)) {

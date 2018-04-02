@@ -2,12 +2,12 @@
 export interface IXtalFetchLiteProperties{
     href: string,
     fetch: boolean,
-    block: boolean,
+    disabled: boolean,
     result: any,
 }
 const fetch = 'fetch';
 const href = 'href';
-const block = 'block';
+const disabled = 'disabled';
 export class XtalFetchBase extends HTMLElement implements IXtalFetchLiteProperties{
     _reqInit : RequestInit = {
         credentials: 'include'
@@ -34,15 +34,15 @@ export class XtalFetchBase extends HTMLElement implements IXtalFetchLiteProperti
             this.removeAttribute(fetch);
         }
     }
-    _block;
-    get block(){
-        return this._block;
+    _disabled;
+    get disabled(){
+        return this._disabled;
     }
-    set block(val){
+    set disabled(val){
         if(val){
-            this.setAttribute(block, '');
+            this.setAttribute(disabled, '');
         }else{
-            this.removeAttribute(block);
+            this.removeAttribute(disabled);
         }
     }
     _href: string;
@@ -61,7 +61,7 @@ export class XtalFetchBase extends HTMLElement implements IXtalFetchLiteProperti
         this.de('result', val);
     }
     static get observedAttributes(){
-        return [fetch, href, block];
+        return [fetch, href, disabled];
     }
     _upgradeProperties(props: string[]) {
         props.forEach(prop =>{
@@ -77,7 +77,7 @@ export class XtalFetchBase extends HTMLElement implements IXtalFetchLiteProperti
         switch(name){
             //booleans
             case fetch:
-            case block:
+            case disabled:
                 this['_' + name] = newVal !== null;
                 break;
             default:
@@ -86,7 +86,7 @@ export class XtalFetchBase extends HTMLElement implements IXtalFetchLiteProperti
         this.onBasePropsChange();
     }
     onBasePropsChange(){
-        if(!this.fetch || !this.href || this.block) return;
+        if(!this.fetch || !this.href || this.disabled) return;
         this.do();
     }
     do(){
@@ -98,7 +98,7 @@ export class XtalFetchBase extends HTMLElement implements IXtalFetchLiteProperti
         })
     }
     connectedCallback(){
-        this._upgradeProperties([fetch, href, block]);
+        this._upgradeProperties([fetch, href, disabled]);
     }
 }
 if(!customElements.get(XtalFetchBase.is)){
