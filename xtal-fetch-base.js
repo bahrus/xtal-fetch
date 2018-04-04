@@ -76,18 +76,20 @@ export class XtalFetchBase extends HTMLElement {
             default:
                 this['_' + name] = newVal;
         }
-        this.onBasePropsChange();
+        this.onPropsChange();
     }
-    onBasePropsChange() {
+    onPropsChange() {
+        this.loadNewUrl();
+    }
+    loadNewUrl() {
         if (!this.fetch || !this.href || this.disabled)
             return;
         this.do();
     }
     do() {
-        const _this = this;
         self.fetch(this.href, this._reqInit).then(resp => {
-            resp[_this._as]().then(result => {
-                _this.result = result;
+            resp[this._as]().then(result => {
+                this.result = result;
             });
         });
     }

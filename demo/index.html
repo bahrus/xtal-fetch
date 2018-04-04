@@ -15,6 +15,7 @@
     </script>
     <script async src="../xtal-fetch.js"></script>
     <script async type="module" src="../xtal-fetch-base.js"></script>
+    <script async type="module" src="../xtal-fetch-req.js"></script>
     <!-- <script type="module" src="../xtal-fetch.js"></script> -->
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
@@ -53,7 +54,7 @@
                 <p>Test of binding in expression -- need to watch network monitor to see the effects</p>
               </div>
               <label>Search string: </label><input type="text" value="{{searchString::input}}">
-              <xtal-fetch fetch="[[searchString]]" href="generated.json?search=[[searchString]]" debounce-duration="500"></xtal-fetch>
+              <xtal-fetch-req fetch="[[searchString]]" href="generated.json?search=[[searchString]]" debounce-duration="500"></xtal-fetch-req>
             </template>
           </dom-module>
           <script>

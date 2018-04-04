@@ -1,14 +1,15 @@
 
-export interface IXtalFetchLiteProperties{
+export interface IXtalFetchBaseProperties{
     href: string,
     fetch: boolean,
     disabled: boolean,
     result: any,
 }
+
 const fetch = 'fetch';
 const href = 'href';
 const disabled = 'disabled';
-export class XtalFetchBase extends HTMLElement implements IXtalFetchLiteProperties{
+export class XtalFetchBase extends HTMLElement implements IXtalFetchBaseProperties{
     _reqInit : RequestInit = {
         credentials: 'include'
     }
@@ -83,20 +84,23 @@ export class XtalFetchBase extends HTMLElement implements IXtalFetchLiteProperti
             default:
                 this['_' + name] = newVal;
         }
-        this.onBasePropsChange();
+        this.onPropsChange();
     }
-    onBasePropsChange(){
+    onPropsChange(){
+        this.loadNewUrl();
+    }
+    loadNewUrl(){
         if(!this.fetch || !this.href || this.disabled) return;
         this.do();
     }
     do(){
-        const _this = this;
         self.fetch(this.href, this._reqInit).then(resp =>{
-            resp[_this._as]().then(result =>{
-                _this.result = result;
+            resp[this._as]().then(result =>{
+                this.result = result;
             })
-        })
+        });
     }
+
     connectedCallback(){
         this._upgradeProperties([fetch, href, disabled]);
     }
