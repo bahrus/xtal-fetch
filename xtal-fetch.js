@@ -1,437 +1,438 @@
+
+//@ts-check
 (function () {
-    const xtalFetch = 'xtal-fetch';
-    if (customElements.get(xtalFetch))
-        return;
-    const a$ = {
-        as: 'as',
-        baseLinkId: {
-            cc: 'baseLinkId',
-            sc: 'base-link-id',
-        },
-        cacheResults: {
-            cc: 'cacheResults',
-            sc: 'cache-results'
-        },
-        debounceDuration: {
-            cc: 'debounceDuration',
-            sc: 'debounce-duration'
-        },
-        fetch: 'fetch',
-        forEach: {
-            cc: 'forEach',
-            sc: 'for-each'
-        },
-        href: 'href',
-        inEntities: {
-            cc: 'inEntities',
-            sc: 'in-entities'
-        },
-        insertResults: {
-            cc: 'insertResults',
-            sc: 'insert-results'
-        },
-        reqInit: {
-            cc: 'reqInit',
-            sc: 'req-init'
-        },
-        reqInitRequired: {
-            cc: 'reqInitRequired',
-            sc: 'req-init-required'
-        },
-        setPath: {
-            cc: 'setPath',
-            sc: 'set-path'
-        }
-    };
-    const cc = {};
-    for (var key in a$) {
-        const val = a$[key];
-        if (val.sc) {
-            cc[val.sc] = '_' + val.cc;
+const fetch = 'fetch';
+const href = 'href';
+const disabled = 'disabled';
+class XtalFetchGet extends HTMLElement {
+    constructor() {
+        super(...arguments);
+        this._reqInit = {
+            credentials: 'include'
+        };
+        this._as = 'json';
+    }
+    static get is() { return 'xtal-fetch-get'; }
+    de(name, detail) {
+        const newEvent = new CustomEvent(name + '-changed', {
+            detail: detail,
+            bubbles: true,
+            composed: false,
+        });
+        this.dispatchEvent(newEvent);
+        return newEvent;
+    }
+    get fetch() {
+        return this._fetch;
+    }
+    set fetch(val) {
+        if (val) {
+            this.setAttribute(fetch, '');
         }
         else {
-            cc[val] = '_' + key;
+            this.removeAttribute(fetch);
         }
     }
-    const e$ = {
-        errorResponse: {
-            cc: 'errorRespone',
-            sc: 'error-response'
-        },
-        errorText: {
-            cc: 'errorText',
-            sc: 'error-text'
-        },
-        fetchInProgress: {
-            cc: 'fetchInProgress',
-            sc: 'fetch-in-progress'
-        },
-        result: 'result',
-    };
-    // interface IXtalFetchProperties { //becomes an export when we are ready
-    //     as: string,
-    //     [a$.baseLinkId.cc]: string,
-    //     [a$.cacheResults.cc]: boolean,
-    //     [a$.debounceDuration.cc]: number,
-    //     [e$.errorText.cc]: string,
-    //     [e$.errorResponse.cc]: object,
-    //     [a$.fetch]: boolean,
-    //     [e$.fetchInProgress.cc]: boolean,
-    //     [a$.forEach.cc]: string,
-    //     [a$.href]: string,
-    //     inEntities: any[],
-    //     [a$.insertResults.cc]: boolean,
-    //     [a$.reqInit.cc]: RequestInit,
-    //     [a$.req_init_required.cc]: boolean,
-    //     [e$.result]: any,
-    //     [a$.setPath.cc]: string,
-    // }
-    /**
-    * `xtal-fetch`
-    * Dependency free web component wrapper around the fetch api call.  Note:  IE11 requires a polyfill for fetch / promises
-    *
-    *
-    * @customElement
-    * @polymer
-    * @demo demo/index.html
-    */
-    class XtalFetch extends HTMLElement {
-        constructor() {
-            super(...arguments);
-            this._as = 'text';
-            this._cacheResults = false;
-            this._fetchInProgress = false;
-            this._cachedResults = {};
-            this.__loadNewUrlDebouncer = this.debounce(() => {
-                this.loadNewUrl();
-            }, 0);
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(val) {
+        if (val) {
+            this.setAttribute(disabled, '');
         }
-        get [a$.reqInit.cc]() {
-            return this._reqInit;
+        else {
+            this.removeAttribute(disabled);
         }
-        set [a$.reqInit.cc](val) {
-            this._reqInit = val;
-            this.__loadNewUrlDebouncer();
-        }
-        get [a$.reqInitRequired.cc]() {
-            return this._reqInitRequired;
-        }
-        set [a$.reqInitRequired.cc](val) {
-            if (val) {
-                this.setAttribute(a$.reqInitRequired.sc, '');
-            }
-            else {
-                this.removeAttribute(a$.reqInitRequired.sc);
-            }
-        }
-        get [a$.href]() {
-            return this._href;
-        }
-        set [a$.href](val) {
-            this.setAttribute(a$.href, val);
-        }
-        get [a$.inEntities.cc]() {
-            return this._inEntities;
-        }
-        set [a$.inEntities.cc](val) {
-            this._inEntities = val;
-            this.__loadNewUrlDebouncer();
-        }
-        get [e$.result]() {
-            return this._result;
-        }
-        set [e$.result](val) {
-            this._result = val;
-            this.de(e$.result, {
-                value: val,
-            });
-        }
-        get [a$.forEach.cc]() {
-            return this._forEach;
-        }
-        set [a$.forEach.cc](val) {
-            this.setAttribute(a$.forEach.sc, val);
-        }
-        get [a$.fetch]() {
-            return this._fetch;
-        }
-        set [a$.fetch](val) {
-            if (val) {
-                this.setAttribute(a$.fetch, '');
-            }
-            else {
-                this.removeAttribute(a$.fetch);
-            }
-        }
-        get [a$.setPath.cc]() {
-            return this._setPath;
-        }
-        set [a$.setPath.cc](val) {
-            this.setAttribute(a$.setPath.sc, val);
-        }
-        get [a$.as]() {
-            return this._as;
-        }
-        set [a$.as](val) {
-            this.setAttribute(a$.as, val);
-        }
-        get [a$.cacheResults.cc]() {
-            return this._cachedResults;
-        }
-        set [a$.cacheResults.cc](val) {
-            if (val) {
-                this.setAttribute(a$.cacheResults.sc, '');
-            }
-            else {
-                this.removeAttribute(a$.cacheResults.sc);
-            }
-        }
-        get [e$.errorText.cc]() {
-            return this._errorText;
-        }
-        set [e$.errorText.cc](val) {
-            this._errorText = val;
-            this.de(e$.errorText.sc, {
-                value: val
-            });
-        }
-        ;
-        get [e$.errorResponse.cc]() {
-            return this._errorResponse;
-        }
-        set [e$.errorResponse.cc](val) {
-            this._errorResponse = val;
-            this.de(e$.errorResponse.sc, {
-                value: val
-            });
-        }
-        get [e$.fetchInProgress.cc]() {
-            return this._fetchInProgress;
-        }
-        set [e$.fetchInProgress.cc](val) {
-            this._fetchInProgress = val;
-            this.de(e$.fetchInProgress.sc, {
-                value: val
-            });
-        }
-        get [a$.baseLinkId.cc]() {
-            return this._baseLinkId;
-        }
-        set [a$.baseLinkId.cc](val) {
-            this.setAttribute(a$.baseLinkId.sc, val);
-        }
-        get [a$.debounceDuration.cc]() {
-            return this._debounceDuration;
-        }
-        set [a$.debounceDuration.cc](val) {
-            this.setAttribute(a$.debounceDuration.sc, val.toString());
-        }
-        get [a$.insertResults.cc]() {
-            return this._insertResults;
-        }
-        set [a$.insertResults.cc](val) {
-            if (val) {
-                this.setAttribute(a$.insertResults.sc, '');
-            }
-            else {
-                this.removeAttribute(a$.insertResults.sc);
-            }
-        }
-        get cachedResults() {
-            return this._cachedResults;
-        }
-        static get is() { return xtalFetch; }
-        de(name, detail) {
-            const newEvent = new CustomEvent(name + '-changed', {
-                detail: detail,
-                bubbles: true,
-                composed: false,
-            });
-            this.dispatchEvent(newEvent);
-            return newEvent;
-        }
-        _upgradeProperty(prop) {
+    }
+    get href() {
+        return this._href;
+    }
+    set href(val) {
+        this.setAttribute(href, val);
+    }
+    get result() {
+        return this._result;
+    }
+    set result(val) {
+        this._result = val;
+        this.de('result', val);
+    }
+    static get observedAttributes() {
+        return [fetch, href, disabled];
+    }
+    _upgradeProperties(props) {
+        props.forEach(prop => {
             if (this.hasOwnProperty(prop)) {
                 let value = this[prop];
                 delete this[prop];
                 this[prop] = value;
             }
+        });
+    }
+    attributeChangedCallback(name, oldVal, newVal) {
+        switch (name) {
+            //booleans
+            case fetch:
+            case disabled:
+                this['_' + name] = newVal !== null;
+                break;
+            default:
+                this['_' + name] = newVal;
         }
-        connectedCallback() {
-            for (var key in a$) {
-                this._upgradeProperty(key);
-            }
+        this.onPropsChange();
+    }
+    onPropsChange() {
+        this.loadNewUrl();
+    }
+    loadNewUrl() {
+        if (!this.fetch || !this.href || this.disabled)
+            return;
+        this.do();
+    }
+    do() {
+        self.fetch(this.href, this._reqInit).then(resp => {
+            resp[this._as]().then(result => {
+                this.result = result;
+            });
+        });
+    }
+    connectedCallback() {
+        this._upgradeProperties([fetch, href, disabled]);
+    }
+}
+if (!customElements.get(XtalFetchGet.is)) {
+    customElements.define(XtalFetchGet.is, XtalFetchGet);
+}
+//# sourceMappingURL=xtal-fetch-get.js.map
+function snakeToCamel(s) {
+    return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
+}
+const debounceDuration = 'debounce-duration';
+const reqInitRequired = 'req-init-required';
+const cacheResults = 'cache-results';
+const insertResults = 'insert-results';
+const baseLinkId = 'base-link-id';
+class XtalFetchReq extends XtalFetchGet {
+    constructor() {
+        super();
+        this._cacheResults = false;
+        this._cachedResults = {};
+        this._fetchInProgress = false;
+        this._reqInit = null;
+    }
+    /**
+    * Fired  when a fetch has finished.
+    *
+    * @event fetch-complete
+    */
+    get reqInit() {
+        return this._reqInit;
+    }
+    set reqInit(val) {
+        this._reqInit = val;
+        //this.__loadNewUrlDebouncer();
+        this.onPropsChange();
+    }
+    onPropsChange() {
+        if (this.reqInitRequired && !this.reqInit)
+            return;
+        if (!this.__loadNewUrlDebouncer) {
+            this.debounceDurationHandler();
         }
-        static get observedAttributes() {
-            const returnObj = [];
-            for (var key in cc) {
-                returnObj.push(key);
-            }
-            return returnObj;
+        this.__loadNewUrlDebouncer();
+    }
+    static get is() { return 'xtal-fetch-req'; }
+    get cacheResults() {
+        return this._cacheResults;
+    }
+    set cacheResults(val) {
+        if (val) {
+            this.setAttribute(cacheResults, '');
         }
-        attributeChangedCallback(name, oldValue, newValue) {
-            const privateFieldName = cc[name];
-            switch (name) {
-                //string properties
-                case a$.as:
-                case a$.baseLinkId.sc:
-                case a$.forEach.sc:
-                case a$.href:
-                case a$.setPath.sc:
-                    this[privateFieldName] = newValue;
-                    break;
-                //boolean properties
-                case a$.cacheResults.sc:
-                case a$.fetch:
-                case a$.insertResults.sc:
-                case a$.reqInitRequired.sc:
-                    this[privateFieldName] = newValue !== null;
-                    break;
-                //numeric properties
-                case a$.debounceDuration.sc:
-                    this[privateFieldName] = parseInt(newValue);
-                    this.debounceDurationHandler();
-                    break;
-                //potentially small object properties
-                case a$.reqInit.sc:
-                    this[privateFieldName] = JSON.parse(newValue);
-                    break;
-            }
-            this.__loadNewUrlDebouncer();
-        }
-        debounce(func, wait, immediate) {
-            let timeout;
-            return function () {
-                const context = this, args = arguments;
-                clearTimeout(timeout);
-                timeout = setTimeout(function () {
-                    timeout = null;
-                    if (!immediate)
-                        func.apply(context, args);
-                }, wait);
-                if (immediate && !timeout)
-                    func.apply(context, args);
-            };
-        }
-        debounceDurationHandler() {
-            this.__loadNewUrlDebouncer = this.debounce(() => {
-                this.loadNewUrl();
-            }, this._debounceDuration);
-        }
-        loadNewUrl() {
-            if (!this._fetch)
-                return;
-            if (this.offsetParent === null)
-                return;
-            if (this._reqInitRequired && !this._reqInit)
-                return;
-            if (!this._href)
-                return;
-            this[e$.errorText.cc] = null;
-            this[e$.errorResponse.cc] = null;
-            const base = this._baseLinkId ? self[this._baseLinkId].href : '';
-            const _this = this;
-            let counter = 0;
-            if (this._forEach) {
-                if (!this._inEntities)
-                    return;
-                const keys = this._forEach.split(',');
-                let remainingCalls = this._inEntities.length;
-                this[e$.fetchInProgress.cc] = true;
-                this._inEntities.forEach(entity => {
-                    entity['__xtal_idx'] = counter;
-                    counter++;
-                    let href = base + this._href;
-                    keys.forEach(key => {
-                        href = href.replace(':' + key, entity[key]);
-                    });
-                    if (this._cacheResults) {
-                        const val = this.cachedResults[href];
-                        if (val) {
-                            entity[this._setPath] = val;
-                            remainingCalls--;
-                            if (remainingCalls === 0)
-                                this[e$.fetchInProgress.cc] = false;
-                            return;
-                        }
-                    }
-                    fetch(href, this._reqInit).then(resp => {
-                        if (resp.status !== 200) {
-                            resp['text']().then(val => {
-                                this[e$.errorText.cc] = val;
-                            });
-                        }
-                        else {
-                            resp[_this._as]().then(val => {
-                                remainingCalls--;
-                                if (remainingCalls === 0)
-                                    this[e$.fetchInProgress.cc] = false;
-                                if (this._cacheResults)
-                                    this.cachedResults[href] = val;
-                                entity[this._setPath] = val;
-                                //const newEntity = Object.assign("{}", entity);
-                                const detail = {
-                                    entity: entity,
-                                    href: href
-                                };
-                                this.dispatchEvent(new CustomEvent('fetch-complete', {
-                                    detail: detail,
-                                    bubbles: true,
-                                    composed: false,
-                                }));
-                            });
-                        }
-                    });
-                });
-            }
-            else {
-                if (this._cacheResults) {
-                    const val = this.cachedResults[this._href];
-                    if (val) {
-                        _this[e$.result] = val;
-                        return;
-                    }
-                }
-                this[e$.fetchInProgress.cc] = true;
-                const href = base + this._href;
-                fetch(href, this._reqInit).then(resp => {
-                    this[e$.fetchInProgress.cc] = false;
-                    if (resp.status !== 200) {
-                        this[e$.errorResponse.cc] = resp;
-                        resp['text']().then(val => {
-                            this[e$.errorText.cc] = val;
-                        });
-                    }
-                    else {
-                        resp[_this._as]().then(val => {
-                            if (this.cachedResults) {
-                                this.cachedResults[this._href] = val;
-                            }
-                            _this[e$.result] = val;
-                            if (typeof val === 'string' && this._insertResults) {
-                                this.innerHTML = val;
-                                this.dispatchEvent(new CustomEvent('dom-change', {
-                                    bubbles: true,
-                                    composed: true,
-                                }));
-                            }
-                            const detail = {
-                                href: href
-                            };
-                            this.dispatchEvent(new CustomEvent('fetch-complete', {
-                                detail: detail,
-                                bubbles: true,
-                                composed: false,
-                            }));
-                        });
-                    }
-                }).catch(err => {
-                    this[e$.errorResponse.cc] = err;
-                    this[e$.fetchInProgress.cc] = false;
-                });
-            }
+        else {
+            this.removeAttribute(cacheResults);
         }
     }
-    customElements.define(XtalFetch.is, XtalFetch);
-})();
-//# sourceMappingURL=xtal-fetch.js.map
+    get cachedResults() {
+        return this._cachedResults;
+    }
+    get reqInitRequired() {
+        return this._reqInitRequired;
+    }
+    set reqInitRequired(val) {
+        if (val) {
+            this.setAttribute(reqInitRequired, '');
+        }
+        else {
+            this.removeAttribute(reqInitRequired);
+        }
+    }
+    get debounceDuration() {
+        return this._debounceDuration;
+    }
+    set debounceDuration(val) {
+        this.setAttribute(debounceDuration, val.toString());
+    }
+    get errorResponse() {
+        return this._errorResponse;
+    }
+    set errorResponse(val) {
+        this._errorResponse = val;
+        this.de('error-response', {
+            value: val
+        });
+    }
+    get errorText() {
+        return this._errorText;
+    }
+    set errorText(val) {
+        this._errorText = val;
+        this.de('error-text', {
+            value: val
+        });
+    }
+    get fetchInProgress() {
+        return this._fetchInProgress;
+    }
+    set fetchInProgress(val) {
+        this._fetchInProgress = val;
+        this.de('fetch-in-progress', {
+            value: val
+        });
+    }
+    get insertResults() {
+        return this._insertResults;
+    }
+    set insertResults(val) {
+        if (val) {
+            this.setAttribute(insertResults, '');
+        }
+        else {
+            this.removeAttribute(insertResults);
+        }
+    }
+    get baseLinkId() {
+        return this._baseLinkId;
+    }
+    set baseLinkId(val) {
+        this.setAttribute(baseLinkId, val);
+    }
+    static get observedAttributes() {
+        return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults, baseLinkId]);
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case debounceDuration:
+                this._debounceDuration = parseFloat(newValue);
+                this.debounceDurationHandler();
+                break;
+            //boolean
+            case reqInitRequired:
+            case cacheResults:
+            case insertResults:
+                this['_' + snakeToCamel(name)] = newValue !== null;
+                break;
+            case baseLinkId:
+                this._baseLinkId = newValue;
+                break;
+        }
+        super.attributeChangedCallback(name, oldValue, newValue);
+    }
+    debounce(func, wait, immediate) {
+        let timeout;
+        return function () {
+            const context = this, args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+                timeout = null;
+                if (!immediate)
+                    func.apply(context, args);
+            }, wait);
+            if (immediate && !timeout)
+                func.apply(context, args);
+        };
+    }
+    debounceDurationHandler() {
+        this.__loadNewUrlDebouncer = this.debounce(() => {
+            this.loadNewUrl();
+        }, this._debounceDuration);
+    }
+    //overrides
+    do() {
+        this.errorResponse = null;
+        if (this._cacheResults) {
+            const val = this.cachedResults[this._href];
+            if (val) {
+                this.result = val;
+                return;
+            }
+        }
+        this.fetchInProgress = true;
+        let href = this.href;
+        if (this._baseLinkId) {
+            const link = self[this._baseLinkId];
+            if (link)
+                href = link.href + href;
+        }
+        self.fetch(this.href, this._reqInit).then(resp => {
+            this.fetchInProgress = false;
+            resp[this._as]().then(result => {
+                if (resp.status !== 200) {
+                    this.errorResponse = resp;
+                    resp['text']().then(val => {
+                        this.errorText = val;
+                    });
+                }
+                else {
+                    this.result = result;
+                    if (this.cachedResults) {
+                        this.cachedResults[this._href] = result;
+                    }
+                    if (typeof result === 'string' && this._insertResults) {
+                        this.innerHTML = result;
+                        this.dispatchEvent(new CustomEvent('dom-change', {
+                            bubbles: true,
+                            composed: true,
+                        }));
+                    }
+                    const detail = {
+                        href: this.href
+                    };
+                    this.dispatchEvent(new CustomEvent('fetch-complete', {
+                        detail: detail,
+                        bubbles: true,
+                        composed: false,
+                    }));
+                }
+            });
+        });
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        this._upgradeProperties(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit']);
+    }
+}
+if (!customElements.get(XtalFetchReq.is)) {
+    customElements.define(XtalFetchReq.is, XtalFetchReq);
+}
+//# sourceMappingURL=xtal-fetch-req.js.map
+const forEach = 'for-each';
+const setPath = 'set-path';
+class XtalFetchEntities extends XtalFetchReq {
+    static get is() { return 'xtal-fetch-entities'; }
+    get forEach() {
+        return this._forEach;
+    }
+    set forEach(val) {
+        this.setAttribute(forEach, val);
+    }
+    get setPath() {
+        return this._setPath;
+    }
+    set setPath(val) {
+        this.setAttribute(setPath, val);
+    }
+    get inEntities() {
+        return this._inEntities;
+    }
+    set inEntities(val) {
+        this._inEntities = val;
+        this.onPropsChange();
+    }
+    static get observedAttributes() {
+        return super.observedAttributes.concat([forEach, setPath]);
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case setPath:
+            case forEach:
+                this['_' + snakeToCamel(name)] = newValue;
+        }
+        super.attributeChangedCallback(name, oldValue, newValue);
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        this._upgradeProperties(['forEach', 'setPath', 'inEntities']);
+    }
+    onPropsChange() {
+        const hasAtLeastOneProp = this._setPath || this._forEach || this.inEntities;
+        if (hasAtLeastOneProp) {
+            this._hasAllThreeProps = this._setPath && this._forEach && this.inEntities;
+            if (!this._hasAllThreeProps) {
+                return;
+            }
+        }
+        super.onPropsChange();
+    }
+    do() {
+        if (!this._hasAllThreeProps) {
+            super.do();
+            return;
+        }
+        const keys = this._forEach.split(',');
+        let remainingCalls = this._inEntities.length;
+        this.fetchInProgress = true;
+        let counter = 0;
+        const base = this._baseLinkId ? self[this._baseLinkId].href : '';
+        //this._inEntities.forEach(entity => {
+        for (let i = 0, ii = this._inEntities.length; i < ii; i++) {
+            const entity = this._inEntities[i];
+            entity['__xtal_idx'] = counter;
+            counter++;
+            let href = this._href;
+            keys.forEach(key => {
+                href = href.replace(':' + key, entity[key]);
+            });
+            href = base + href;
+            if (this._cacheResults) {
+                const val = this.cachedResults[href];
+                if (val) {
+                    entity[this._setPath] = val;
+                    remainingCalls--;
+                    if (remainingCalls === 0)
+                        this.fetchInProgress = false;
+                    return;
+                }
+            }
+            fetch(href, this._reqInit).then(resp => {
+                if (resp.status !== 200) {
+                    resp['text']().then(val => {
+                        this.errorText = val;
+                    });
+                    this.errorResponse = resp;
+                }
+                else {
+                    resp[this._as]().then(val => {
+                        remainingCalls--;
+                        if (remainingCalls === 0)
+                            this.fetchInProgress = false;
+                        if (this._cacheResults)
+                            this.cachedResults[href] = val;
+                        entity[this._setPath] = val;
+                        const detail = {
+                            entity: entity,
+                            href: href
+                        };
+                        this.dispatchEvent(new CustomEvent('fetch-complete', {
+                            detail: detail,
+                            bubbles: true,
+                            composed: false,
+                        }));
+                    });
+                }
+            });
+        }
+    }
+}
+if (!customElements.get(XtalFetchEntities.is)) {
+    customElements.define(XtalFetchEntities.is, XtalFetchEntities);
+}
+class XtalFetch extends XtalFetchEntities {
+    static get is() { return 'xtal-fetch'; }
+}
+if (!customElements.get(XtalFetch.is)) {
+    customElements.define(XtalFetchEntities.is, XtalFetch);
+}
+//# sourceMappingURL=xtal-fetch-entities.js.map
+})();  
+    

@@ -15,17 +15,16 @@ function processFile(filePath, newLines){
     })
 }
 const newLines = [];
-processFile('custom-event.js', newLines);
-processFile('observe-attributes.js', newLines);
-processFile('observe-children.js', newLines);
-processFile('add-event-listener.js', newLines);
+processFile('xtal-fetch-get.js', newLines);
+processFile('xtal-fetch-req.js', newLines);
+processFile('xtal-fetch-entities.js', newLines);
 let newContent = `
 //@ts-check
 (function () {
 ${newLines.join('\n')}
 })();  
     `;
-fs.writeFileSync("xtal-in.js", newContent, 'utf8');
+fs.writeFileSync("xtal-fetch.js", newContent, 'utf8');
 
 
 

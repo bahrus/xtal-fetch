@@ -7,6 +7,7 @@
     "xtal-fetch-get.js",
     "xtal-fetch-req.js",
     "xtal-fetch-entities.js",
+    "xtal-fetch.js",
     "index.html"
   ],
   "extraDependencies": [

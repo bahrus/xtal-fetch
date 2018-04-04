@@ -4,7 +4,8 @@
     "xtal-fetch.js",
     "xtal-fetch-get.js",
     "xtal-fetch-req.js",
-    "xtal-fetch-entities.js"
+    "xtal-fetch-entities.js",
+    "xtal-fetch.js"
   ],
   "lint": {
     "rules": [
