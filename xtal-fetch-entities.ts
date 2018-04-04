@@ -122,3 +122,11 @@ class XtalFetchEntities extends XtalFetchReq{
 if(!customElements.get(XtalFetchEntities.is)){
     customElements.define(XtalFetchEntities.is, XtalFetchEntities);
 }
+
+class XtalFetch extends XtalFetchEntities{
+    static get is(){return 'xtal-fetch';}
+}
+
+if(!customElements.get(XtalFetch.is)){
+    customElements.define(XtalFetchEntities.is, XtalFetch);
+}

@@ -2,7 +2,9 @@
   "sources":[
     "xtal-fetch.html",
     "xtal-fetch.js",
-    "xtal-fetch-base.js"
+    "xtal-fetch-get.js",
+    "xtal-fetch-req.js",
+    "xtal-fetch-entities.js"
   ],
   "lint": {
     "rules": [
