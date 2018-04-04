@@ -176,6 +176,13 @@ export class XtalFetchReq extends XtalFetchBase implements IXtalFetchReq {
     //overrides
     do() {
         this.errorResponse = null;
+        if (this._cacheResults) {
+            const val = this.cachedResults[this._href];
+            if (val) {
+                this.result = val;
+                return;
+            }
+        }
         this.fetchInProgress = true;
         self.fetch(this.href, this._reqInit).then(resp => {
             this.fetchInProgress = false;
