@@ -6,6 +6,7 @@ const debounceDuration = 'debounce-duration';
 const reqInitRequired = 'req-init-required';
 const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
+const baseLinkId = 'base-link-id';
 export class XtalFetchReq extends XtalFetchGet {
     constructor() {
         super();
@@ -105,22 +106,32 @@ export class XtalFetchReq extends XtalFetchGet {
             this.removeAttribute(insertResults);
         }
     }
+    get baseLinkId() {
+        return this._baseLinkId;
+    }
+    set baseLinkId(val) {
+        this.setAttribute(baseLinkId, val);
+    }
     static get observedAttributes() {
-        return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults]);
+        return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults, baseLinkId]);
     }
     attributeChangedCallback(name, oldValue, newValue) {
-        super.attributeChangedCallback(name, oldValue, newValue);
         switch (name) {
             case debounceDuration:
                 this._debounceDuration = parseFloat(newValue);
                 this.debounceDurationHandler();
                 break;
+            //boolean
             case reqInitRequired:
             case cacheResults:
             case insertResults:
                 this['_' + snakeToCamel(name)] = newValue !== null;
                 break;
+            case baseLinkId:
+                this._baseLinkId = newValue;
+                break;
         }
+        super.attributeChangedCallback(name, oldValue, newValue);
     }
     debounce(func, wait, immediate) {
         let timeout;
@@ -152,6 +163,12 @@ export class XtalFetchReq extends XtalFetchGet {
             }
         }
         this.fetchInProgress = true;
+        let href = this.href;
+        if (this._baseLinkId) {
+            const link = self[this._baseLinkId];
+            if (link)
+                href = link.href + href;
+        }
         self.fetch(this.href, this._reqInit).then(resp => {
             this.fetchInProgress = false;
             resp[this._as]().then(result => {

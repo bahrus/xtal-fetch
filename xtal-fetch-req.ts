@@ -1,12 +1,13 @@
 import { XtalFetchGet, IXtalFetchBaseProperties } from './xtal-fetch-get.js';
 
-export interface IXtalFetchReq extends IXtalFetchBaseProperties {
+export interface IXtalFetchReqProperties extends IXtalFetchBaseProperties {
     reqInit: RequestInit,
     reqInitRequired: boolean,
     debounceDuration: number,
     errorResponse: Response;
     fetchInProgress: boolean;
     insertResults: boolean;
+    baseLinkId: string;
 }
 export function snakeToCamel(s) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
@@ -15,8 +16,9 @@ const debounceDuration = 'debounce-duration';
 const reqInitRequired = 'req-init-required';
 const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
+const baseLinkId = 'base-link-id';
 
-export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReq {
+export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqProperties {
     constructor(){
         super();
         this._reqInit = null;
@@ -126,28 +128,35 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReq {
         }
     }
 
+    _baseLinkId : string;
+    get baseLinkId(){
+        return this._baseLinkId;
+    }
+    set baseLinkId(val){
+        this.setAttribute(baseLinkId, val);
+    }
+
     static get observedAttributes() {
-        return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults]);
+        return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults, baseLinkId]);
     }
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-        super.attributeChangedCallback(name, oldValue, newValue);
         switch (name) {
             case debounceDuration:
                 this._debounceDuration = parseFloat(newValue);
                 this.debounceDurationHandler();
                 break;
+            //boolean
             case reqInitRequired:
             case cacheResults:
             case insertResults:
                 this['_' + snakeToCamel(name)] =  newValue !== null;
                 break;
-            //     this._reqInitRequired = newValue !== null;
-            //     break;
-            // case cacheResults:
-            //     this._cacheResults = newValue !== null;
-            //     break;
+            case baseLinkId:
+                this._baseLinkId = newValue;
+                break;
         }
+        super.attributeChangedCallback(name, oldValue, newValue);
     }
 
 
@@ -179,11 +188,16 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReq {
         if (this._cacheResults) {
             const val = this.cachedResults[this._href];
             if (val) {
-                this.result             = val;
+                this.result = val;
                 return;
             }
         }
         this.fetchInProgress = true;
+        let href = this.href;
+        if(this._baseLinkId){
+            const link = self[this._baseLinkId] as HTMLLinkElement;
+            if(link) href = link.href + href;
+        }
         self.fetch(this.href, this._reqInit).then(resp => {
             this.fetchInProgress = false;
             resp[this._as]().then(result => {

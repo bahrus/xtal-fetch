@@ -16,6 +16,7 @@
     <script async src="../xtal-fetch.js"></script>
     <script async type="module" src="../xtal-fetch-get.js"></script>
     <script async type="module" src="../xtal-fetch-req.js"></script>
+    <script async type="module" src="../xtal-fetch-entities.js"></script>
     <!-- <script type="module" src="../xtal-fetch.js"></script> -->
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
@@ -44,8 +45,8 @@
                 <hr>
               </template>
             </div>
-              <xtal-fetch as="json" fetch href="detail_:_id.json" for-each="_id" in-entities="[[people]]" 
-                set-path="detail_contents" on-fetch-complete="refreshDetail"></xtal-fetch>
+              <xtal-fetch-entities as="json" fetch href="detail_:_id.json" for-each="_id" in-entities="[[people]]" 
+                set-path="detail_contents" on-fetch-complete="refreshDetail"></xtal-fetch-entities>
               <template id="detail" is="dom-repeat" items="[[people]]" mutable-data>
                 DetailContents: [[item.detail_contents.message]] <br>
               </template>
