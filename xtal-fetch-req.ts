@@ -1,4 +1,4 @@
-import { XtalFetchBase, IXtalFetchBaseProperties } from './xtal-fetch-base.js';
+import { XtalFetchGet, IXtalFetchBaseProperties } from './xtal-fetch-get.js';
 
 export interface IXtalFetchReq extends IXtalFetchBaseProperties {
     reqInit: RequestInit,
@@ -16,7 +16,7 @@ const reqInitRequired = 'req-init-required';
 const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
 
-export class XtalFetchReq extends XtalFetchBase implements IXtalFetchReq {
+export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReq {
     constructor(){
         super();
         this._reqInit = null;
@@ -179,7 +179,7 @@ export class XtalFetchReq extends XtalFetchBase implements IXtalFetchReq {
         if (this._cacheResults) {
             const val = this.cachedResults[this._href];
             if (val) {
-                this.result = val;
+                this.result             = val;
                 return;
             }
         }

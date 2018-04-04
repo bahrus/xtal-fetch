@@ -9,12 +9,12 @@ export interface IXtalFetchBaseProperties{
 const fetch = 'fetch';
 const href = 'href';
 const disabled = 'disabled';
-export class XtalFetchBase extends HTMLElement implements IXtalFetchBaseProperties{
+export class XtalFetchGet extends HTMLElement implements IXtalFetchBaseProperties{
     _reqInit : RequestInit = {
         credentials: 'include'
     }
     _as = 'json';
-    static get is() { return 'xtal-fetch-base'; }
+    static get is() { return 'xtal-fetch-get'; }
     de(name: string, detail: any) {
         const newEvent = new CustomEvent(name + '-changed', {
             detail: detail,
@@ -105,6 +105,6 @@ export class XtalFetchBase extends HTMLElement implements IXtalFetchBaseProperti
         this._upgradeProperties([fetch, href, disabled]);
     }
 }
-if(!customElements.get(XtalFetchBase.is)){
-    customElements.define(XtalFetchBase.is, XtalFetchBase);
+if(!customElements.get(XtalFetchGet.is)){
+    customElements.define(XtalFetchGet.is, XtalFetchGet);
 }

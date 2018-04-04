@@ -1,7 +1,7 @@
 const fetch = 'fetch';
 const href = 'href';
 const disabled = 'disabled';
-export class XtalFetchBase extends HTMLElement {
+export class XtalFetchGet extends HTMLElement {
     constructor() {
         super(...arguments);
         this._reqInit = {
@@ -9,7 +9,7 @@ export class XtalFetchBase extends HTMLElement {
         };
         this._as = 'json';
     }
-    static get is() { return 'xtal-fetch-base'; }
+    static get is() { return 'xtal-fetch-get'; }
     de(name, detail) {
         const newEvent = new CustomEvent(name + '-changed', {
             detail: detail,
@@ -97,7 +97,7 @@ export class XtalFetchBase extends HTMLElement {
         this._upgradeProperties([fetch, href, disabled]);
     }
 }
-if (!customElements.get(XtalFetchBase.is)) {
-    customElements.define(XtalFetchBase.is, XtalFetchBase);
+if (!customElements.get(XtalFetchGet.is)) {
+    customElements.define(XtalFetchGet.is, XtalFetchGet);
 }
-//# sourceMappingURL=xtal-fetch-base.js.map
+//# sourceMappingURL=xtal-fetch-get.js.map

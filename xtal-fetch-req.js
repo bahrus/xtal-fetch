@@ -1,4 +1,4 @@
-import { XtalFetchBase } from './xtal-fetch-base.js';
+import { XtalFetchGet } from './xtal-fetch-get.js';
 export function snakeToCamel(s) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
 }
@@ -6,7 +6,7 @@ const debounceDuration = 'debounce-duration';
 const reqInitRequired = 'req-init-required';
 const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
-export class XtalFetchReq extends XtalFetchBase {
+export class XtalFetchReq extends XtalFetchGet {
     constructor() {
         super();
         this._cacheResults = false;
