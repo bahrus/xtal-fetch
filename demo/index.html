@@ -14,9 +14,9 @@
         
     </script>
     <script async src="../xtal-fetch.js"></script>
-    <script async type="module" src="../xtal-fetch-get.js"></script>
+    <!-- <script async type="module" src="../xtal-fetch-get.js"></script>
     <script async type="module" src="../xtal-fetch-req.js"></script>
-    <script async type="module" src="../xtal-fetch-entities.js"></script>
+    <script async type="module" src="../xtal-fetch-entities.js"></script> -->
     <!-- <script type="module" src="../xtal-fetch.js"></script> -->
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
@@ -38,15 +38,15 @@
             
             <template>
               <div>
-              <xtal-fetch-get fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch-get>
+              <xtal-fetch fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch>
               <template is="dom-repeat" items="[[people]]">
                 Name: [[item.name]] <br>
                 Email: [[item.email]] <br>
                 <hr>
               </template>
             </div>
-              <xtal-fetch-entities as="json" fetch href="detail_:_id.json" for-each="_id" in-entities="[[people]]" 
-                set-path="detail_contents" on-fetch-complete="refreshDetail"></xtal-fetch-entities>
+              <xtal-fetch as="json" fetch href="detail_:_id.json" for-each="_id" in-entities="[[people]]" 
+                set-path="detail_contents" on-fetch-complete="refreshDetail"></xtal-fetch>
               <template id="detail" is="dom-repeat" items="[[people]]" mutable-data>
                 DetailContents: [[item.detail_contents.message]] <br>
               </template>
@@ -55,7 +55,7 @@
                 <p>Test of binding in expression -- need to watch network monitor to see the effects</p>
               </div>
               <label>Search string: </label><input type="text" value="{{searchString::input}}">
-              <xtal-fetch-req fetch="[[searchString]]" href="generated.json?search=[[searchString]]" debounce-duration="500"></xtal-fetch-req>
+              <xtal-fetch fetch="[[searchString]]" href="generated.json?search=[[searchString]]" debounce-duration="500"></xtal-fetch>
             </template>
           </dom-module>
           <script>

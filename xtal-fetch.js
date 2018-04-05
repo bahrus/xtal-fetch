@@ -394,7 +394,7 @@ class XtalFetchEntities extends XtalFetchReq {
                     return;
                 }
             }
-            fetch(href, this._reqInit).then(resp => {
+            self.fetch(href, this._reqInit).then(resp => {
                 if (resp.status !== 200) {
                     resp['text']().then(val => {
                         this.errorText = val;
@@ -431,7 +431,7 @@ class XtalFetch extends XtalFetchEntities {
     static get is() { return 'xtal-fetch'; }
 }
 if (!customElements.get(XtalFetch.is)) {
-    customElements.define(XtalFetchEntities.is, XtalFetch);
+    customElements.define(XtalFetch.is, XtalFetch);
 }
 //# sourceMappingURL=xtal-fetch-entities.js.map
 })();  
