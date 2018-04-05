@@ -52,7 +52,7 @@ export class XtalFetchReq extends XtalFetchGet {
         return this._cachedResults;
     }
     get reqInitRequired() {
-        return this._reqInitRequired;
+        return this._reqInitRequired || this.hasAttribute(reqInitRequired);
     }
     set reqInitRequired(val) {
         if (val) {

@@ -11,14 +11,14 @@ class XtalFetchEntities extends XtalFetchReq{
     static get is(){return 'xtal-fetch-entities';}
     _forEach: string;
     get forEach(){
-        return this._forEach;
+        return this._forEach || this.getAttribute(forEach);
     }
     set forEach(val){
         this.setAttribute(forEach, val);
     }
     _setPath: string;
     get setPath(){
-        return this._setPath;
+        return this._setPath || this.getAttribute(setPath);
     }
     set setPath(val){
         this.setAttribute(setPath, val);
@@ -49,7 +49,7 @@ class XtalFetchEntities extends XtalFetchReq{
     }
     _hasAllThreeProps;
     onPropsChange(){
-        const hasAtLeastOneProp = this._setPath || this._forEach || this.inEntities;
+        const hasAtLeastOneProp = this.setPath || this.forEach || this.inEntities;
         if(hasAtLeastOneProp){
             this._hasAllThreeProps = this._setPath && this._forEach && this.inEntities
             if(!this._hasAllThreeProps){ //need all three

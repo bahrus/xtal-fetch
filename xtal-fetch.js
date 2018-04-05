@@ -157,7 +157,7 @@ class XtalFetchReq extends XtalFetchGet {
         return this._cachedResults;
     }
     get reqInitRequired() {
-        return this._reqInitRequired;
+        return this._reqInitRequired || this.hasAttribute(reqInitRequired);
     }
     set reqInitRequired(val) {
         if (val) {
@@ -321,13 +321,13 @@ const setPath = 'set-path';
 class XtalFetchEntities extends XtalFetchReq {
     static get is() { return 'xtal-fetch-entities'; }
     get forEach() {
-        return this._forEach;
+        return this._forEach || this.getAttribute(forEach);
     }
     set forEach(val) {
         this.setAttribute(forEach, val);
     }
     get setPath() {
-        return this._setPath;
+        return this._setPath || this.getAttribute(setPath);
     }
     set setPath(val) {
         this.setAttribute(setPath, val);
@@ -355,7 +355,7 @@ class XtalFetchEntities extends XtalFetchReq {
         this._upgradeProperties(['forEach', 'setPath', 'inEntities']);
     }
     onPropsChange() {
-        const hasAtLeastOneProp = this._setPath || this._forEach || this.inEntities;
+        const hasAtLeastOneProp = this.setPath || this.forEach || this.inEntities;
         if (hasAtLeastOneProp) {
             this._hasAllThreeProps = this._setPath && this._forEach && this.inEntities;
             if (!this._hasAllThreeProps) {

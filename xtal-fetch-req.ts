@@ -65,7 +65,7 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
 
     _reqInitRequired: boolean;
     get reqInitRequired() {
-        return this._reqInitRequired;
+        return this._reqInitRequired || this.hasAttribute(reqInitRequired);
     }
     set reqInitRequired(val) {
         if (val) {
