@@ -31,7 +31,7 @@ export class XtalFetchGet extends HTMLElement {
         }
     }
     get disabled() {
-        return this._disabled;
+        return this.hasAttribute(disabled);
     }
     set disabled(val) {
         if (val) {

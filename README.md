@@ -6,11 +6,46 @@
 
 ## Single Requests
 
-\<xtal-fetch\> is a dependency free, 1.9kb (gzipped and minified) web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
+\<xtal-fetch\> is a dependency free web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
+
+### Referencing
+
+In order to keep the size of the download(s) as small as possible, the functionality of this component is broken down into three subcomponents.  xtal-fetch-get just supports basic get requests, has no support for error handling.  It requires a browser that supports ES6 Modules.  It is 740B (gzipped and minified).  xtal-fetch-req supports supports everything xtal-fetch supports, except multi fetch requests.  It adds another 1.26K (gzipped and minified), and also requires ES6 Modules to import.  
+
+If you want to just keep things simple and include everything, or need to support browsers that don't support ES6 Modules (and not require require or a build step), you can use xtal-fetch.js.  It can use a classic script reference of a module reference.  It weighs 2.0 KB gzipped and minified.
 
 All the evergreen browsers support fetch.  For IE11, a polyfill should be used.
 
 An example of such a polyfill can be found [here](https://github.com/bahrus/xtal-fetch/blob/master/IE11-polyfill.js).  This was extracted from the [Financial Times Polyfill service](https://github.com/Financial-Times/polyfill-service).  It contains additional polyfills recommended for supporting most ES6 features.
+
+### To use  \<xtal-fetch\>
+
+>bower install --save bahrus/xtal-fetch
+
+or
+
+>yarn add xtal-fetch
+
+or
+
+>npm install xtal-fetch
+
+or
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.21/build/ES6/xtal-fetch.js"></script>
+```
+
+or
+
+```html
+<script src="https://unpkg.com/xtal-fetch@0.0.21/build/ES6/xtal-fetch.js"></script>
+```
+
+
+As mentioned, if you don't need all the functionality of xtal-fetch.js, replace the above links with xtal-fetch-get or xtal-fetch-req (and modify the tag name accordingly.)
+
+## Core functionality
 
 To make a fetch request, you need to add the fetch attribute, and specify an href value:
 
@@ -27,6 +62,8 @@ It may seem somewhat redundant to need to add the fetch attribute (being that th
 This will prevent a (typically cancelled) request from going through, until the binding needed for the href is available. Debouncing is also supported to help avoid duplicate calls due to complex bindings.
 
 For more complex sanity checks / validation logic, the fetch property could, of course, refer to a computed property coming from the hosting [Polymer?] component (if applicable).
+
+xtal-fetch also has a property, disable, that *prevents* requests from going through.  Kind of the opposite of the fetch property.
 
 In the event that multiple xtal-fetch tags share the same base URL, xtal-fetch supports the use of the [link rel="preconnect"](https://w3c.github.io/resource-hints/#preconnect) tag to specify the base url.  A unique ID should be given to that link, inside the document.head tag:
 
@@ -76,7 +113,7 @@ Other non Polymer component containers will need to add event handlers to listen
 For example, preact:
 
 ```JSX
-<xtal-fetch fetch href="generated.json" as="json" result-changed={this.setPeople}></xtl-fetch>>
+<xtal-fetch fetch href="generated.json" as="json" result-changed={this.setPeople}></xtl-fetch>
 ```  
 
 If creating a non Polymer web component, you can apply the Polymer mixin to the class.  Since mixin's are quite flexible (unlike single inheritance) this should not impose too many constraints on what can be done with non Polymer components.
@@ -151,52 +188,9 @@ The syntax for this is meant to be readable:
 
 *set-path* specifies the property name in each entity, used to store the fetched entity detail (json or text specified by "as" just like before).
 
-Note that *xtal-fetch* issues a "fetch-complete" event after every fetch is completed.
+Note that *xtal-fetch* issues a "fetch-complete" event after all the fetches are completed.
 
-One can enable caching  of the same href value using the cache-results attribute.  In the future, this will also consider the req-init property as well in determining whether a fresh request should be made.
+One can enable caching  of the same href value using the cache-results attribute.  
 
 Like the Polymer iron-ajax inspiration, the *debounce-duration* attribute specifies how much to wait for the request to "settle down" before proceeding.
 
-## To use  \<xtal-fetch\>
-
->bower install --save bahrus/xtal-fetch
-
-or
-
->yarn add xtal-fetch
-
-or
-
->npm install xtal-fetch
-
-or
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.21/build/ES6/xtal-fetch.js"></script>
-```
-
-or
-
-```html
-<script src="https://unpkg.com/xtal-fetch@0.0.21/build/ES6/xtal-fetch.js"></script>
-```
-
-
-## Install the Polymer-CLI
-
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
-
-
-## Viewing Your Element
-
-```
-$ polymer serve
-```
-
-## Running Tests
-
-```
-$ polymer test
-```
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.

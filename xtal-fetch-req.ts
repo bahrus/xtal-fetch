@@ -65,7 +65,7 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
 
     _reqInitRequired: boolean;
     get reqInitRequired() {
-        return this._reqInitRequired || this.hasAttribute(reqInitRequired);
+        return this.hasAttribute(reqInitRequired);
     }
     set reqInitRequired(val) {
         if (val) {
@@ -213,10 +213,6 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
                     }
                     if (typeof result === 'string' && this._insertResults) {
                         this.innerHTML = result;
-                        this.dispatchEvent(new CustomEvent('dom-change', {
-                            bubbles: true,
-                            composed: true,
-                        } as CustomEventInit));
                     }
                     const detail = {
                         href: this.href

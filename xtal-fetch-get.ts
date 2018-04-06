@@ -37,7 +37,7 @@ export class XtalFetchGet extends HTMLElement implements IXtalFetchBasePropertie
     }
     _disabled;
     get disabled(){
-        return this._disabled;
+        return this.hasAttribute(disabled);
     }
     set disabled(val){
         if(val){
