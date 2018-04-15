@@ -215,7 +215,8 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
                         this.innerHTML = result;
                     }
                     const detail = {
-                        href: this.href
+                        href: this.href,
+                        result: result
                     }
                     this.dispatchEvent(new CustomEvent('fetch-complete', {
                         detail: detail,

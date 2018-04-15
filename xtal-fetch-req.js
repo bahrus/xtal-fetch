@@ -187,7 +187,8 @@ export class XtalFetchReq extends XtalFetchGet {
                         this.innerHTML = result;
                     }
                     const detail = {
-                        href: this.href
+                        href: this.href,
+                        result: result
                     };
                     this.dispatchEvent(new CustomEvent('fetch-complete', {
                         detail: detail,

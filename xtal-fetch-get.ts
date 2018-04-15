@@ -59,10 +59,19 @@ export class XtalFetchGet extends HTMLElement implements IXtalFetchBasePropertie
     }
     set result(val){
         this._result = val;
-        this.de('result', val);
+        this.de('result', {
+            value: val
+        });
     }
     static get observedAttributes(){
-        return [fetch, href, disabled];
+        return [
+            /**
+             * @type boolean
+             * Indicates whether fetch request should be made.
+             */
+            fetch, 
+            href, 
+            disabled];
     }
     _upgradeProperties(props: string[]) {
         props.forEach(prop =>{
