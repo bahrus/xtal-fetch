@@ -11,7 +11,7 @@ const href = 'href';
 const disabled = 'disabled';
 export class XtalFetchGet extends HTMLElement implements IXtalFetchBaseProperties{
     _reqInit : RequestInit = {
-        credentials: 'include'
+        credentials: 'same-origin'
     }
     _as = 'json';
     static get is() { return 'xtal-fetch-get'; }

@@ -6,25 +6,20 @@
 
     <title>xtal-fetch demo</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script type="text/javascript">
-        if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)){
-          document.write('<script src="../IE11-polyfill.js"><\/script>');
-        }
-        
-    </script>
-    
+      if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)){
+        document.write('<script src="../IE11-polyfill.js"><\/script>');
+      }
+      
+  </script>
+    <script type="module" src="../node_modules/@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
+    <script type="module" src="../node_modules/@polymer/iron-demo-helpers/demo-snippet.js"></script>
+    <script type="module" src="../node_modules/@polymer/polymer/lib/elements/dom-bind.js"></script>
+    <script type="module" src="../node_modules/@polymer/polymer/lib/elements/dom-repeat.js"></script>
     <script async type="module" src="../xtal-fetch-get.js"></script>
     <script async type="module" src="../xtal-fetch-req.js"></script>
     <script async type="module" src="../xtal-fetch-entities.js"></script>
-    <!-- <script async src="../xtal-fetch.js"></script> -->
-
-
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    
-    <link rel="import" href="../../polymer/lib/elements/dom-bind.html">
-    <link rel="import" href="../../polymer/lib/elements/dom-repeat.html">
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -36,8 +31,7 @@
       <h3>Basic xtal-fetch demo</h3>
       <demo-snippet>
         <template>
-          <dom-module id="my-component">
-            
+          <dom-bind>
             <template>
               <div>
               <xtal-fetch-get fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch-get>
@@ -48,8 +42,8 @@
               </template>
             </div>
               <xtal-fetch-entities as="json" fetch href="detail_:_id.json" for-each="_id" in-entities="[[people]]" 
-                set-path="detail_contents" on-fetch-complete="refreshDetail"></xtal-fetch-entities>
-              <template id="detail" is="dom-repeat" items="[[people]]" mutable-data>
+                set-path="detail_contents" result="{{people_details}}"></xtal-fetch-entities>
+              <template id="detail" is="dom-repeat" items="[[people_details]]" mutable-data>
                 DetailContents: [[item.detail_contents.message]] <br>
               </template>
               <hr>
@@ -59,17 +53,7 @@
               <label>Search string: </label><input type="text" value="{{searchString::input}}">
               <xtal-fetch-req fetch="[[searchString]]" href="generated.json?search=[[searchString]]" debounce-duration="500"></xtal-fetch-req>
             </template>
-          </dom-module>
-          <script>
-            class MyComponent extends Polymer.Element{
-              static get is(){return 'my-component';}
-              refreshDetail(){
-                this.$.detail.notifyPath('items');
-              }
-            }
-            customElements.define(MyComponent.is, MyComponent);
-          </script>
-          <my-component></my-component>
+          </dom-bind>
         </template>
       </demo-snippet>
     </div>

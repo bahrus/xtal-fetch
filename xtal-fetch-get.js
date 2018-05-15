@@ -5,7 +5,7 @@ export class XtalFetchGet extends HTMLElement {
     constructor() {
         super(...arguments);
         this._reqInit = {
-            credentials: 'include'
+            credentials: 'same-origin'
         };
         this._as = 'json';
     }

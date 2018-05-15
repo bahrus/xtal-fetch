@@ -6,10 +6,10 @@
 
     <title>xtal-fetch test</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/wct-browser-legacy/browser.js"></script>
 
-    <link rel="import" href="../xtal-fetch.html">
+    <script type="module" src="../xtal-fetch.js"></script>
   </head>
   <body>
 
@@ -25,23 +25,23 @@
       </template>
     </test-fixture>
 
-    <script>
-      suite('xtal-fetch', function() {
+    <script type="module">
+      suite('xtal-fetch', () => {
 
-        test('instantiating the element with default properties works', function() {
-          var element = fixture('BasicTestFixture');
+        test('instantiating the element with default properties works', () => {
+          const element = fixture('BasicTestFixture');
           assert.equal(element.prop1, 'xtal-fetch');
-          var elementShadowRoot = element.shadowRoot;
-          var elementHeader = elementShadowRoot.querySelector('h2');
+          const elementShadowRoot = element.shadowRoot;
+          const elementHeader = elementShadowRoot.querySelector('h2');
           assert.equal(elementHeader.innerHTML, 'Hello xtal-fetch!');
         });
 
-        test('setting a property on the element works', function() {
+        test('setting a property on the element works', () => {
           // Create a test fixture
-          var element = fixture('ChangedPropertyTestFixture');
+          const element = fixture('ChangedPropertyTestFixture');
           assert.equal(element.prop1, 'new-prop1');
-          var elementShadowRoot = element.shadowRoot;
-          var elementHeader = elementShadowRoot.querySelector('h2');
+          const elementShadowRoot = element.shadowRoot;
+          const elementHeader = elementShadowRoot.querySelector('h2');
           assert.equal(elementHeader.innerHTML, 'Hello new-prop1!');
         });
 

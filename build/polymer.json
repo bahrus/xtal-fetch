@@ -2,7 +2,6 @@
   "entrypoint": "index.html",
   "fragments": [],
   "sources": [
-    "xtal-fetch.html",
     "xtal-fetch.js",
     "xtal-fetch-get.js",
     "xtal-fetch-req.js",
@@ -11,7 +10,7 @@
     "index.html"
   ],
   "extraDependencies": [
-    "bower_components\\webcomponentsjs\\*.js"
+    "bower_components/webcomponentsjs/*.js"
   ],
   "builds": [
     {
@@ -34,5 +33,5 @@
       "polymer-2"
     ]
   },
-  "moduleResolution": "none"
+  "moduleResolution": "node"
 }

@@ -96,7 +96,13 @@ class XtalFetchEntities extends XtalFetchReq{
                 } else {
                     resp[this._as]().then(val => {
                         remainingCalls--;
-                        if (remainingCalls === 0) this.fetchInProgress = false;
+                        if (remainingCalls === 0) {
+                            this.fetchInProgress = false;
+                            //this.result = Object.assign({}, this.inEntities);
+                            this.result = this.inEntities.slice(0);
+                            //this.result = [];
+                            //this.de('result')
+                        }
                         if (this._cacheResults) this.cachedResults[href] = val;
                         entity[this._setPath] = val;
                         const detail = {
@@ -108,6 +114,7 @@ class XtalFetchEntities extends XtalFetchReq{
                             bubbles: true,
                             composed: false,
                         } as CustomEventInit));
+                        
 
                     });
                 }

@@ -1,6 +1,1 @@
-/bower_components
-/node_modules
-/build/ES5/bower_components
-/build/ES5/src
-/build/ES6/bower_components
-/build/ES6/src
+/node_modules/

@@ -41,7 +41,7 @@ class XtalFetchEntities extends XtalFetchReq {
         const hasAtLeastOneProp = this.setPath || this.forEach || this.inEntities;
         if (hasAtLeastOneProp) {
             this._hasAllThreeProps = this._setPath && this._forEach && this.inEntities;
-            if (!this._hasAllThreeProps) {
+            if (!this._hasAllThreeProps) { //need all three
                 return;
             }
         }
@@ -87,8 +87,13 @@ class XtalFetchEntities extends XtalFetchReq {
                 else {
                     resp[this._as]().then(val => {
                         remainingCalls--;
-                        if (remainingCalls === 0)
+                        if (remainingCalls === 0) {
                             this.fetchInProgress = false;
+                            //this.result = Object.assign({}, this.inEntities);
+                            this.result = this.inEntities.slice(0);
+                            //this.result = [];
+                            //this.de('result')
+                        }
                         if (this._cacheResults)
                             this.cachedResults[href] = val;
                         entity[this._setPath] = val;

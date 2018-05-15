@@ -1,6 +1,5 @@
 {
   "sources":[
-    "xtal-fetch.html",
     "xtal-fetch.js",
     "xtal-fetch-get.js",
     "xtal-fetch-req.js",
