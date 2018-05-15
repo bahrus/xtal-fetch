@@ -1,3 +1,8 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/bahrus/xtal-fetch)
+
+<a href="https://nodei.co/npm/xtal-fetch/"><img src="https://nodei.co/npm/xtal-fetch.png"></a>
+
+
 # \<xtal-fetch\>
 
 [Demo](demo/index.html)
