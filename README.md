@@ -6,6 +6,8 @@
 
 \<xtal-fetch\> is a dependency free web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
 
+Web components that do anything other than pure presentation views may seem unnatural, or wrong in some frameworks, as discussed [here](http://github.com/bahrus/json-merge) .  But it is my view that they can still serve a very useful purpose even in such settings, in promoting developer productiviy, lowering barrier to entry for new developers, and keeping the total code footprint low.
+
 ### Referencing
 
 In order to keep the size of the download(s) as small as possible, the functionality of this component is broken down into three subcomponents.  xtal-fetch-get just supports basic get requests, has no support for error handling.  It requires a browser that supports ES6 Modules.  It is 740B (gzipped and minified).  xtal-fetch-req supports everything xtal-fetch supports, except multi fetch requests.  It adds another 1.26K (gzipped and minified), and also requires ES6 Modules to import.  
@@ -18,9 +20,6 @@ An example of such a polyfill can be found [here](https://github.com/bahrus/xtal
 
 ### To use  \<xtal-fetch\>
 
->bower install --save bahrus/xtal-fetch
-
-or
 
 >yarn add xtal-fetch
 
