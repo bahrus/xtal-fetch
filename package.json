@@ -3,6 +3,9 @@
   "version": "0.0.26",
   "description": "Dependency free web component wrapper around the fetch function.",
   "main": "xtal-fetch.js",
+  "repository": "https://github.com/bahrus/xtal-fetch",
+  "author": "bahrus <anderson.bruce.b@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "@polymer/polymer": "^3.0.0"
   },
