@@ -9,6 +9,7 @@ export interface IXtalFetchBaseProperties{
 const fetch = 'fetch';
 const href = 'href';
 const disabled = 'disabled';
+const pass_down = 'pass-down';
 export class XtalFetchGet extends HTMLElement implements IXtalFetchBaseProperties{
     _reqInit : RequestInit = {
         credentials: 'same-origin'
@@ -59,9 +60,24 @@ export class XtalFetchGet extends HTMLElement implements IXtalFetchBasePropertie
     }
     set result(val){
         this._result = val;
+        console.log({
+            result: val,
+            passDown: this._passDown,
+        })
+        if(this._passDown){
+            this.nextElementSibling[this._passDown] = val;
+            return;
+        }
         this.de('result', {
             value: val
         });
+    }
+    _passDown:string;
+    get passDown(){
+        return this._passDown;
+    }
+    set passDown(val){
+        this.setAttribute(pass_down, val);
     }
     static get observedAttributes(){
         return [
@@ -71,7 +87,9 @@ export class XtalFetchGet extends HTMLElement implements IXtalFetchBasePropertie
              */
             fetch, 
             href, 
-            disabled];
+            disabled,
+            pass_down
+        ];
     }
     _upgradeProperties(props: string[]) {
         props.forEach(prop =>{
@@ -89,6 +107,10 @@ export class XtalFetchGet extends HTMLElement implements IXtalFetchBasePropertie
             case fetch:
             case disabled:
                 this['_' + name] = newVal !== null;
+                break;
+            case pass_down:
+                this._passDown = newVal;
+                console.log('pass_down attr');
                 break;
             default:
                 this['_' + name] = newVal;

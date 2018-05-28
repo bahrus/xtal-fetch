@@ -34,7 +34,9 @@
           <dom-bind>
             <template>
               <div>
-              <xtal-fetch-get fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch-get>
+              <!-- <xtal-fetch-get fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch-get> -->
+              <xtal-fetch-get fetch href="generated.json" as="json" pass-down="items"></xtal-fetch-get>
+              <!-- <template is="dom-repeat" items="[[people]]"> -->
               <template is="dom-repeat" items="[[people]]">
                 Name: [[item.name]] <br>
                 Email: [[item.email]] <br>

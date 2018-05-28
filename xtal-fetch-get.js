@@ -1,6 +1,7 @@
 const fetch = 'fetch';
 const href = 'href';
 const disabled = 'disabled';
+const pass_down = 'pass-down';
 export class XtalFetchGet extends HTMLElement {
     constructor() {
         super(...arguments);
@@ -52,9 +53,23 @@ export class XtalFetchGet extends HTMLElement {
     }
     set result(val) {
         this._result = val;
+        console.log({
+            result: val,
+            passDown: this._passDown,
+        });
+        if (this._passDown) {
+            this.nextElementSibling[this._passDown] = val;
+            return;
+        }
         this.de('result', {
             value: val
         });
+    }
+    get passDown() {
+        return this._passDown;
+    }
+    set passDown(val) {
+        this.setAttribute(pass_down, val);
     }
     static get observedAttributes() {
         return [
@@ -64,7 +79,8 @@ export class XtalFetchGet extends HTMLElement {
              */
             fetch,
             href,
-            disabled
+            disabled,
+            pass_down
         ];
     }
     _upgradeProperties(props) {
@@ -82,6 +98,10 @@ export class XtalFetchGet extends HTMLElement {
             case fetch:
             case disabled:
                 this['_' + name] = newVal !== null;
+                break;
+            case pass_down:
+                this._passDown = newVal;
+                console.log('pass_down attr');
                 break;
             default:
                 this['_' + name] = newVal;

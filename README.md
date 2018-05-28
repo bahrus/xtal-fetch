@@ -108,44 +108,28 @@ But more typically, you will want to "post the results of the fetch to a place a
 </template>
 ```
 
-This is referred to as the mediator pattern.
+This is referred to as the mediator pattern.  It seems, though, that many developers prefer to organize their application around more of a Soviet-style top-down dictatorship, where siblings can't talk to one another without writing code in the parent.
 
-Other non Polymer component containers will need to add event handlers to listen for change events, in order to achieve similar results.
-
-For example, preact:
+So, for example, preact:
 
 ```JSX
 <xtal-fetch fetch href="generated.json" as="json" result-changed={this.setPeople}></xtl-fetch>
-```  
+``` 
 
-If creating a non Polymer web component, you can apply the Polymer mixin to the class.  Since mixin's are quite flexible (unlike single inheritance) this should not impose too many constraints on what can be done with non Polymer components.
-
-The markup below is a simple example of how to use the Polymer mixin in order to achieve the mediator pattern effects.
+However, if you are a fellow egalitarian who believes in botherly / sisterly love, you can do this:
 
 ```html
-    <script>
-        function initMyComponents() {
-            class MyComponent extends HTMLElement {
-                set myProp(val){
-                    this.innerHTML = val;
-                }
-            }
-            customElements.define('my-component', MyComponent);
-            class MyContainer extends Polymer.ElementMixin(HTMLElement) {
-                static get is(){return 'my-container';}
-                static get template() {
-                    return `
-                        <xtal-fetch fetch href="sampleHTMLFragment.html" result="{{myResult}}"></xtal-fetch>
-                        <my-component my-prop="[[myResult]]"></my-component>
-                    `;
-                }
-            }
-            customElements.define('my-container', MyContainer);
-        }
-        customElements.whenDefined('xtal-fetch').then(() => initMyComponents());
-    </script>
-    <my-container></my-container>
+<xtal-fetch fetch href="generated.json" as="json" pass-down="items"></xtl-fetch>
+<template is="dom-repeat">
+    Name: [[item.name]] <br>
+    Email: [[item.email]] <br>
+<hr>
+</template>
 ```
+
+I won't report you to the authorities!
+
+
 
 ## Caching
 
