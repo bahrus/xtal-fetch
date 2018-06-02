@@ -4,7 +4,16 @@
 const fetch = 'fetch';
 const href = 'href';
 const disabled = 'disabled';
-class XtalFetchGet extends HTMLElement {
+const pass_down = 'pass-down';
+/**
+ * `xtal-fetch-get`
+ *  Barebones custom element that can make fetch calls.
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
+class XtalFetchGet extends XtallatX(HTMLElement) {
     constructor() {
         super(...arguments);
         this._reqInit = {
@@ -13,15 +22,6 @@ class XtalFetchGet extends HTMLElement {
         this._as = 'json';
     }
     static get is() { return 'xtal-fetch-get'; }
-    de(name, detail) {
-        const newEvent = new CustomEvent(name + '-changed', {
-            detail: detail,
-            bubbles: true,
-            composed: false,
-        });
-        this.dispatchEvent(newEvent);
-        return newEvent;
-    }
     get fetch() {
         return this._fetch;
     }
@@ -55,45 +55,87 @@ class XtalFetchGet extends HTMLElement {
     }
     set result(val) {
         this._result = val;
+        if (this._cssPropMap) {
+            this.passDownProp(val);
+        }
+        // if (this.cssKeyMappers) {
+        //     this.passDownProp(val);
+        //     return;
+        // }
         this.de('result', {
             value: val
         });
     }
+    // _passDown: string;
+    // get passDown() {
+    //     return this._passDown;
+    // }
+    // set passDown(val) {
+    //     this.setAttribute(pass_down, val);
+    // }
     static get observedAttributes() {
-        return [
+        return super.observedAttributes.concat([
             /**
              * @type boolean
              * Indicates whether fetch request should be made.
              */
             fetch,
             href,
-            disabled
-        ];
+        ]);
     }
-    _upgradeProperties(props) {
-        props.forEach(prop => {
-            if (this.hasOwnProperty(prop)) {
-                let value = this[prop];
-                delete this[prop];
-                this[prop] = value;
-            }
-        });
-    }
+    // _upgradeProperties(props: string[]) {
+    //     props.forEach(prop => {
+    //         if (this.hasOwnProperty(prop)) {
+    //             let value = this[prop];
+    //             delete this[prop];
+    //             this[prop] = value;
+    //         }
+    //     })
+    // }
     attributeChangedCallback(name, oldVal, newVal) {
         switch (name) {
             //booleans
             case fetch:
-            case disabled:
+                // case disabled:
                 this['_' + name] = newVal !== null;
                 break;
+            // case pass_down:
+            //     this._passDown = newVal;
+            //     this.parsePassDown();
+            //     break;
             default:
                 this['_' + name] = newVal;
         }
+        super.attributeChangedCallback(name, oldVal, newVal);
         this.onPropsChange();
     }
     onPropsChange() {
         this.loadNewUrl();
     }
+    // cssKeyMappers: ICssKeyMapper[];
+    // parsePassDown() {
+    //     this.cssKeyMappers = [];
+    //     const splitPassDown = this._passDown.split('};');
+    //     splitPassDown.forEach(passDownSelectorAndProp => {
+    //         if (!passDownSelectorAndProp) return;
+    //         const splitPassTo2 = passDownSelectorAndProp.split('{');
+    //         this.cssKeyMappers.push({
+    //             cssSelector: splitPassTo2[0],
+    //             propTarget: splitPassTo2[1]
+    //         });
+    //     })
+    // }
+    // passDownProp(val: any) {
+    //     let nextSibling = this.nextElementSibling;
+    //     while (nextSibling) {
+    //         this.cssKeyMappers.forEach(map => {
+    //             if (nextSibling.matches(map.cssSelector)) {
+    //                 nextSibling[map.propTarget] = val;
+    //             }
+    //         })
+    //         nextSibling = nextSibling.nextElementSibling;
+    //     }
+    // }
     loadNewUrl() {
         if (!this.fetch || !this.href || this.disabled)
             return;
@@ -122,6 +164,14 @@ const reqInitRequired = 'req-init-required';
 const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
 const baseLinkId = 'base-link-id';
+/**
+ * `xtal-fetch-req`
+ *  Feature rich custom element that can make fetch calls, include Post requests.
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
 class XtalFetchReq extends XtalFetchGet {
     constructor() {
         super();
@@ -325,6 +375,14 @@ if (!customElements.get(XtalFetchReq.is)) {
 //# sourceMappingURL=xtal-fetch-req.js.map
 const forEach = 'for-each';
 const setPath = 'set-path';
+/**
+ * `xtal-fetch-entities`
+ *  Entire feature set for fetch, including multiple entity requests.
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
 class XtalFetchEntities extends XtalFetchReq {
     static get is() { return 'xtal-fetch-entities'; }
     get forEach() {
