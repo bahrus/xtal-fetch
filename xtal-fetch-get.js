@@ -53,12 +53,8 @@ export class XtalFetchGet extends HTMLElement {
     }
     set result(val) {
         this._result = val;
-        console.log({
-            result: val,
-            passDown: this._passDown,
-        });
-        if (this._passDown) {
-            this.nextElementSibling[this._passDown] = val;
+        if (this.cssKeyMappers) {
+            this.passDownProp(val);
             return;
         }
         this.de('result', {
@@ -101,7 +97,7 @@ export class XtalFetchGet extends HTMLElement {
                 break;
             case pass_down:
                 this._passDown = newVal;
-                console.log('pass_down attr');
+                this.parsePassDown();
                 break;
             default:
                 this['_' + name] = newVal;
@@ -110,6 +106,30 @@ export class XtalFetchGet extends HTMLElement {
     }
     onPropsChange() {
         this.loadNewUrl();
+    }
+    parsePassDown() {
+        this.cssKeyMappers = [];
+        const splitPassDown = this._passDown.split('};');
+        splitPassDown.forEach(passDownSelectorAndProp => {
+            if (!passDownSelectorAndProp)
+                return;
+            const splitPassTo2 = passDownSelectorAndProp.split('{');
+            this.cssKeyMappers.push({
+                cssSelector: splitPassTo2[0],
+                propTarget: splitPassTo2[1]
+            });
+        });
+    }
+    passDownProp(val) {
+        let nextSibling = this.nextElementSibling;
+        while (nextSibling) {
+            this.cssKeyMappers.forEach(map => {
+                if (nextSibling.matches(map.cssSelector)) {
+                    nextSibling[map.propTarget] = val;
+                }
+            });
+            nextSibling = nextSibling.nextElementSibling;
+        }
     }
     loadNewUrl() {
         if (!this.fetch || !this.href || this.disabled)
