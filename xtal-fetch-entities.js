@@ -1,6 +1,14 @@
 import { XtalFetchReq, snakeToCamel } from './xtal-fetch-req.js';
 const forEach = 'for-each';
 const setPath = 'set-path';
+/**
+ * `xtal-fetch-entities`
+ *  Entire feature set for fetch, including multiple entity requests.
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
 class XtalFetchEntities extends XtalFetchReq {
     static get is() { return 'xtal-fetch-entities'; }
     get forEach() {

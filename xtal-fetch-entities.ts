@@ -7,6 +7,14 @@ export interface IXtalFetchEntitiesProperties extends IXtalFetchReqProperties{
 }
 const forEach = 'for-each';
 const setPath = 'set-path';
+/**
+ * `xtal-fetch-entities`
+ *  Entire feature set for fetch, including multiple entity requests.
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
 class XtalFetchEntities extends XtalFetchReq{
     static get is(){return 'xtal-fetch-entities';}
     _forEach: string;

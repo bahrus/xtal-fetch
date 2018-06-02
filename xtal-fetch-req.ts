@@ -18,6 +18,14 @@ const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
 const baseLinkId = 'base-link-id';
 
+/**
+ * `xtal-fetch-req`
+ *  Feature rich custom element that can make fetch calls, include Post requests.
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
 export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqProperties {
     constructor(){
         super();
