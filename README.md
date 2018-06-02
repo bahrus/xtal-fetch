@@ -5,8 +5,6 @@
 
 # \<xtal-fetch\>
 
-[Demo](demo/index.html)
-
 ## Single Requests
 
 \<xtal-fetch\> is a vanilla-ish web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
