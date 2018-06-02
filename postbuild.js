@@ -15,6 +15,7 @@ function processFile(filePath, newLines){
     })
 }
 const newLines = [];
+processFile('node_modules/xtal-latx/xtal-latx.js', newLines)
 processFile('xtal-fetch-get.js', newLines);
 processFile('xtal-fetch-req.js', newLines);
 processFile('xtal-fetch-entities.js', newLines);

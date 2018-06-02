@@ -1,8 +1,8 @@
 import { XtallatX } from 'xtal-latx/xtal-latx.js';
 const fetch = 'fetch';
 const href = 'href';
-const disabled = 'disabled';
-const pass_down = 'pass-down';
+// const disabled = 'disabled';
+// const pass_down = 'pass-down';
 /**
  * `xtal-fetch-get`
  *  Barebones custom element that can make fetch calls.
@@ -29,17 +29,6 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         }
         else {
             this.removeAttribute(fetch);
-        }
-    }
-    get disabled() {
-        return this.hasAttribute(disabled);
-    }
-    set disabled(val) {
-        if (val) {
-            this.setAttribute(disabled, '');
-        }
-        else {
-            this.removeAttribute(disabled);
         }
     }
     get href() {
@@ -94,13 +83,8 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         switch (name) {
             //booleans
             case fetch:
-                // case disabled:
                 this['_' + name] = newVal !== null;
                 break;
-            // case pass_down:
-            //     this._passDown = newVal;
-            //     this.parsePassDown();
-            //     break;
             default:
                 this['_' + name] = newVal;
         }
@@ -110,30 +94,6 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
     onPropsChange() {
         this.loadNewUrl();
     }
-    // cssKeyMappers: ICssKeyMapper[];
-    // parsePassDown() {
-    //     this.cssKeyMappers = [];
-    //     const splitPassDown = this._passDown.split('};');
-    //     splitPassDown.forEach(passDownSelectorAndProp => {
-    //         if (!passDownSelectorAndProp) return;
-    //         const splitPassTo2 = passDownSelectorAndProp.split('{');
-    //         this.cssKeyMappers.push({
-    //             cssSelector: splitPassTo2[0],
-    //             propTarget: splitPassTo2[1]
-    //         });
-    //     })
-    // }
-    // passDownProp(val: any) {
-    //     let nextSibling = this.nextElementSibling;
-    //     while (nextSibling) {
-    //         this.cssKeyMappers.forEach(map => {
-    //             if (nextSibling.matches(map.cssSelector)) {
-    //                 nextSibling[map.propTarget] = val;
-    //             }
-    //         })
-    //         nextSibling = nextSibling.nextElementSibling;
-    //     }
-    // }
     loadNewUrl() {
         if (!this.fetch || !this.href || this.disabled)
             return;
@@ -147,7 +107,8 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         });
     }
     connectedCallback() {
-        this._upgradeProperties([fetch, href, disabled]);
+        this._upgradeProperties([fetch, href]);
+        super.conectedCallback();
     }
 }
 if (!customElements.get(XtalFetchGet.is)) {

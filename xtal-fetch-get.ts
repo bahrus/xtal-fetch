@@ -14,8 +14,8 @@ export interface ICssKeyMapper {
 
 const fetch = 'fetch';
 const href = 'href';
-const disabled = 'disabled';
-const pass_down = 'pass-down';
+// const disabled = 'disabled';
+// const pass_down = 'pass-down';
 /**
  * `xtal-fetch-get`
  *  Barebones custom element that can make fetch calls.
@@ -30,16 +30,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
     }
     _as = 'json';
     static get is() { return 'xtal-fetch-get'; }
-    // de(name: string, detail: any) {
-    //     const newEvent = new CustomEvent(name + '-changed', {
-    //         detail: detail,
-    //         bubbles: true,
-    //         composed: false,
-    //     } as CustomEventInit);
-    //     this.dispatchEvent(newEvent);
-    //     return newEvent;
-    // }
-    _fetch
+    _fetch: boolean;
     get fetch() {
         return this._fetch
     }
@@ -50,17 +41,17 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
             this.removeAttribute(fetch);
         }
     }
-    _disabled;
-    get disabled() {
-        return this.hasAttribute(disabled);
-    }
-    set disabled(val) {
-        if (val) {
-            this.setAttribute(disabled, '');
-        } else {
-            this.removeAttribute(disabled);
-        }
-    }
+    // _disabled;
+    // get disabled() {
+    //     return this.hasAttribute(disabled);
+    // }
+    // set disabled(val) {
+    //     if (val) {
+    //         this.setAttribute(disabled, '');
+    //     } else {
+    //         this.removeAttribute(disabled);
+    //     }
+    // }
     _href: string;
     get href() {
         return this._href;
@@ -118,13 +109,9 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
         switch (name) {
             //booleans
             case fetch:
-            // case disabled:
                 this['_' + name] = newVal !== null;
                 break;
-            // case pass_down:
-            //     this._passDown = newVal;
-            //     this.parsePassDown();
-            //     break;
+
             default:
                 this['_' + name] = newVal;
         }
@@ -134,31 +121,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
     onPropsChange() {
         this.loadNewUrl();
     }
-    // cssKeyMappers: ICssKeyMapper[];
-    // parsePassDown() {
-    //     this.cssKeyMappers = [];
-    //     const splitPassDown = this._passDown.split('};');
-    //     splitPassDown.forEach(passDownSelectorAndProp => {
-    //         if (!passDownSelectorAndProp) return;
-    //         const splitPassTo2 = passDownSelectorAndProp.split('{');
-    //         this.cssKeyMappers.push({
-    //             cssSelector: splitPassTo2[0],
-    //             propTarget: splitPassTo2[1]
-    //         });
-    //     })
 
-    // }
-    // passDownProp(val: any) {
-    //     let nextSibling = this.nextElementSibling;
-    //     while (nextSibling) {
-    //         this.cssKeyMappers.forEach(map => {
-    //             if (nextSibling.matches(map.cssSelector)) {
-    //                 nextSibling[map.propTarget] = val;
-    //             }
-    //         })
-    //         nextSibling = nextSibling.nextElementSibling;
-    //     }
-    // }
     loadNewUrl() {
         if (!this.fetch || !this.href || this.disabled) return;
         this.do();
@@ -172,7 +135,8 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
     }
 
     connectedCallback() {
-        this._upgradeProperties([fetch, href, disabled]);
+        this._upgradeProperties([fetch, href]);
+        super.conectedCallback();
     }
 }
 if (!customElements.get(XtalFetchGet.is)) {

@@ -1,10 +1,90 @@
 
 //@ts-check
 (function () {
+const pass_down = 'pass-down';
+const disabled = 'disabled';
+function XtallatX(superClass) {
+    return class extends superClass {
+        static get observedAttributes() {
+            return [disabled, pass_down];
+        }
+        get passDown() {
+            return this._passDown;
+        }
+        set passDown(val) {
+            this.setAttribute(pass_down, val);
+        }
+        get disabled() {
+            return this._disabled;
+        }
+        set disabled(val) {
+            if (val) {
+                this.setAttribute(disabled, '');
+            }
+            else {
+                this.removeAttribute(disabled);
+            }
+        }
+        attributeChangedCallback(name, oldVal, newVal) {
+            switch (name) {
+                case pass_down:
+                    this._passDown = newVal;
+                    this.parsePassDown();
+                    break;
+                case disabled:
+                    this._disabled = newVal !== null;
+                    break;
+            }
+        }
+        de(name, detail) {
+            const newEvent = new CustomEvent(name + '-changed', {
+                detail: detail,
+                bubbles: true,
+                composed: false,
+            });
+            this.dispatchEvent(newEvent);
+            return newEvent;
+        }
+        parsePassDown() {
+            this._cssPropMap = [];
+            const splitPassDown = this._passDown.split('};');
+            splitPassDown.forEach(passDownSelectorAndProp => {
+                if (!passDownSelectorAndProp)
+                    return;
+                const splitPassTo2 = passDownSelectorAndProp.split('{');
+                this._cssPropMap.push({
+                    cssSelector: splitPassTo2[0],
+                    propTarget: splitPassTo2[1]
+                });
+            });
+        }
+        passDownProp(val) {
+            let nextSibling = this.nextElementSibling;
+            while (nextSibling) {
+                this._cssPropMap.forEach(map => {
+                    if (nextSibling.matches(map.cssSelector)) {
+                        nextSibling[map.propTarget] = val;
+                    }
+                });
+                nextSibling = nextSibling.nextElementSibling;
+            }
+        }
+        _upgradeProperties(props) {
+            props.forEach(prop => {
+                if (this.hasOwnProperty(prop)) {
+                    let value = this[prop];
+                    delete this[prop];
+                    this[prop] = value;
+                }
+            });
+        }
+    };
+}
+//# sourceMappingURL=xtal-latx.js.map
 const fetch = 'fetch';
 const href = 'href';
-const disabled = 'disabled';
-const pass_down = 'pass-down';
+// const disabled = 'disabled';
+// const pass_down = 'pass-down';
 /**
  * `xtal-fetch-get`
  *  Barebones custom element that can make fetch calls.
@@ -31,17 +111,6 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
         }
         else {
             this.removeAttribute(fetch);
-        }
-    }
-    get disabled() {
-        return this.hasAttribute(disabled);
-    }
-    set disabled(val) {
-        if (val) {
-            this.setAttribute(disabled, '');
-        }
-        else {
-            this.removeAttribute(disabled);
         }
     }
     get href() {
@@ -96,13 +165,8 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
         switch (name) {
             //booleans
             case fetch:
-                // case disabled:
                 this['_' + name] = newVal !== null;
                 break;
-            // case pass_down:
-            //     this._passDown = newVal;
-            //     this.parsePassDown();
-            //     break;
             default:
                 this['_' + name] = newVal;
         }
@@ -112,30 +176,6 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
     onPropsChange() {
         this.loadNewUrl();
     }
-    // cssKeyMappers: ICssKeyMapper[];
-    // parsePassDown() {
-    //     this.cssKeyMappers = [];
-    //     const splitPassDown = this._passDown.split('};');
-    //     splitPassDown.forEach(passDownSelectorAndProp => {
-    //         if (!passDownSelectorAndProp) return;
-    //         const splitPassTo2 = passDownSelectorAndProp.split('{');
-    //         this.cssKeyMappers.push({
-    //             cssSelector: splitPassTo2[0],
-    //             propTarget: splitPassTo2[1]
-    //         });
-    //     })
-    // }
-    // passDownProp(val: any) {
-    //     let nextSibling = this.nextElementSibling;
-    //     while (nextSibling) {
-    //         this.cssKeyMappers.forEach(map => {
-    //             if (nextSibling.matches(map.cssSelector)) {
-    //                 nextSibling[map.propTarget] = val;
-    //             }
-    //         })
-    //         nextSibling = nextSibling.nextElementSibling;
-    //     }
-    // }
     loadNewUrl() {
         if (!this.fetch || !this.href || this.disabled)
             return;
@@ -149,7 +189,8 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
         });
     }
     connectedCallback() {
-        this._upgradeProperties([fetch, href, disabled]);
+        this._upgradeProperties([fetch, href]);
+        super.conectedCallback();
     }
 }
 if (!customElements.get(XtalFetchGet.is)) {
