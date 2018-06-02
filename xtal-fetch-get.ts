@@ -1,4 +1,4 @@
-
+import {XtallatX} from 'xtal-latx/xtal-latx.js';
 export interface IXtalFetchBaseProperties {
     href: string,
     fetch: boolean,
@@ -16,21 +16,29 @@ const fetch = 'fetch';
 const href = 'href';
 const disabled = 'disabled';
 const pass_down = 'pass-down';
-export class XtalFetchGet extends HTMLElement implements IXtalFetchBaseProperties {
+/**
+ * `xtal-fetch-get`
+ *  Barebones custom element that can make fetch calls.
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
+export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBaseProperties {
     _reqInit: RequestInit = {
         credentials: 'same-origin'
     }
     _as = 'json';
     static get is() { return 'xtal-fetch-get'; }
-    de(name: string, detail: any) {
-        const newEvent = new CustomEvent(name + '-changed', {
-            detail: detail,
-            bubbles: true,
-            composed: false,
-        } as CustomEventInit);
-        this.dispatchEvent(newEvent);
-        return newEvent;
-    }
+    // de(name: string, detail: any) {
+    //     const newEvent = new CustomEvent(name + '-changed', {
+    //         detail: detail,
+    //         bubbles: true,
+    //         composed: false,
+    //     } as CustomEventInit);
+    //     this.dispatchEvent(newEvent);
+    //     return newEvent;
+    // }
     _fetch
     get fetch() {
         return this._fetch
@@ -66,87 +74,91 @@ export class XtalFetchGet extends HTMLElement implements IXtalFetchBasePropertie
     }
     set result(val) {
         this._result = val;
-        if (this.cssKeyMappers) {
+        if(this._cssPropMap){
             this.passDownProp(val);
-            return;
         }
+        // if (this.cssKeyMappers) {
+        //     this.passDownProp(val);
+        //     return;
+        // }
         this.de('result', {
             value: val
         });
     }
-    _passDown: string;
-    get passDown() {
-        return this._passDown;
-    }
-    set passDown(val) {
-        this.setAttribute(pass_down, val);
-    }
+    // _passDown: string;
+    // get passDown() {
+    //     return this._passDown;
+    // }
+    // set passDown(val) {
+    //     this.setAttribute(pass_down, val);
+    // }
     static get observedAttributes() {
-        return [
+        return super.observedAttributes.concat( [
             /**
              * @type boolean
              * Indicates whether fetch request should be made.
              */
             fetch,
             href,
-            disabled,
-            pass_down
-        ];
+            // disabled,
+            // pass_down
+        ]);
     }
-    _upgradeProperties(props: string[]) {
-        props.forEach(prop => {
-            if (this.hasOwnProperty(prop)) {
-                let value = this[prop];
-                delete this[prop];
-                this[prop] = value;
-            }
-        })
+    // _upgradeProperties(props: string[]) {
+    //     props.forEach(prop => {
+    //         if (this.hasOwnProperty(prop)) {
+    //             let value = this[prop];
+    //             delete this[prop];
+    //             this[prop] = value;
+    //         }
+    //     })
 
-    }
+    // }
     attributeChangedCallback(name: string, oldVal: string, newVal: string) {
         switch (name) {
             //booleans
             case fetch:
-            case disabled:
+            // case disabled:
                 this['_' + name] = newVal !== null;
                 break;
-            case pass_down:
-                this._passDown = newVal;
-                this.parsePassDown();
-                break;
+            // case pass_down:
+            //     this._passDown = newVal;
+            //     this.parsePassDown();
+            //     break;
             default:
                 this['_' + name] = newVal;
         }
+        super.attributeChangedCallback(name, oldVal, newVal);
         this.onPropsChange();
     }
     onPropsChange() {
         this.loadNewUrl();
     }
-    cssKeyMappers: ICssKeyMapper[];
-    parsePassDown() {
-        this.cssKeyMappers = [];
-        const splitPassDown = this._passDown.split('};');
-        splitPassDown.forEach(passDownSelectorAndProp => {
-            if (!passDownSelectorAndProp) return;
-            const splitPassTo2 = passDownSelectorAndProp.split('{');
-            this.cssKeyMappers.push({
-                cssSelector: splitPassTo2[0],
-                propTarget: splitPassTo2[1]
-            });
-        })
+    // cssKeyMappers: ICssKeyMapper[];
+    // parsePassDown() {
+    //     this.cssKeyMappers = [];
+    //     const splitPassDown = this._passDown.split('};');
+    //     splitPassDown.forEach(passDownSelectorAndProp => {
+    //         if (!passDownSelectorAndProp) return;
+    //         const splitPassTo2 = passDownSelectorAndProp.split('{');
+    //         this.cssKeyMappers.push({
+    //             cssSelector: splitPassTo2[0],
+    //             propTarget: splitPassTo2[1]
+    //         });
+    //     })
 
-    }
-    passDownProp(val: any) {
-        let nextSibling = this.nextElementSibling;
-        while (nextSibling) {
-            this.cssKeyMappers.forEach(map => {
-                if (nextSibling.matches(map.cssSelector)) {
-                    nextSibling[map.propTarget] = val;
-                }
-            })
-            nextSibling = nextSibling.nextElementSibling;
-        }
-    }
+    // }
+    // passDownProp(val: any) {
+    //     let nextSibling = this.nextElementSibling;
+    //     while (nextSibling) {
+    //         this.cssKeyMappers.forEach(map => {
+    //             if (nextSibling.matches(map.cssSelector)) {
+    //                 nextSibling[map.propTarget] = val;
+    //             }
+    //         })
+    //         nextSibling = nextSibling.nextElementSibling;
+    //     }
+    // }
     loadNewUrl() {
         if (!this.fetch || !this.href || this.disabled) return;
         this.do();
