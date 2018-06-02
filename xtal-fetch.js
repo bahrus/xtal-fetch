@@ -538,6 +538,14 @@ class XtalFetchEntities extends XtalFetchReq {
 if (!customElements.get(XtalFetchEntities.is)) {
     customElements.define(XtalFetchEntities.is, XtalFetchEntities);
 }
+/**
+ * `xtal-fetch`
+ *  Feature rich custom element that can make fetch calls, include Post requests.
+ *
+ * @customElement
+ * @polymer
+ * @demo demo/index.html
+ */
 class XtalFetch extends XtalFetchEntities {
     static get is() { return 'xtal-fetch'; }
 }

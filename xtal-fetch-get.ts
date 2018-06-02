@@ -6,11 +6,6 @@ export interface IXtalFetchBaseProperties {
     result: any,
 }
 
-export interface ICssKeyMapper {
-    cssSelector: string;
-    //propMapper: {[key: string]: string[]}
-    propTarget: string;
-}
 
 const fetch = 'fetch';
 const href = 'href';
