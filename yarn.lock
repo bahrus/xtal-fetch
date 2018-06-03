@@ -224,6 +224,10 @@ inherits@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
 
+jiife@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/jiife/-/jiife-0.0.0.tgz#43fde478b4255be1c35df282c2daa5eaabb8c159"
+
 json3@3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/json3/-/json3-3.3.2.tgz#3c0434743df93e2f5c42aee7b19bcb483575f4e1"
@@ -427,6 +431,6 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-xtal-latx@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/xtal-latx/-/xtal-latx-0.0.2.tgz#5759533e3e92b527418da4e539e4718059de25dd"
+xtal-latx@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/xtal-latx/-/xtal-latx-0.0.5.tgz#07a0f8642f75994c64d04ab24528356fad593c8c"

@@ -41,17 +41,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         return this._result;
     }
     set result(val) {
-        this._result = val;
-        if (this._cssPropMap) {
-            this.passDownProp(val);
-        }
-        // if (this.cssKeyMappers) {
-        //     this.passDownProp(val);
-        //     return;
-        // }
-        this.de('result', {
-            value: val
-        });
+        this.updateResultProp(val, 'result', '_result', null);
     }
     // _passDown: string;
     // get passDown() {
@@ -108,7 +98,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
     }
     connectedCallback() {
         this._upgradeProperties([fetch, href]);
-        super.conectedCallback();
+        super.connectedCallback();
     }
 }
 if (!customElements.get(XtalFetchGet.is)) {

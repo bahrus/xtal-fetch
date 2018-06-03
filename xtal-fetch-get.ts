@@ -36,17 +36,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
             this.removeAttribute(fetch);
         }
     }
-    // _disabled;
-    // get disabled() {
-    //     return this.hasAttribute(disabled);
-    // }
-    // set disabled(val) {
-    //     if (val) {
-    //         this.setAttribute(disabled, '');
-    //     } else {
-    //         this.removeAttribute(disabled);
-    //     }
-    // }
+
     _href: string;
     get href() {
         return this._href;
@@ -59,17 +49,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
         return this._result;
     }
     set result(val) {
-        this._result = val;
-        if(this._cssPropMap){
-            this.passDownProp(val);
-        }
-        // if (this.cssKeyMappers) {
-        //     this.passDownProp(val);
-        //     return;
-        // }
-        this.de('result', {
-            value: val
-        });
+        this.updateResultProp(val, 'result', '_result', null);
     }
     // _passDown: string;
     // get passDown() {
@@ -131,7 +111,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
 
     connectedCallback() {
         this._upgradeProperties([fetch, href]);
-        super.conectedCallback();
+        super.connectedCallback();
     }
 }
 if (!customElements.get(XtalFetchGet.is)) {

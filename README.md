@@ -13,7 +13,7 @@ Web components that do anything other than pure presentation views may seem unna
 
 ### Referencing
 
-In order to keep the size of the download(s) as small as possible, the functionality of this component is broken down into three subcomponents.  xtal-fetch-get just supports basic get requests, has no support for error handling.  It requires a browser that supports ES6 Modules.  It is 730B (gzipped and minified, not counting a common xtal base class).  xtal-fetch-req supports everything xtal-fetch supports, except multi fetch requests.  It adds another 1.33K (gzipped and minified), and also requires ES6 Modules to import.  
+In order to keep the size of the download(s) as small as possible, the functionality of this component is broken down into three subcomponents.  xtal-fetch-get just supports basic get requests, has no support for error handling.  It requires a browser that supports ES6 Modules.  It is ~710B (gzipped and minified, not counting a common xtal base class).  xtal-fetch-req supports everything xtal-fetch supports, except parallel multiple entity fetch requests.  It adds another 1.33K (gzipped and minified), and also requires ES6 Modules to import.  
 
 If you want to just keep things simple and include everything, or need to support browsers that don't support ES6 Modules (and not require "require.js" or a build step), you can use xtal-fetch.js.  It can use a classic script reference or a module reference.  It weighs 2.4 KB minified and gzipped.
 
