@@ -431,6 +431,6 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-xtal-latx@0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/xtal-latx/-/xtal-latx-0.0.5.tgz#07a0f8642f75994c64d04ab24528356fad593c8c"
+xtal-latx@0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/xtal-latx/-/xtal-latx-0.0.11.tgz#be0c7f5b9a3f2e529684f2cb014cb6d9f85b2c59"

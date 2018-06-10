@@ -1,8 +1,6 @@
 import { XtallatX } from 'xtal-latx/xtal-latx.js';
 const fetch = 'fetch';
 const href = 'href';
-// const disabled = 'disabled';
-// const pass_down = 'pass-down';
 /**
  * `xtal-fetch-get`
  *  Barebones custom element that can make fetch calls.
@@ -41,15 +39,10 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         return this._result;
     }
     set result(val) {
-        this.updateResultProp(val, 'result', '_result', null);
+        //this.updateResultProp(val, 'result', '_result', null);
+        this._result = val;
+        this.de('result', { value: val });
     }
-    // _passDown: string;
-    // get passDown() {
-    //     return this._passDown;
-    // }
-    // set passDown(val) {
-    //     this.setAttribute(pass_down, val);
-    // }
     static get observedAttributes() {
         return super.observedAttributes.concat([
             /**
@@ -60,15 +53,6 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
             href,
         ]);
     }
-    // _upgradeProperties(props: string[]) {
-    //     props.forEach(prop => {
-    //         if (this.hasOwnProperty(prop)) {
-    //             let value = this[prop];
-    //             delete this[prop];
-    //             this[prop] = value;
-    //         }
-    //     })
-    // }
     attributeChangedCallback(name, oldVal, newVal) {
         switch (name) {
             //booleans
@@ -98,7 +82,6 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
     }
     connectedCallback() {
         this._upgradeProperties([fetch, href]);
-        super.connectedCallback();
     }
 }
 if (!customElements.get(XtalFetchGet.is)) {
