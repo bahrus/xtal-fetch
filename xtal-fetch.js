@@ -1,18 +1,11 @@
 
-//@ts-check
-(function () {
-const pass_down = 'pass-down';
-const disabled = 'disabled';
+    //@ts-check
+    (function () {
+    const disabled = 'disabled';
 function XtallatX(superClass) {
     return class extends superClass {
         static get observedAttributes() {
-            return [disabled, pass_down];
-        }
-        get passDown() {
-            return this._passDown;
-        }
-        set passDown(val) {
-            this.setAttribute(pass_down, val);
+            return [disabled];
         }
         get disabled() {
             return this._disabled;
@@ -27,10 +20,6 @@ function XtallatX(superClass) {
         }
         attributeChangedCallback(name, oldVal, newVal) {
             switch (name) {
-                case pass_down:
-                    this._passDown = newVal;
-                    this.parsePassDown();
-                    break;
                 case disabled:
                     this._disabled = newVal !== null;
                     break;
@@ -44,30 +33,6 @@ function XtallatX(superClass) {
             });
             this.dispatchEvent(newEvent);
             return newEvent;
-        }
-        parsePassDown() {
-            this._cssPropMap = [];
-            const splitPassDown = this._passDown.split('};');
-            splitPassDown.forEach(passDownSelectorAndProp => {
-                if (!passDownSelectorAndProp)
-                    return;
-                const splitPassTo2 = passDownSelectorAndProp.split('{');
-                this._cssPropMap.push({
-                    cssSelector: splitPassTo2[0],
-                    propTarget: splitPassTo2[1]
-                });
-            });
-        }
-        passDownProp(val) {
-            let nextSibling = this.nextElementSibling;
-            while (nextSibling) {
-                this._cssPropMap.forEach(map => {
-                    if (nextSibling.matches(map.cssSelector)) {
-                        nextSibling[map.propTarget] = val;
-                    }
-                });
-                nextSibling = nextSibling.nextElementSibling;
-            }
         }
         _upgradeProperties(props) {
             props.forEach(prop => {
@@ -83,8 +48,6 @@ function XtallatX(superClass) {
 //# sourceMappingURL=xtal-latx.js.map
 const fetch = 'fetch';
 const href = 'href';
-// const disabled = 'disabled';
-// const pass_down = 'pass-down';
 /**
  * `xtal-fetch-get`
  *  Barebones custom element that can make fetch calls.
@@ -123,25 +86,10 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
         return this._result;
     }
     set result(val) {
+        //this.updateResultProp(val, 'result', '_result', null);
         this._result = val;
-        if (this._cssPropMap) {
-            this.passDownProp(val);
-        }
-        // if (this.cssKeyMappers) {
-        //     this.passDownProp(val);
-        //     return;
-        // }
-        this.de('result', {
-            value: val
-        });
+        this.de('result', { value: val });
     }
-    // _passDown: string;
-    // get passDown() {
-    //     return this._passDown;
-    // }
-    // set passDown(val) {
-    //     this.setAttribute(pass_down, val);
-    // }
     static get observedAttributes() {
         return super.observedAttributes.concat([
             /**
@@ -152,15 +100,6 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
             href,
         ]);
     }
-    // _upgradeProperties(props: string[]) {
-    //     props.forEach(prop => {
-    //         if (this.hasOwnProperty(prop)) {
-    //             let value = this[prop];
-    //             delete this[prop];
-    //             this[prop] = value;
-    //         }
-    //     })
-    // }
     attributeChangedCallback(name, oldVal, newVal) {
         switch (name) {
             //booleans
@@ -190,7 +129,6 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
     }
     connectedCallback() {
         this._upgradeProperties([fetch, href]);
-        super.conectedCallback();
     }
 }
 if (!customElements.get(XtalFetchGet.is)) {
@@ -553,5 +491,5 @@ if (!customElements.get(XtalFetch.is)) {
     customElements.define(XtalFetch.is, XtalFetch);
 }
 //# sourceMappingURL=xtal-fetch-entities.js.map
-})();  
-    
+    })();  
+        
