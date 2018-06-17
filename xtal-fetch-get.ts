@@ -49,6 +49,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
     set result(val) {
         //this.updateResultProp(val, 'result', '_result', null);
         this._result = val;
+        this.value = val;
         this.de('result', {value:val});
     }
 
