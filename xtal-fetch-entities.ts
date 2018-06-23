@@ -22,14 +22,14 @@ class XtalFetchEntities extends XtalFetchReq{
         return this._forEach || this.getAttribute(forEach);
     }
     set forEach(val){
-        this.setAttribute(forEach, val);
+        this.attr(forEach, val);
     }
     _setPath: string;
     get setPath(){
         return this._setPath || this.getAttribute(setPath);
     }
     set setPath(val){
-        this.setAttribute(setPath, val);
+        this.attr(setPath, val);
     }
     _inEntities : any[];
     get inEntities(){

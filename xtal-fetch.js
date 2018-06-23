@@ -11,11 +11,14 @@ function XtallatX(superClass) {
             return this._disabled;
         }
         set disabled(val) {
+            this.attr(disabled, val, '');
+        }
+        attr(name, val, trueVal) {
             if (val) {
-                this.setAttribute(disabled, '');
+                this.setAttribute(name, trueVal || val);
             }
             else {
-                this.removeAttribute(disabled);
+                this.removeAttribute(name);
             }
         }
         attributeChangedCallback(name, oldVal, newVal) {
@@ -69,18 +72,13 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
         return this._fetch;
     }
     set fetch(val) {
-        if (val) {
-            this.setAttribute(fetch, '');
-        }
-        else {
-            this.removeAttribute(fetch);
-        }
+        this.attr(fetch, val, '');
     }
     get href() {
         return this._href;
     }
     set href(val) {
-        this.setAttribute(href, val);
+        this.attr(href, val);
     }
     get result() {
         return this._result;
@@ -88,6 +86,7 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
     set result(val) {
         //this.updateResultProp(val, 'result', '_result', null);
         this._result = val;
+        this.value = val;
         this.de('result', { value: val });
     }
     static get observedAttributes() {
@@ -185,12 +184,7 @@ class XtalFetchReq extends XtalFetchGet {
         return this._cacheResults;
     }
     set cacheResults(val) {
-        if (val) {
-            this.setAttribute(cacheResults, '');
-        }
-        else {
-            this.removeAttribute(cacheResults);
-        }
+        this.attr(cacheResults, val, '');
     }
     get cachedResults() {
         return this._cachedResults;
@@ -199,12 +193,7 @@ class XtalFetchReq extends XtalFetchGet {
         return this.hasAttribute(reqInitRequired);
     }
     set reqInitRequired(val) {
-        if (val) {
-            this.setAttribute(reqInitRequired, '');
-        }
-        else {
-            this.removeAttribute(reqInitRequired);
-        }
+        this.attr(reqInitRequired, val, '');
     }
     get debounceDuration() {
         return this._debounceDuration;
@@ -243,12 +232,7 @@ class XtalFetchReq extends XtalFetchGet {
         return this._insertResults;
     }
     set insertResults(val) {
-        if (val) {
-            this.setAttribute(insertResults, '');
-        }
-        else {
-            this.removeAttribute(insertResults);
-        }
+        this.attr(insertResults, val, '');
     }
     get baseLinkId() {
         return this._baseLinkId;
@@ -368,13 +352,13 @@ class XtalFetchEntities extends XtalFetchReq {
         return this._forEach || this.getAttribute(forEach);
     }
     set forEach(val) {
-        this.setAttribute(forEach, val);
+        this.attr(forEach, val);
     }
     get setPath() {
         return this._setPath || this.getAttribute(setPath);
     }
     set setPath(val) {
-        this.setAttribute(setPath, val);
+        this.attr(setPath, val);
     }
     get inEntities() {
         return this._inEntities;

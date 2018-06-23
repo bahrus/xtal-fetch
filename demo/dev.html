@@ -23,7 +23,7 @@
       import "https://unpkg.com/@polymer/polymer@3.0.2/lib/elements/dom-bind.js?module";
       import "https://unpkg.com/@polymer/polymer@3.0.2/lib/elements/dom-repeat.js?module";
     </script>
-    <script async type="module" src="https://unpkg.com/p-d.p-u@0.0.3/p-d.js?module"></script>
+    <script async type="module" src="https://unpkg.com/p-d.p-u@0.0.13/p-d.js?module"></script>
     <script async type="module" src="../xtal-fetch-get.js"></script>
     <script async type="module" src="../xtal-fetch-req.js"></script>
     <script async type="module" src="../xtal-fetch-entities.js"></script>
@@ -42,17 +42,17 @@
             <template>
               <div>
                 <xtal-fetch-get fetch href="generated.json" as="json"></xtal-fetch-get>
-                <p-d to="{items:target.result}" on="result-changed"></p-d>
+                <p-d to="#peopleList{items:target.result};xtal-fetch-entities{inEntities:target.result}" on="result-changed"></p-d>
                 <template id="peopleList" is="dom-repeat">
                   Name: [[item.name]] <br>
                   Email: [[item.email]] <br>
                   <hr>
                 </template>
-                <!-- <xtal-fetch-entities id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id"
+                <xtal-fetch-entities id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id"
                   set-path="detail_contents" result="{{people_details}}"></xtal-fetch-entities>
                 <template id="detail" is="dom-repeat" items="[[people_details]]" mutable-data>
                   DetailContents: [[item.detail_contents.message]] <br>
-                </template> -->
+                </template>
             </div>
               
               <hr>

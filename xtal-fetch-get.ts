@@ -28,11 +28,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
         return this._fetch
     }
     set fetch(val) {
-        if (val) {
-            this.setAttribute(fetch, '');
-        } else {
-            this.removeAttribute(fetch);
-        }
+        this.attr(fetch, val, '');
     }
 
     _href: string;
@@ -40,7 +36,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
         return this._href;
     }
     set href(val) {
-        this.setAttribute(href, val);
+        this.attr(href, val);
     }
     _result: any;
     get result() {

@@ -59,11 +59,7 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
         return this._cacheResults;
     }
     set cacheResults(val) {
-        if (val) {
-            this.setAttribute(cacheResults, '');
-        } else {
-            this.removeAttribute(cacheResults);
-        }
+        this.attr(cacheResults, val, '');
     }
 
     private _cachedResults: { [key: string]: any } = {};
@@ -76,11 +72,7 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
         return this.hasAttribute(reqInitRequired);
     }
     set reqInitRequired(val) {
-        if (val) {
-            this.setAttribute(reqInitRequired, '')
-        } else {
-            this.removeAttribute(reqInitRequired);
-        }
+        this.attr(reqInitRequired, val, '');
     }
 
     _debounceDuration;
@@ -129,11 +121,7 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
         return this._insertResults;
     }
     set insertResults(val) {
-        if (val) {
-            this.setAttribute(insertResults, '');
-        } else {
-            this.removeAttribute(insertResults);
-        }
+        this.attr(insertResults, val, '');
     }
 
     _baseLinkId : string;

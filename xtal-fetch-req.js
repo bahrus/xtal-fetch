@@ -49,12 +49,7 @@ export class XtalFetchReq extends XtalFetchGet {
         return this._cacheResults;
     }
     set cacheResults(val) {
-        if (val) {
-            this.setAttribute(cacheResults, '');
-        }
-        else {
-            this.removeAttribute(cacheResults);
-        }
+        this.attr(cacheResults, val, '');
     }
     get cachedResults() {
         return this._cachedResults;
@@ -63,12 +58,7 @@ export class XtalFetchReq extends XtalFetchGet {
         return this.hasAttribute(reqInitRequired);
     }
     set reqInitRequired(val) {
-        if (val) {
-            this.setAttribute(reqInitRequired, '');
-        }
-        else {
-            this.removeAttribute(reqInitRequired);
-        }
+        this.attr(reqInitRequired, val, '');
     }
     get debounceDuration() {
         return this._debounceDuration;
@@ -107,12 +97,7 @@ export class XtalFetchReq extends XtalFetchGet {
         return this._insertResults;
     }
     set insertResults(val) {
-        if (val) {
-            this.setAttribute(insertResults, '');
-        }
-        else {
-            this.removeAttribute(insertResults);
-        }
+        this.attr(insertResults, val, '');
     }
     get baseLinkId() {
         return this._baseLinkId;

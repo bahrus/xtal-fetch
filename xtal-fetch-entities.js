@@ -15,13 +15,13 @@ class XtalFetchEntities extends XtalFetchReq {
         return this._forEach || this.getAttribute(forEach);
     }
     set forEach(val) {
-        this.setAttribute(forEach, val);
+        this.attr(forEach, val);
     }
     get setPath() {
         return this._setPath || this.getAttribute(setPath);
     }
     set setPath(val) {
-        this.setAttribute(setPath, val);
+        this.attr(setPath, val);
     }
     get inEntities() {
         return this._inEntities;

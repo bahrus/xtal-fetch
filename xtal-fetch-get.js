@@ -22,18 +22,13 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         return this._fetch;
     }
     set fetch(val) {
-        if (val) {
-            this.setAttribute(fetch, '');
-        }
-        else {
-            this.removeAttribute(fetch);
-        }
+        this.attr(fetch, val, '');
     }
     get href() {
         return this._href;
     }
     set href(val) {
-        this.setAttribute(href, val);
+        this.attr(href, val);
     }
     get result() {
         return this._result;
@@ -41,6 +36,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
     set result(val) {
         //this.updateResultProp(val, 'result', '_result', null);
         this._result = val;
+        this.value = val;
         this.de('result', { value: val });
     }
     static get observedAttributes() {
