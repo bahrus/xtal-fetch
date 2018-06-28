@@ -31,11 +31,6 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
         super();
         this._reqInit = null;
     }
-    /**
-    * Fired  when a fetch has finished.
-    *
-    * @event fetch-complete
-    */
     get reqInit() {
         return this._reqInit;
     }
@@ -76,6 +71,10 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
     }
 
     _debounceDuration;
+    /**
+     * @type {Number}
+     * How long to pause between requests
+     */
     get debounceDuration() {
         return this._debounceDuration;
     }
@@ -84,6 +83,11 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
     }
 
     _errorResponse: Response;
+    /**
+     * @type {Object}
+     * Error response as an object
+     * ⚡ Fires event error-response-changed.
+     */
     get errorResponse() {
         return this._errorResponse;
     }
@@ -94,7 +98,12 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
         });
     }
 
-    _errorText
+    _errorText;
+    /**
+     * @type {String}
+     * Indicates the error text of the last request.
+     * ⚡ Fires event error-text-changed.
+     */
     get errorText() {
         return this._errorText;
     }
@@ -106,6 +115,11 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
     }
 
     _fetchInProgress = false;
+    /**
+     * @type {Boolean}
+     * Indicates Fetch is in progress
+     * ⚡ Fires event fetch-in-progress-changed
+     */
     get fetchInProgress() {
         return this._fetchInProgress;
     }
@@ -168,9 +182,7 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
             if (immediate && !timeout) func.apply(context, args);
         };
     }
-    // __loadNewUrlDebouncer = this.debounce(() => {
-    //     this.loadNewUrl();
-    // }, 0);
+
     __loadNewUrlDebouncer;
     debounceDurationHandler() {
         this.__loadNewUrlDebouncer = this.debounce(() => {

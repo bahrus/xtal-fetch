@@ -30,6 +30,11 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
     set href(val) {
         this.attr(href, val);
     }
+    /**
+     * @type{Object}
+     * Result of fetch request
+     * ⚡ Fires event result-changed
+     */
     get result() {
         return this._result;
     }

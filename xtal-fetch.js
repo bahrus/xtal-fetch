@@ -4,6 +4,10 @@
     const disabled = 'disabled';
 function XtallatX(superClass) {
     return class extends superClass {
+        constructor() {
+            super(...arguments);
+            this._evCount = {};
+        }
         static get observedAttributes() {
             return [disabled];
         }
@@ -21,6 +25,16 @@ function XtallatX(superClass) {
                 this.removeAttribute(name);
             }
         }
+        incAttr(name) {
+            const ec = this._evCount;
+            if (name in ec) {
+                ec[name]++;
+            }
+            else {
+                ec[name] = 0;
+            }
+            this.attr(name, ec[name].toString());
+        }
         attributeChangedCallback(name, oldVal, newVal) {
             switch (name) {
                 case disabled:
@@ -29,12 +43,14 @@ function XtallatX(superClass) {
             }
         }
         de(name, detail) {
-            const newEvent = new CustomEvent(name + '-changed', {
+            const eventName = name + '-changed';
+            const newEvent = new CustomEvent(eventName, {
                 detail: detail,
                 bubbles: true,
                 composed: false,
             });
             this.dispatchEvent(newEvent);
+            this.incAttr(eventName);
             return newEvent;
         }
         _upgradeProperties(props) {
@@ -80,6 +96,11 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
     set href(val) {
         this.attr(href, val);
     }
+    /**
+     * @type{Object}
+     * Result of fetch request
+     * ⚡ Fires event result-changed
+     */
     get result() {
         return this._result;
     }
@@ -158,11 +179,6 @@ class XtalFetchReq extends XtalFetchGet {
         this._fetchInProgress = false;
         this._reqInit = null;
     }
-    /**
-    * Fired  when a fetch has finished.
-    *
-    * @event fetch-complete
-    */
     get reqInit() {
         return this._reqInit;
     }
@@ -195,12 +211,21 @@ class XtalFetchReq extends XtalFetchGet {
     set reqInitRequired(val) {
         this.attr(reqInitRequired, val, '');
     }
+    /**
+     * @type {Number}
+     * How long to pause between requests
+     */
     get debounceDuration() {
         return this._debounceDuration;
     }
     set debounceDuration(val) {
         this.setAttribute(debounceDuration, val.toString());
     }
+    /**
+     * @type {Object}
+     * Error response as an object
+     * ⚡ Fires event error-response-changed.
+     */
     get errorResponse() {
         return this._errorResponse;
     }
@@ -210,6 +235,11 @@ class XtalFetchReq extends XtalFetchGet {
             value: val
         });
     }
+    /**
+     * @type {String}
+     * Indicates the error text of the last request.
+     * ⚡ Fires event error-text-changed.
+     */
     get errorText() {
         return this._errorText;
     }
@@ -219,6 +249,11 @@ class XtalFetchReq extends XtalFetchGet {
             value: val
         });
     }
+    /**
+     * @type {Boolean}
+     * Indicates Fetch is in progress
+     * ⚡ Fires event fetch-in-progress-changed
+     */
     get fetchInProgress() {
         return this._fetchInProgress;
     }
@@ -348,18 +383,30 @@ const setPath = 'set-path';
  */
 class XtalFetchEntities extends XtalFetchReq {
     static get is() { return 'xtal-fetch-entities'; }
+    /**
+     * @type {String}
+     * Comma delimited list of properties to use as input for the fetch urls
+     */
     get forEach() {
         return this._forEach || this.getAttribute(forEach);
     }
     set forEach(val) {
         this.attr(forEach, val);
     }
+    /**
+     * @type {String}
+     * Path to set value inside each entity
+     */
     get setPath() {
         return this._setPath || this.getAttribute(setPath);
     }
     set setPath(val) {
         this.attr(setPath, val);
     }
+    /**
+     * @type {Array}
+     * Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)
+     */
     get inEntities() {
         return this._inEntities;
     }

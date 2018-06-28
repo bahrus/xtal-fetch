@@ -18,6 +18,10 @@ const setPath = 'set-path';
 class XtalFetchEntities extends XtalFetchReq{
     static get is(){return 'xtal-fetch-entities';}
     _forEach: string;
+    /**
+     * @type {String}
+     * Comma delimited list of properties to use as input for the fetch urls
+     */
     get forEach(){
         return this._forEach || this.getAttribute(forEach);
     }
@@ -25,6 +29,10 @@ class XtalFetchEntities extends XtalFetchReq{
         this.attr(forEach, val);
     }
     _setPath: string;
+    /**
+     * @type {String}
+     * Path to set value inside each entity
+     */
     get setPath(){
         return this._setPath || this.getAttribute(setPath);
     }
@@ -32,6 +40,10 @@ class XtalFetchEntities extends XtalFetchReq{
         this.attr(setPath, val);
     }
     _inEntities : any[];
+    /**
+     * @type {Array}
+     * Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)
+     */
     get inEntities(){
         return this._inEntities;
     }

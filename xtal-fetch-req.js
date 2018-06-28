@@ -23,11 +23,6 @@ export class XtalFetchReq extends XtalFetchGet {
         this._fetchInProgress = false;
         this._reqInit = null;
     }
-    /**
-    * Fired  when a fetch has finished.
-    *
-    * @event fetch-complete
-    */
     get reqInit() {
         return this._reqInit;
     }
@@ -60,12 +55,21 @@ export class XtalFetchReq extends XtalFetchGet {
     set reqInitRequired(val) {
         this.attr(reqInitRequired, val, '');
     }
+    /**
+     * @type {Number}
+     * How long to pause between requests
+     */
     get debounceDuration() {
         return this._debounceDuration;
     }
     set debounceDuration(val) {
         this.setAttribute(debounceDuration, val.toString());
     }
+    /**
+     * @type {Object}
+     * Error response as an object
+     * ⚡ Fires event error-response-changed.
+     */
     get errorResponse() {
         return this._errorResponse;
     }
@@ -75,6 +79,11 @@ export class XtalFetchReq extends XtalFetchGet {
             value: val
         });
     }
+    /**
+     * @type {String}
+     * Indicates the error text of the last request.
+     * ⚡ Fires event error-text-changed.
+     */
     get errorText() {
         return this._errorText;
     }
@@ -84,6 +93,11 @@ export class XtalFetchReq extends XtalFetchGet {
             value: val
         });
     }
+    /**
+     * @type {Boolean}
+     * Indicates Fetch is in progress
+     * ⚡ Fires event fetch-in-progress-changed
+     */
     get fetchInProgress() {
         return this._fetchInProgress;
     }

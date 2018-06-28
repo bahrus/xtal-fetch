@@ -193,9 +193,7 @@ good-listener@^1.2.2:
 
 growl@1.10.2:
   version "1.10.2"
-  resolved "https://registry.yarnpkg.com/growl/-/growl-1.10.2.tgz#8f16dfcd8fb7c04cfc1f4e0012e0ea858726979a"
-  dependencies:
-    eslint-plugin-node "^5.1.0"
+  resolved "https://registry.yarnpkg.com/growl/-/growl-1.10.2.tgz#0ea7743715db8d8de2c5ede1775e1b45ac85c02f"
 
 has-ansi@^2.0.0:
   version "2.0.0"
@@ -319,7 +317,7 @@ mocha@^3.4.2:
     diff "3.2.0"
     escape-string-regexp "1.0.5"
     glob "7.1.1"
-    growl "1.9.2"
+    growl "1.10.2"
     he "1.1.1"
     json3 "3.3.2"
     lodash.create "3.1.1"
@@ -433,6 +431,6 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-xtal-latx@0.0.13:
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/xtal-latx/-/xtal-latx-0.0.13.tgz#cffadd60b3239383b04a436cc2fb7b7ded47b655"
+xtal-latx@0.0.17:
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/xtal-latx/-/xtal-latx-0.0.17.tgz#520d9f49ac1b6b8d58b1b0521e1b186a938ae25c"
