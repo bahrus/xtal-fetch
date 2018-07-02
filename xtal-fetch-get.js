@@ -1,6 +1,7 @@
 import { XtallatX } from 'xtal-latx/xtal-latx.js';
 const fetch = 'fetch';
 const href = 'href';
+const as = 'as';
 /**
  * `xtal-fetch-get`
  *  Barebones custom element that can make fetch calls.
@@ -23,6 +24,12 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
     }
     set fetch(val) {
         this.attr(fetch, val, '');
+    }
+    get as() {
+        return this._as;
+    }
+    set as(val) {
+        this.attr(as, val);
     }
     get href() {
         return this._href;
@@ -52,11 +59,11 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
              */
             fetch,
             href,
+            as
         ]);
     }
     attributeChangedCallback(name, oldVal, newVal) {
         switch (name) {
-            //booleans
             case fetch:
                 this['_' + name] = newVal !== null;
                 break;
@@ -70,7 +77,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         this.loadNewUrl();
     }
     loadNewUrl() {
-        if (!this.fetch || !this.href || this.disabled)
+        if (!this.fetch || !this.href || this.disabled || !this._connected)
             return;
         this.do();
     }
@@ -83,6 +90,8 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
     }
     connectedCallback() {
         this._upgradeProperties([fetch, href]);
+        this._connected = true;
+        this.onPropsChange();
     }
 }
 if (!customElements.get(XtalFetchGet.is)) {

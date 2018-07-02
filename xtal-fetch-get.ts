@@ -9,6 +9,7 @@ export interface IXtalFetchBaseProperties {
 
 const fetch = 'fetch';
 const href = 'href';
+const as = 'as';
 /**
  * `xtal-fetch-get`
  *  Barebones custom element that can make fetch calls.
@@ -21,7 +22,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
     _reqInit: RequestInit = {
         credentials: 'same-origin'
     }
-    _as = 'json';
+   
     static get is() { return 'xtal-fetch-get'; }
     _fetch: boolean;
     get fetch() {
@@ -29,6 +30,14 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
     }
     set fetch(val) {
         this.attr(fetch, val, '');
+    }
+
+    _as = 'json';
+    get as(){
+        return this._as;
+    }
+    set as(val){
+        this.attr(as, val);
     }
 
     _href: string;
@@ -62,12 +71,12 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
              */
             fetch,
             href,
+            as
         ]);
     }
 
     attributeChangedCallback(name: string, oldVal: string, newVal: string) {
         switch (name) {
-            //booleans
             case fetch:
                 this['_' + name] = newVal !== null;
                 break;
@@ -83,7 +92,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
     }
 
     loadNewUrl() {
-        if (!this.fetch || !this.href || this.disabled) return;
+        if (!this.fetch || !this.href || this.disabled || !this._connected) return;
         this.do();
     }
     do() {
@@ -93,9 +102,11 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
             })
         });
     }
-
+    _connected: boolean;
     connectedCallback() {
         this._upgradeProperties([fetch, href]);
+        this._connected = true;
+        this.onPropsChange();
     }
 }
 if (!customElements.get(XtalFetchGet.is)) {
