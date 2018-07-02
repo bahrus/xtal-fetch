@@ -114,11 +114,11 @@ So, for example, preact:
 <xtal-fetch fetch href="generated.json" as="json" result-changed={this.setPeople}></xtl-fetch>
 ``` 
 
-However, if you are a fellow egalitarian who believes in brotherly / sisterly love, you can use Polymer binding, as described above, or make use of the [p-d element](https://www.webcomponents.org/element/p-d.p-u), which more explicitly supports unidirectional data flow:
+However, if you are a fellow egalitarian who believes in brotherly / sisterly love, you can use Polymer binding, as described above. I won't report you to the authorities!  Or make use of the [p-d element](https://www.webcomponents.org/element/p-d.p-u), which more explicitly supports unidirectional data flow:
 
 ```html
 <xtal-fetch fetch href="generated.json" as="json"></xtl-fetch>
-<pd on="result-changed" to="{items}">
+<p-d on="result-changed" to="{items}"></p-d>
 <template is="dom-repeat">
     Name: [[item.name]] <br>
     Email: [[item.email]] <br>
@@ -126,9 +126,8 @@ However, if you are a fellow egalitarian who believes in brotherly / sisterly lo
 </template>
 ```
 
-or you can use the p-d element from yours truly.
 
-I won't report you to the authorities!
+
 
 ## Caching
 
