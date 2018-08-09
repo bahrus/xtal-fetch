@@ -90,7 +90,7 @@ Possible values for as are "json" and "text."
 The results of the fetch can be inserted inside the <xtal-fetch> tag, becoming a glorified client-side "include":
 
 ```html
-<xtal-fetch fetch href="https://myDomain/myPath/mySubpath" as="json" insert-results></xtal-fetch>
+<xtal-fetch fetch href="https://myDomain/myPath/mySubpath" as="text" insert-results></xtal-fetch>
 ```
 
 Note, though, that if using a relative path for href, it will be relative to the url of the hosting page, not the url of the component definition.
@@ -111,7 +111,7 @@ This is referred to as the mediator pattern.  It seems, though, that many develo
 So, for example, preact:
 
 ```JSX
-<xtal-fetch fetch href="generated.json" as="json" result-changed={this.setPeople}></xtl-fetch>
+<xtal-fetch fetch href="generated.json" as="json" result-changed={this.setPeople}></xtal-fetch>
 ``` 
 
 However, if you are a fellow egalitarian who believes in brotherly / sisterly love, you can use Polymer binding, as described above. I won't report you to the authorities!  Or make use of the [p-d element](https://www.webcomponents.org/element/p-d.p-u), which more explicitly supports unidirectional data flow:

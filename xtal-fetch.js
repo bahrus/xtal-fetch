@@ -172,6 +172,7 @@ const reqInitRequired = 'req-init-required';
 const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
 const baseLinkId = 'base-link-id';
+const req_init = 'req-init';
 /**
  * `xtal-fetch-req`
  *  Feature rich custom element that can make fetch calls, include Post requests.
@@ -285,7 +286,7 @@ class XtalFetchReq extends XtalFetchGet {
         this.setAttribute(baseLinkId, val);
     }
     static get observedAttributes() {
-        return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults, baseLinkId]);
+        return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults, baseLinkId, req_init]);
     }
     attributeChangedCallback(name, oldValue, newValue) {
         switch (name) {
@@ -301,6 +302,9 @@ class XtalFetchReq extends XtalFetchGet {
                 break;
             case baseLinkId:
                 this._baseLinkId = newValue;
+                break;
+            case req_init:
+                this._reqInit = JSON.parse(newValue);
                 break;
         }
         super.attributeChangedCallback(name, oldValue, newValue);
@@ -346,9 +350,11 @@ class XtalFetchReq extends XtalFetchGet {
             resp[this._as]().then(result => {
                 if (resp.status !== 200) {
                     this.errorResponse = resp;
-                    resp['text']().then(val => {
-                        this.errorText = val;
-                    });
+                    const respText = resp['text'];
+                    if (respText)
+                        respText().then(val => {
+                            this.errorText = val;
+                        });
                 }
                 else {
                     this.result = result;
