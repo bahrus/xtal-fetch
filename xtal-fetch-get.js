@@ -1,5 +1,5 @@
 import { XtallatX } from 'xtal-latx/xtal-latx.js';
-const fetch = 'fetch';
+const fetch$ = 'fetch';
 const href = 'href';
 const as = 'as';
 /**
@@ -23,7 +23,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         return this._fetch;
     }
     set fetch(val) {
-        this.attr(fetch, val, '');
+        this.attr(fetch$, val, '');
     }
     get as() {
         return this._as;
@@ -57,14 +57,14 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
              * @type boolean
              * Indicates whether fetch request should be made.
              */
-            fetch,
+            fetch$,
             href,
             as
         ]);
     }
     attributeChangedCallback(name, oldVal, newVal) {
         switch (name) {
-            case fetch:
+            case fetch$:
                 this['_' + name] = newVal !== null;
                 break;
             default:
@@ -89,7 +89,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         });
     }
     connectedCallback() {
-        this._upgradeProperties([fetch, href]);
+        this._upgradeProperties([fetch$, href]);
         this._connected = true;
         this.onPropsChange();
     }

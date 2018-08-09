@@ -9,7 +9,7 @@ const setPath = 'set-path';
  * @polymer
  * @demo demo/index.html
  */
-class XtalFetchEntities extends XtalFetchReq {
+export class XtalFetchEntities extends XtalFetchReq {
     static get is() { return 'xtal-fetch-entities'; }
     /**
      * @type {String}

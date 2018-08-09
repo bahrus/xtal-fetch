@@ -7,7 +7,7 @@ export interface IXtalFetchBaseProperties {
 }
 
 
-const fetch = 'fetch';
+const fetch$ = 'fetch';
 const href = 'href';
 const as = 'as';
 /**
@@ -29,7 +29,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
         return this._fetch
     }
     set fetch(val) {
-        this.attr(fetch, val, '');
+        this.attr(fetch$, val, '');
     }
 
     _as = 'json';
@@ -69,7 +69,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
              * @type boolean
              * Indicates whether fetch request should be made.
              */
-            fetch,
+            fetch$,
             href,
             as
         ]);
@@ -77,7 +77,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
 
     attributeChangedCallback(name: string, oldVal: string, newVal: string) {
         switch (name) {
-            case fetch:
+            case fetch$:
                 this['_' + name] = newVal !== null;
                 break;
 
@@ -104,7 +104,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
     }
     _connected: boolean;
     connectedCallback() {
-        this._upgradeProperties([fetch, href]);
+        this._upgradeProperties([fetch$, href]);
         this._connected = true;
         this.onPropsChange();
     }
