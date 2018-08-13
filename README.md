@@ -33,13 +33,13 @@ or
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.21/build/ES6/xtal-fetch.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.40/build/ES6/xtal-fetch.js"></script>
 ```
 
 or
 
 ```html
-<script src="https://unpkg.com/xtal-fetch@0.0.21/build/ES6/xtal-fetch.js"></script>
+<script src="https://unpkg.com/xtal-fetch@0.0.40/build/ES6/xtal-fetch.js"></script>
 ```
 
 
