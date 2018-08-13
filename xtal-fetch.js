@@ -25,6 +25,10 @@ function XtallatX(superClass) {
                 this.removeAttribute(name);
             }
         }
+        to$(number) {
+            const mod = number % 2;
+            return (number - mod) / 2 + '-' + mod;
+        }
         incAttr(name) {
             const ec = this._evCount;
             if (name in ec) {
@@ -33,7 +37,7 @@ function XtallatX(superClass) {
             else {
                 ec[name] = 0;
             }
-            this.attr(name, ec[name].toString());
+            this.attr('data-' + name, this.to$(ec[name]));
         }
         attributeChangedCallback(name, oldVal, newVal) {
             switch (name) {
@@ -64,7 +68,6 @@ function XtallatX(superClass) {
         }
     };
 }
-//# sourceMappingURL=xtal-latx.js.map
 const fetch$ = 'fetch';
 const href = 'href';
 const as = 'as';
@@ -163,7 +166,6 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
 if (!customElements.get(XtalFetchGet.is)) {
     customElements.define(XtalFetchGet.is, XtalFetchGet);
 }
-//# sourceMappingURL=xtal-fetch-get.js.map
 function snakeToCamel(s) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
 }
@@ -385,7 +387,6 @@ class XtalFetchReq extends XtalFetchGet {
 if (!customElements.get(XtalFetchReq.is)) {
     customElements.define(XtalFetchReq.is, XtalFetchReq);
 }
-//# sourceMappingURL=xtal-fetch-req.js.map
 const forEach = 'for-each';
 const setPath = 'set-path';
 /**
@@ -536,6 +537,5 @@ class XtalFetch extends XtalFetchEntities {
 if (!customElements.get(XtalFetch.is)) {
     customElements.define(XtalFetch.is, XtalFetch);
 }
-//# sourceMappingURL=xtal-fetch-entities.js.map
     })();  
         
