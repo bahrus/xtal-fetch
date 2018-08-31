@@ -1,71 +1,72 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>xtal-fetch demo</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script type="text/javascript">
-      if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)){
-        document.write('<script src="../IE11-polyfill.js"><\/script>');
-      }
-      
+  <title>xtal-fetch demo</title>
+
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="text/javascript">
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+      document.write('<script src="../IE11-polyfill.js"><\/script>');
+    }
+
   </script>
-    <!-- <script type="module" src="../node_modules/@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
-    <script type="module" src="../node_modules/@polymer/iron-demo-helpers/demo-snippet.js"></script>
-    <script type="module" src="../node_modules/@polymer/polymer/lib/elements/dom-bind.js"></script>
-    <script type="module" src="../node_modules/@polymer/polymer/lib/elements/dom-repeat.js"></script> -->
-    <script type="module">
-      import "https://unpkg.com/@polymer/iron-demo-helpers@3.0.0-pre.19/demo-pages-shared-styles.js?module";
-      import "https://unpkg.com/@polymer/iron-demo-helpers@3.0.0-pre.19/demo-snippet.js?module";
-      import "https://unpkg.com/@polymer/polymer@3.0.2/lib/elements/dom-bind.js?module";
-      import "https://unpkg.com/@polymer/polymer@3.0.2/lib/elements/dom-repeat.js?module";
-    </script>
-    <script async type="module" src="https://unpkg.com/p-d.p-u@0.0.3/p-d.js?module"></script>
-    <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.28/xtal-fetch-get.js?module"></script>
-    <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.28/xtal-fetch-req.js?module"></script>
-    <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.28/xtal-fetch-entities.js?module"></script>
+  
+  
+  <script async type="module" src="https://unpkg.com/p-d.p-u@0.0.67/p-d-x.js?module"></script>
+  <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.40/xtal-fetch-get.js?module"></script>
+  <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.40/xtal-fetch-req.js?module"></script>
+  <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.40/xtal-fetch-entities.js?module"></script>
+  <script type="module" src="https://unpkg.com/xtal-method@0.0.13/xtal-im-ex.js"></script>
+  <script nomodule id="_root_lit_html">
+    //const root = 'https://unpkg.com/lit-html/';
+    const root = 'https://cdn.jsdelivr.net/npm/lit-html/'
+  </script>
+  <script nomodule id="_lit_html">
+    const { html, render } = await import(root + 'lit-html.js');
+  </script>
+  <script nomodule id="_lit_repeat">
+    const { repeat } = await import(root + 'lib/repeat.js');
+  </script>
+</head>
 
-    <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles">
-      </style>
-    </custom-style>
-  </head>
-  <body>
-    <div class="vertical-section-container centered">
-      <h3>Basic xtal-fetch demo</h3>
-      <demo-snippet>
-        <template>
-          <dom-bind>
-            <template>
-              <div>
-                <!-- <xtal-fetch-get fetch href="generated.json" as="json" result="{{people}}"></xtal-fetch-get> -->
-                <xtal-fetch-get disabled fetch href="generated.json" as="json" pass-down="#peopleList{items};#peopleEntities{inEntities};"></xtal-fetch-get>
-                <p-d to="{items:target.result};#peopleEntities{inEntities:target.result}" on="result-changed"></p-d>
-                <template id="peopleList" is="dom-repeat" items="[[people]]">
-                  Name: [[item.name]] <br>
-                  Email: [[item.email]] <br>
+<body>
+  <div class="vertical-section-container centered">
+    <h3>Basic xtal-fetch demo</h3>
+    <div>
+      <xtal-fetch-get disabled fetch href="generated.json" as="json" pass-down="#peopleList{items};#peopleEntities{inEntities};"></xtal-fetch-get>
+      <p-d-x on="result-changed" to="{input;#peopleEntities{inEntities}" ></p-d-x>
+      <xtal-im-ex>
+        <script nomodule>
+            XtalIMEX.insert(_root_lit_html, _lit_html, _lit_repeat);
+            const litter = input => html`
+                ${repeat(input, item => Math.random().toString(), item => html`
+                  Name: ${item.name} <br> Email: ${item.email} <br>
                   <hr>
-                </template>
-                <xtal-fetch-entities id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id"
-                  set-path="detail_contents" result="{{people_details}}"></xtal-fetch-entities>
-                <template id="detail" is="dom-repeat" items="[[people_details]]" mutable-data>
-                  DetailContents: [[item.detail_contents.message]] <br>
-                </template>
-            </div>
-              
-              <hr>
-              <div>
-                <p>Test of binding in expression -- need to watch network monitor to see the effects</p>
-              </div>
-              <label>Search string: </label><input type="text" value="{{searchString::input}}">
-              <xtal-fetch-req  fetch="[[searchString]]" href="generated.json?search=[[searchString]]" debounce-duration="500"></xtal-fetch-req>
-            </template>
-          </dom-bind>
-        </template>
-      </demo-snippet>
+                `)}
+            `;
+            export const renderer = (input, target) => render(litter(input), target);
+        </script>
+      </xtal-im-ex>
+      
+      <xtal-fetch-entities id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"
+        result="{{people_details}}"></xtal-fetch-entities>
+        <!-- <p-d to="{input:target.result}"></p-d> -->
+      <!-- <template id="detail" is="dom-repeat" items="[[people_details]]" mutable-data>
+        DetailContents: [[item.detail_contents.message]] <br>
+      </template> -->
     </div>
-  </body>
+
+    <hr>
+    <div>
+      <p>Test of binding in expression -- need to watch network monitor to see the effects</p>
+    </div>
+    <label>Search string: </label><input type="text" value="{{searchString::input}}">
+    <xtal-fetch-req fetch="[[searchString]]" href="generated.json?search=[[searchString]]" debounce-duration="500"></xtal-fetch-req>
+  </div>
+</body>
+
 </html>
