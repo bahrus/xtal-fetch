@@ -210,7 +210,7 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
             const link = self[this._baseLinkId] as HTMLLinkElement;
             if(link) href = link.href + href;
         }
-        self.fetch(this.href, this._reqInit).then(resp => {
+        self.fetch(href, this._reqInit).then(resp => {
             this.fetchInProgress = false;
             resp[this._as]().then(result => {
                 if (resp.status !== 200) {
