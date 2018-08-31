@@ -178,7 +178,61 @@ One can enable caching  of the same href value using the cache-results attribute
 
 Like the Polymer iron-ajax inspiration, the *debounce-duration* attribute specifies how much to wait for the request to "settle down" before proceeding.
 
-
+<!--
+```
+<custom-element-demo>
+  <template>
+  <div>
+    <script async type="module" src="https://unpkg.com/p-d.p-u@0.0.67/p-d-x.js?module"></script>
+    <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.40/xtal-fetch-get.js?module"></script>
+    <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.40/xtal-fetch-req.js?module"></script>
+    <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.40/xtal-fetch-entities.js?module"></script>
+    <script type="module" src="https://unpkg.com/xtal-method@0.0.13/xtal-im-ex.js"></script>
+    <script nomodule id="_root_lit_html">
+      const root = 'https://cdn.jsdelivr.net/npm/lit-html/'
+    </script>
+    <script nomodule id="_lit_html">
+      const { html, render } = await import(root + 'lit-html.js');
+    </script>
+    <script nomodule id="_lit_repeat">
+      const { repeat } = await import(root + 'lib/repeat.js');
+    </script>
+    <h3>Basic xtal-fetch demo</h3>
+      <xtal-fetch-get disabled fetch href="https://unpkg.com/xtal-fetch@0.0.40/demo/generated.json" as="json"></xtal-fetch-get>
+      <p-d on="result-changed" to="xtal-im-ex{input}" ></p-d>
+      <p-d on="result-changed" to="#peopleEntities{inEntities}"></p-d>
+      <xtal-im-ex>
+        <script nomodule>
+            XtalIMEX.insert(_root_lit_html, _lit_html, _lit_repeat);
+            const litter = input => html`
+                ${repeat(input, item => Math.random().toString(), item => html`
+                  Name: ${item.name} <br> Email: ${item.email} <br>
+                  <hr>
+                `)}
+            `;
+            export const renderer = (input, target) => render(litter(input), target);
+        </script>
+      </xtal-im-ex>
+      
+      <xtal-fetch-entities id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch-entities>
+      <p-d on="result-changed" to="{input}"></p-d>
+      <xtal-im-ex>
+        <script nomodule>
+            XtalIMEX.insert(_root_lit_html, _lit_html, _lit_repeat);
+            const litter = input => html`
+                ${repeat(input, item => Math.random().toString(), item => html`
+                  Detail Contents: ${item.detail_contents.message}
+                  <hr>
+                `)}
+            `;
+            export const renderer = (input, target) => render(litter(input), target);
+        </script>
+      </xtal-im-ex>
+  </div>
+</template>
+</custom-element-demo>
+```
+-->
 ## Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) and npm (packaged with [Node.js](https://nodejs.org)) installed. Run `npm install` to install your element's dependencies, then run `polymer serve` to serve your element locally.
