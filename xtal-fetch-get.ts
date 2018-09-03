@@ -47,6 +47,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
     set href(val) {
         this.attr(href, val);
     }
+    value!: any;
     _result: any;
     /**
      * @type{Object}
