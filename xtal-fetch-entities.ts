@@ -1,4 +1,5 @@
 import { XtalFetchReq, IXtalFetchReqProperties, snakeToCamel } from './xtal-fetch-req.js';
+import {define} from 'xtal-latx/define.js';
 
 export interface IXtalFetchEntitiesProperties extends IXtalFetchReqProperties{
     forEach: string,
@@ -146,9 +147,7 @@ export class XtalFetchEntities extends XtalFetchReq{
 
     }
 }
-if(!customElements.get(XtalFetchEntities.is)){
-    customElements.define(XtalFetchEntities.is, XtalFetchEntities);
-}
+define(XtalFetchEntities);
 
 /**
  * `xtal-fetch`
@@ -161,7 +160,4 @@ if(!customElements.get(XtalFetchEntities.is)){
 class XtalFetch extends XtalFetchEntities{
     static get is(){return 'xtal-fetch';}
 }
-
-if(!customElements.get(XtalFetch.is)){
-    customElements.define(XtalFetch.is, XtalFetch);
-}
+define(XtalFetch);

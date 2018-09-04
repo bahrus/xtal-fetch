@@ -1,4 +1,5 @@
 import { XtallatX } from 'xtal-latx/xtal-latx.js';
+import { define } from 'xtal-latx/define.js';
 const fetch$ = 'fetch';
 const href = 'href';
 const as = 'as';
@@ -94,7 +95,5 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         this.onPropsChange();
     }
 }
-if (!customElements.get(XtalFetchGet.is)) {
-    customElements.define(XtalFetchGet.is, XtalFetchGet);
-}
+define(XtalFetchGet);
 //# sourceMappingURL=xtal-fetch-get.js.map

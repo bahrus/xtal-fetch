@@ -1,4 +1,6 @@
 import {XtallatX} from 'xtal-latx/xtal-latx.js';
+import {define} from 'xtal-latx/define.js';
+
 export interface IXtalFetchBaseProperties {
     href: string,
     fetch: boolean,
@@ -110,6 +112,4 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
         this.onPropsChange();
     }
 }
-if (!customElements.get(XtalFetchGet.is)) {
-    customElements.define(XtalFetchGet.is, XtalFetchGet);
-}
+define(XtalFetchGet);

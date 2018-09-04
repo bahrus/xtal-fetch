@@ -1,4 +1,5 @@
 import { XtalFetchGet, IXtalFetchBaseProperties } from './xtal-fetch-get.js';
+import {define} from 'xtal-latx/define.js';
 
 export interface IXtalFetchReqProperties extends IXtalFetchBaseProperties {
     reqInit: RequestInit,
@@ -242,8 +243,9 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
     }
 
     connectedCallback(){
-        super.connectedCallback();
         this._upgradeProperties(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit']);
+        super.connectedCallback();
+        
     }
 }
 if(!customElements.get(XtalFetchReq.is)){

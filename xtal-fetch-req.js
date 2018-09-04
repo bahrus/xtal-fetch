@@ -213,8 +213,8 @@ export class XtalFetchReq extends XtalFetchGet {
         });
     }
     connectedCallback() {
-        super.connectedCallback();
         this._upgradeProperties(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit']);
+        super.connectedCallback();
     }
 }
 if (!customElements.get(XtalFetchReq.is)) {
