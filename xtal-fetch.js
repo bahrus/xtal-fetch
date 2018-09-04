@@ -18,12 +18,12 @@ function XtallatX(superClass) {
             this.attr(disabled, val, '');
         }
         attr(name, val, trueVal) {
-            const setOrRemove = val ? 'set' : 'remove';
-            this[setOrRemove + 'Attribute'](name, trueVal || val);
+            const v = val ? 'set' : 'remove'; //verb
+            this[v + 'Attribute'](name, trueVal || val);
         }
-        to$(number) {
-            const mod = number % 2;
-            return (number - mod) / 2 + '-' + mod;
+        to$(n) {
+            const mod = n % 2;
+            return (n - mod) / 2 + '-' + mod;
         }
         incAttr(name) {
             const ec = this._evCount;
@@ -159,9 +159,7 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
         this.onPropsChange();
     }
 }
-if (!customElements.get(XtalFetchGet.is)) {
-    customElements.define(XtalFetchGet.is, XtalFetchGet);
-}
+define(XtalFetchGet);
 function snakeToCamel(s) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
 }
@@ -376,8 +374,8 @@ class XtalFetchReq extends XtalFetchGet {
         });
     }
     connectedCallback() {
-        super.connectedCallback();
         this._upgradeProperties(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit']);
+        super.connectedCallback();
     }
 }
 if (!customElements.get(XtalFetchReq.is)) {
@@ -516,9 +514,7 @@ class XtalFetchEntities extends XtalFetchReq {
         }
     }
 }
-if (!customElements.get(XtalFetchEntities.is)) {
-    customElements.define(XtalFetchEntities.is, XtalFetchEntities);
-}
+define(XtalFetchEntities);
 /**
  * `xtal-fetch`
  *  Feature rich custom element that can make fetch calls, include Post requests.
@@ -530,8 +526,6 @@ if (!customElements.get(XtalFetchEntities.is)) {
 class XtalFetch extends XtalFetchEntities {
     static get is() { return 'xtal-fetch'; }
 }
-if (!customElements.get(XtalFetch.is)) {
-    customElements.define(XtalFetch.is, XtalFetch);
-}
+define(XtalFetch);
     })();  
         
