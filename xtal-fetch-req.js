@@ -203,11 +203,7 @@ export class XtalFetchReq extends XtalFetchGet {
                         href: this.href,
                         result: result
                     };
-                    this.dispatchEvent(new CustomEvent('fetch-complete', {
-                        detail: detail,
-                        bubbles: true,
-                        composed: false,
-                    }));
+                    this.de('fetch-complete', detail, true);
                 }
             });
         });

@@ -7,7 +7,7 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "xtal-latx": "0.0.25"
+    "xtal-latx": "0.0.26"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.0.0",

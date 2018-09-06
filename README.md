@@ -9,7 +9,7 @@
 
 \<xtal-fetch\> is a vanilla-ish web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
 
-Web components that do anything other than pure presentation views may seem unnatural, or wrong in some frameworks, as discussed [here](http://github.com/bahrus/json-merge) .  But it is my view that they can still serve a very useful purpose even in such settings, in promoting developer productiviy, lowering barrier to entry for new developers, and keeping the total code footprint low.
+Web components that do anything other than pure presentation views may seem unnatural, or wrong in some frameworks, as discussed [here](http://github.com/bahrus/json-merge).  But it is my view that they can still serve a useful purpose even in such settings, in promoting developer productiviy, lowering barrier to entry for new developers, and keeping the total code footprint low.
 
 ### Referencing
 
@@ -42,6 +42,7 @@ or
 <script src="https://unpkg.com/xtal-fetch@0.0.40/build/ES6/xtal-fetch.js"></script>
 ```
 
+CDN links like these should generally *not* be referenced directly from a generic web component meant for code distribution.  If xtal-fetch is part of a suite of components used frequently with other components, some form of primitive bundling would go a long way to bring performance numbers down.
 
 As mentioned, if you don't need all the functionality of xtal-fetch.js, replace the above links with xtal-fetch-get or xtal-fetch-req (and modify the tag name accordingly.)
 
@@ -56,6 +57,7 @@ To make a fetch request, you need to add the fetch attribute, and specify an hre
 It may seem somewhat redundant to need to add the fetch attribute (being that the component is called "xtal-fetch").  However, this attribute / property serves a useful purpose:  It can block requests until a sanity check is satisfied, such as the requirement of a binding parameter:
 
 ```html
+<!-- Polymer Notation -->
 <xtal-fetch fetch="[[myBinding]]" href="https://myDomain/myPath/[[myBinding]]"></xtal-fetch>
 ```
 
@@ -87,7 +89,7 @@ One can specify whether the result should be parsed as JSON, or left as text, us
 
 Possible values for as are "json" and "text."
 
-The results of the fetch can be inserted inside the <xtal-fetch> tag, becoming a glorified client-side "include":
+The results of the fetch can be inserted inside the xtal-fetch tag, becoming a glorified client-side "include":
 
 ```html
 <xtal-fetch fetch href="https://myDomain/myPath/mySubpath" as="text" insert-results></xtal-fetch>
@@ -98,6 +100,7 @@ Note, though, that if using a relative path for href, it will be relative to the
 But more typically, you will want to "post the results of the fetch to a place available to its peers (other nodes inside the containing web component)".  The last phrase is in quotes, because that isn't precisely what happens when one examines the nitty gritty details, but this is the effect we essentially want to have.  If the containing component is also a Polymer component, then this  can be done by specifying a two-way binding path, and no boilerplate code is required in order to achieve the desired effect: 
 
 ```html
+<!-- Polymer Syntax -->
 <xtal-fetch fetch href="generated.json" as="json" result="{{people}}"></xtl-fetch>
 <template is="dom-repeat" items="[[people]]">
     Name: [[item.name]] <br>
@@ -106,27 +109,15 @@ But more typically, you will want to "post the results of the fetch to a place a
 </template>
 ```
 
-This is referred to as the mediator pattern.  It seems, though, that many developers prefer to organize their application around more of a Soviet-style top-down dictatorship, where siblings can't talk to one another without writing code in the parent.
-
-So, for example, preact:
+Preact can look as follows.
 
 ```JSX
-<xtal-fetch fetch href="generated.json" as="json" result-changed={this.setPeople}></xtal-fetch>
+  <xtal-fetch fetch href="generated.json" as="json" onResultChanged={this.setPeople}></xtal-fetch>
+  ...
 ``` 
 
-However, if you are a fellow egalitarian who believes in brotherly / sisterly love, you can use Polymer binding, as described above. I won't report you to the authorities!  Or make use of the [p-d element](https://www.webcomponents.org/element/p-d.p-u), which more explicitly supports unidirectional data flow:
-
-```html
-<xtal-fetch fetch href="generated.json" as="json"></xtl-fetch>
-<p-d on="result-changed" to="{items}"></p-d>
-<template is="dom-repeat">
-    Name: [[item.name]] <br>
-    Email: [[item.email]] <br>
-<hr>
-</template>
+NB.  Inlining a lambda espression inside the event, rather than calling a method makes it not all that different from Polymer.  Whatever floats your boat.
 ```
-
-
 
 
 ## Caching
@@ -245,8 +236,4 @@ $ polymer serve
 
 ## Running Tests
 
-```
-$ polymer test
-```
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+WIP.

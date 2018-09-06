@@ -232,11 +232,7 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
                         href: this.href,
                         result: result
                     }
-                    this.dispatchEvent(new CustomEvent('fetch-complete', {
-                        detail: detail,
-                        bubbles: true,
-                        composed: false,
-                    } as CustomEventInit));
+                    this.de('fetch-complete', detail, true);
                 }
             })
         });
