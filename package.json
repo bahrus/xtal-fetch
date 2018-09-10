@@ -1,6 +1,6 @@
 {
   "name": "xtal-fetch",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "description": "Dependency free web component wrapper around the fetch function.",
   "main": "xtal-fetch.js",
   "repository": "https://github.com/bahrus/xtal-fetch",
