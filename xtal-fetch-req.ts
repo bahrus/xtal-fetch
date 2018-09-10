@@ -226,6 +226,7 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
                         this.cachedResults[this._href] = result;
                     }
                     if (typeof result === 'string' && this._insertResults) {
+                        this.style.display = this._initDisp;
                         this.innerHTML = result;
                     }
                     const detail = {
@@ -244,6 +245,4 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
         
     }
 }
-if(!customElements.get(XtalFetchReq.is)){
-    customElements.define(XtalFetchReq.is, XtalFetchReq);
-}
+define(XtalFetchReq);

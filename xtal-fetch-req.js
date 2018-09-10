@@ -1,4 +1,5 @@
 import { XtalFetchGet } from './xtal-fetch-get.js';
+import { define } from 'xtal-latx/define.js';
 export function snakeToCamel(s) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
 }
@@ -197,6 +198,7 @@ export class XtalFetchReq extends XtalFetchGet {
                         this.cachedResults[this._href] = result;
                     }
                     if (typeof result === 'string' && this._insertResults) {
+                        this.style.display = this._initDisp;
                         this.innerHTML = result;
                     }
                     const detail = {
@@ -213,7 +215,5 @@ export class XtalFetchReq extends XtalFetchGet {
         super.connectedCallback();
     }
 }
-if (!customElements.get(XtalFetchReq.is)) {
-    customElements.define(XtalFetchReq.is, XtalFetchReq);
-}
+define(XtalFetchReq);
 //# sourceMappingURL=xtal-fetch-req.js.map

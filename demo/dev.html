@@ -24,7 +24,7 @@
     <h3>Basic xtal-fetch demo</h3>
     <div>
       <litter-g></litter-g>
-      <xtal-fetch-get fetch href="generated.json" as="json"></xtal-fetch-get>
+      <xtal-fetch-req fetch href="generated.json" as="json"></xtal-fetch-req>
       <p-d on="fetch-complete" to="#peopleList{input:target.result};xtal-fetch-entities{inEntities:target.result}" ></p-d>
       <ul id="peopleList" data-lit>
           <script nomodule>

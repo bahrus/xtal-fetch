@@ -90,6 +90,8 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         });
     }
     connectedCallback() {
+        this._initDisp = this.style.display;
+        this.style.display = 'none';
         this._upgradeProperties([fetch$, href]);
         this._connected = true;
         this.onPropsChange();
