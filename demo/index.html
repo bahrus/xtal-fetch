@@ -25,8 +25,9 @@
     <h3>Basic xtal-fetch demo</h3>
 
       <div>
+        <link rel="preconnect" id="baseSampleJsonFolder" href="https://unpkg.com/xtal-fetch@0.0.43/demo/">
         <litter-g></litter-g>
-        <xtal-fetch fetch href="https://unpkg.com/xtal-fetch@0.0.43/demo/generated.json" as="json"></xtal-fetch>
+        <xtal-fetch disabled base-link-id="baseSampleJsonFolder" fetch href="generated.json" as="json"></xtal-fetch>
         <p-d on="fetch-complete" to="#peopleList{input:target.result};#peopleEntities{inEntities:target.result}" ></p-d>
         <ul id="peopleList" data-lit>
             <script nomodule>
@@ -34,7 +35,7 @@
             </script>
         </ul>
         
-        <xtal-fetch id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch>
+        <xtal-fetch disabled id="peopleEntities" as="json" base-link-id="baseSampleJsonFolder" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch>
         <p-d on="fetch-complete" to="{input:target.result}"></p-d>
         <ul id="detail" data-lit>
             <script nomodule>

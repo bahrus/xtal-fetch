@@ -173,28 +173,29 @@ Like the Polymer iron-ajax inspiration, the *debounce-duration* attribute specif
 ```
 <custom-element-demo>
   <template>
-  <div>
-    <litter-g></litter-g>
-    <xtal-fetch fetch href="https://unpkg.com/xtal-fetch@0.0.43/demo/generated.json" as="json"></xtal-fetch>
-    <p-d on="fetch-complete" to="#peopleList{input:target.result};#peopleEntities{inEntities:target.result}" ></p-d>
-    <ul id="peopleList" data-lit>
-        <script nomodule>
-            html`${input.map(i => html`<li>Name: ${i.name} <br>Email: ${i.email}</li>`)}`
-        </script>
-    </ul>
-    
-    <xtal-fetch id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch>
-    <p-d on="fetch-complete" to="{input:target.result}"></p-d>
-    <ul id="detail" data-lit>
-        <script nomodule>
-            html`${input.map(i => html`<li>DetailContents: ${i.detail_contents.message}</li>`)}`
-        </script>
-    </ul>
-    <script type="module" src="https://unpkg.com/p-d.p-u@0.0.69/p-d.p-u.js"></script>
-    <script type="module" src="https://unpkg.com/xtal-fetch@0.0.43/xtal-fetch.js"></script>
-    <script type="module" src="https://unpkg.com/litter-g@0.0.10/litter-g.js?module"></script> 
+      <div>
+        <link rel="preconnect" id="baseSampleJsonFolder" href="https://unpkg.com/xtal-fetch@0.0.43/demo/">
+        <litter-g></litter-g>
+        <xtal-fetch disabled base-link-id="baseSampleJsonFolder" fetch href="generated.json" as="json"></xtal-fetch>
+        <p-d on="fetch-complete" to="#peopleList{input:target.result};#peopleEntities{inEntities:target.result}" ></p-d>
+        <ul id="peopleList" data-lit>
+            <script nomodule>
+                html`${input.map(i => html`<li>Name: ${i.name} <br>Email: ${i.email}</li>`)}`
+            </script>
+        </ul>
+        
+        <xtal-fetch disabled id="peopleEntities" as="json" base-link-id="baseSampleJsonFolder" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch>
+        <p-d on="fetch-complete" to="{input:target.result}"></p-d>
+        <ul id="detail" data-lit>
+            <script nomodule>
+                html`${input.map(i => html`<li>DetailContents: ${i.detail_contents.message}</li>`)}`
+            </script>
+        </ul>
+        <script type="module" src="https://unpkg.com/p-d.p-u@0.0.69/p-d.p-u.js"></script>
+        <script type="module" src="https://unpkg.com/xtal-fetch@0.0.43/xtal-fetch.js"></script>
+        <script type="module" src="https://unpkg.com/litter-g@0.0.10/litter-g.js?module"></script> 
 
-  </div>
+      </div>
 </template>
 </custom-element-demo>
 ```
