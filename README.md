@@ -9,13 +9,13 @@
 
 \<xtal-fetch\> is a vanilla-ish web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
 
-Web components that do anything other than pure presentation views may seem unnatural, or wrong in some frameworks, as discussed [here](http://github.com/bahrus/json-merge).  But it is my view that they can still serve a useful purpose even in such settings, in promoting developer productiviy, lowering barrier to entry for new developers, and keeping the total code footprint low.
+Web components that do anything other than pure presentation views may seem unnatural, or wrong in some frameworks, as discussed [here](http://github.com/bahrus/json-merge).  But it is my view that they can still serve a useful purpose even in such settings, in promoting developer productivity, lowering barrier to entry for new developers, and keeping the total code footprint low.
 
 ### Referencing
 
-In order to keep the size of the download(s) as small as possible, the functionality of this component is broken down into three subcomponents.  xtal-fetch-get just supports basic get requests, has no support for error handling.  It requires a browser that supports ES6 Modules.  It is ~680B (gzipped and minified, not counting a common xtal base class).  xtal-fetch-req supports everything xtal-fetch supports, except parallel multiple entity fetch requests.  It adds another 1.3K (gzipped and minified), and also requires ES6 Modules to import.  
+In order to keep the size of the download(s) as small as possible, the functionality of this component is broken down into three subcomponents.  xtal-fetch-get just supports basic get requests, has no support for error handling.  It requires a browser that supports ES6 Modules.  xtal-fetch-req supports everything xtal-fetch supports, except parallel multiple entity fetch requests.  
 
-If you want to just keep things simple and include everything, or need to support browsers that don't support ES6 Modules (and not require "require.js" or a build step), you can use xtal-fetch.js.  It can use a classic script reference or a module reference.  It weighs 2.3 KB minified and gzipped.
+If you want to just keep things simple and include everything, or need to support browsers that don't support ES6 Modules you can use xtal-fetch.js.  It can use a classic script reference or a module reference.  It weighs 2.5 KB minified and gzipped.  
 
 All the evergreen browsers support fetch.  For IE11, a polyfill should be used.
 
@@ -100,23 +100,15 @@ Note, though, that if using a relative path for href, it will be relative to the
 But more typically, you will want to "post the results of the fetch to a place available to its peers (other nodes inside the containing web component)".  The last phrase is in quotes, because that isn't precisely what happens when one examines the nitty gritty details, but this is the effect we essentially want to have.  If the containing component is also a Polymer component, then this  can be done by specifying a two-way binding path, and no boilerplate code is required in order to achieve the desired effect: 
 
 ```html
-<!-- Polymer Syntax -->
+<!-- Sample Syntax -->
 <xtal-fetch fetch href="generated.json" as="json" result="{{people}}"></xtl-fetch>
-<template is="dom-repeat" items="[[people]]">
-    Name: [[item.name]] <br>
-    Email: [[item.email]] <br>
-<hr>
-</template>
+<p-d on="fetch-complete" to="{input}">
+<ul id="peopleList" data-lit>
+    <script nomodule>
+        html`${input.map(i => html`<li>Name: ${i.name} <br>Email: ${i.email}</li>`)}`
+    </script>
+</ul>
 ```
-
-Preact can look as follows.
-
-```JSX
-  <xtal-fetch fetch href="generated.json" as="json" onResultChanged={this.setPeople}></xtal-fetch>
-  ...
-``` 
-
-NB.  Inlining a lambda espression inside the event, rather than calling a method makes it not all that different from Polymer.  Whatever floats your boat.
 
 
 

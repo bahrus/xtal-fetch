@@ -195,6 +195,8 @@ class XtalFetchGet extends XtallatX(HTMLElement) {
         });
     }
     connectedCallback() {
+        this._initDisp = this.style.display;
+        this.style.display = 'none';
         this._upgradeProperties([fetch$, href]);
         this._connected = true;
         this.onPropsChange();
@@ -399,6 +401,7 @@ class XtalFetchReq extends XtalFetchGet {
                         this.cachedResults[this._href] = result;
                     }
                     if (typeof result === 'string' && this._insertResults) {
+                        this.style.display = this._initDisp;
                         this.innerHTML = result;
                     }
                     const detail = {
@@ -415,9 +418,7 @@ class XtalFetchReq extends XtalFetchGet {
         super.connectedCallback();
     }
 }
-if (!customElements.get(XtalFetchReq.is)) {
-    customElements.define(XtalFetchReq.is, XtalFetchReq);
-}
+define(XtalFetchReq);
 const forEach = 'for-each';
 const setPath = 'set-path';
 /**
