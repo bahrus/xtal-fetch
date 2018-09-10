@@ -16,11 +16,7 @@
   </script>
 
 
-  <script type="module" src="https://unpkg.com/p-d.p-u@0.0.69/p-d.js?module"></script>
-  <script type="module" src="../xtal-fetch-get.js"></script>
-  <script type="module" src="../xtal-fetch-req.js"></script>
-  <script type="module" src="../xtal-fetch-entities.js"></script>
-  <script type="module" src="https://unpkg.com/litter-g@0.0.5/litter-g.js?module"></script> 
+  
 </head>
 
 <body>
@@ -29,18 +25,20 @@
     <div>
       <litter-g></litter-g>
       <xtal-fetch-get fetch href="generated.json" as="json"></xtal-fetch-get>
-      <p-d on="fetch-complete" to="ul{input:target.result};xtal-fetch-entities{inEntities:target.result}" ></p-d>
-      <ul data-lit>
+      <p-d on="fetch-complete" to="#peopleList{input:target.result};xtal-fetch-entities{inEntities:target.result}" ></p-d>
+      <ul id="peopleList" data-lit>
           <script nomodule>
               html`${input.map(i => html`<li>Name: ${i.name} <br>Email: ${i.email}</li>`)}`
           </script>
       </ul>
       
-      <xtal-fetch-entities id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"
-        result="{{people_details}}"></xtal-fetch-entities>
-      <template id="detail" is="dom-repeat" items="[[people_details]]" mutable-data>
-        DetailContents: [[item.detail_contents.message]] <br>
-      </template>
+      <xtal-fetch-entities id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch-entities>
+      <p-d on="fetch-complete" to="{input:target.result}"></p-d>
+      <ul id="detail" data-lit>
+          <script nomodule>
+              html`${input.map(i => html`<li>DetailContents: ${i.detail_contents.message}</li>`)}`
+          </script>
+      </ul>
     </div>
 
     <hr>
@@ -53,6 +51,12 @@
     </dom-bind>
 
     <xtal-fetch req-init='{"credentials": "include"}' fetch href="inc.html" as="text" insert-results></xtal-fetch>
+
+    <script type="module" src="https://unpkg.com/p-d.p-u@0.0.69/p-d.js?module"></script>
+    <script type="module" src="../xtal-fetch-get.js"></script>
+    <script type="module" src="../xtal-fetch-req.js"></script>
+    <script type="module" src="../xtal-fetch-entities.js"></script>
+    <script type="module" src="https://unpkg.com/litter-g@0.0.5/litter-g.js?module"></script> 
   </div>
 </body>
 
