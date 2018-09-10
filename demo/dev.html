@@ -16,23 +16,26 @@
   </script>
 
 
-  <script type="module" src="https://unpkg.com/p-d.p-u@0.0.30/p-d.js?module"></script>
+  <script type="module" src="https://unpkg.com/p-d.p-u@0.0.69/p-d.js?module"></script>
   <script type="module" src="../xtal-fetch-get.js"></script>
   <script type="module" src="../xtal-fetch-req.js"></script>
   <script type="module" src="../xtal-fetch-entities.js"></script>
-
+  <script type="module" src="https://unpkg.com/litter-g@0.0.5/litter-g.js?module"></script> 
 </head>
 
 <body>
   <div>
     <h3>Basic xtal-fetch demo</h3>
     <div>
+      <litter-g></litter-g>
       <xtal-fetch-get fetch href="generated.json" as="json"></xtal-fetch-get>
-      <p-d to="#peopleList{items:target.result};xtal-fetch-entities{inEntities:target.result}" on="result-changed"></p-d>
-      <template id="peopleList" is="dom-repeat">
-        Name: [[item.name]] <br> Email: [[item.email]] <br>
-        <hr>
-      </template>
+      <p-d on="fetch-complete" to="ul{input:target.result};xtal-fetch-entities{inEntities:target.result}" ></p-d>
+      <ul data-lit>
+          <script nomodule>
+              html`${input.map(i => html`<li>Name: ${i.name} <br>Email: ${i.email}</li>`)}`
+          </script>
+      </ul>
+      
       <xtal-fetch-entities id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"
         result="{{people_details}}"></xtal-fetch-entities>
       <template id="detail" is="dom-repeat" items="[[people_details]]" mutable-data>
