@@ -21,64 +21,34 @@
 
 <body>
   <div>
-    <script async type="module" src="https://unpkg.com/p-d.p-u@0.0.67/p-d-x.js?module"></script>
-    <!-- <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.40/xtal-fetch-get.js?module"></script>
-    <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.40/xtal-fetch-req.js?module"></script>
-    <script async type="module" src="https://unpkg.com/xtal-fetch@0.0.40/xtal-fetch-entities.js?module"></script> -->
-    <!-- <script async type="module" src="../xtal-fetch-get.js?module"></script>
-    <script async type="module" src="../xtal-fetch-req.js?module"></script> -->
-    <script async type="module" src="../xtal-fetch-entities.js?module"></script>
-    <script type="module" src="https://unpkg.com/xtal-method@0.0.13/xtal-im-ex.js"></script>
-    <script type="module ish" id="_root_lit_html">
-      const root = 'https://cdn.jsdelivr.net/npm/lit-html/'
-    </script>
-    <script type="module ish" id="_lit_html">
-      const { html, render } = await import(root + 'lit-html.js');
-    </script>
-    <script type="module ish" id="_lit_repeat">
-      const { repeat } = await import(root + 'lib/repeat.js');
-    </script>
+    
     <h3>Basic xtal-fetch demo</h3>
-      <xtal-fetch disabled fetch href="https://unpkg.com/xtal-fetch@0.0.40/demo/generated.json" as="json"></xtal-fetch>
 
-      <p-d on="result-changed" to="xtal-im-ex{input}" ></p-d>
-      <p-d on="result-changed" to="#peopleEntities{inEntities}"></p-d>
-      <xtal-im-ex>
-        <script nomodule>
-            XtalIMEX.insert(_root_lit_html, _lit_html, _lit_repeat);
-            const litter = input => html`
-                ${repeat(input, item => Math.random().toString(), item => html`
-                  Name: ${item.name} <br> Email: ${item.email} <br>
-                  <hr>
-                `)}
-            `;
-            export const renderer = (input, target) => render(litter(input), target);
-        </script>
-      </xtal-im-ex>
-      
-      <xtal-fetch-entities id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch-entities>
-      <p-d on="result-changed" to="{input}"></p-d>
-      <xtal-im-ex>
-        <script nomodule>
-            XtalIMEX.insert(_root_lit_html, _lit_html, _lit_repeat);
-            const litterg = input => html`
-                ${repeat(input, item => Math.random().toString(), item => html`
-                  Detail Contents: ${item.detail_contents.message}
-                  <hr>
-                `)}
-            `;
-            export const renderer = (input, target) => render(litterg(input), target);
-        </script>
-      </xtal-im-ex>
+      <div>
+        <litter-g></litter-g>
+        <xtal-fetch fetch href="https://unpkg.com/xtal-fetch@0.0.43/demo/generated.json" as="json"></xtal-fetch>
+        <p-d on="fetch-complete" to="#peopleList{input:target.result};#peopleEntities{inEntities:target.result}" ></p-d>
+        <ul id="peopleList" data-lit>
+            <script nomodule>
+                html`${input.map(i => html`<li>Name: ${i.name} <br>Email: ${i.email}</li>`)}`
+            </script>
+        </ul>
+        
+        <xtal-fetch id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch>
+        <p-d on="fetch-complete" to="{input:target.result}"></p-d>
+        <ul id="detail" data-lit>
+            <script nomodule>
+                html`${input.map(i => html`<li>DetailContents: ${i.detail_contents.message}</li>`)}`
+            </script>
+        </ul>
+        <script type="module" src="https://unpkg.com/p-d.p-u@0.0.69/p-d.p-u.js"></script>
+        <script type="module" src="https://unpkg.com/xtal-fetch@0.0.43/xtal-fetch.js"></script>
+        <script type="module" src="https://unpkg.com/litter-g@0.0.10/litter-g.js?module"></script> 
+
+      </div>
   </div>
 
-  <!-- <hr>
-    <div>
-      <p>Test of binding in expression -- need to watch network monitor to see the effects</p>
-    </div>
-    <label>Search string: </label><input type="text">
-    <p-d on="input" to="{searchString}"></p-d>
-    <xtal-fetch-req fetch="[[searchString]]" href="generated.json?search=[[searchString]]" debounce-duration="500"></xtal-fetch-req> -->
+  
 </body>
 
 </html>
