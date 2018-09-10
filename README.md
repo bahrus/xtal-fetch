@@ -33,13 +33,13 @@ or
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.40/build/ES6/xtal-fetch.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.45/build/ES6/xtal-fetch.js"></script>
 ```
 
 or
 
 ```html
-<script src="https://unpkg.com/xtal-fetch@0.0.40/build/ES6/xtal-fetch.js"></script>
+<script src="https://unpkg.com/xtal-fetch@0.0.45/build/ES6/xtal-fetch.js"></script>
 ```
 
 CDN links like these should generally *not* be referenced directly from a generic web component meant for code distribution.  If xtal-fetch is part of a suite of components used frequently with other components, some form of primitive bundling would go a long way to bring performance numbers down.
@@ -117,7 +117,7 @@ Preact can look as follows.
 ``` 
 
 NB.  Inlining a lambda espression inside the event, rather than calling a method makes it not all that different from Polymer.  Whatever floats your boat.
-```
+
 
 
 ## Caching
