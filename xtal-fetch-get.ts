@@ -1,4 +1,4 @@
-import {XtallatX} from 'xtal-latx/xtal-latx.js';
+import {XtallatX, disabled} from 'xtal-latx/xtal-latx.js';
 import {define} from 'xtal-latx/define.js';
 
 export interface IXtalFetchBaseProperties {

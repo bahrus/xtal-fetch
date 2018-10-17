@@ -1,5 +1,6 @@
 import { XtalFetchGet } from './xtal-fetch-get.js';
 import { define } from 'xtal-latx/define.js';
+import { baseLinkId, BaseLinkId } from 'xtal-latx/base-link-id.js';
 export function snakeToCamel(s) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
 }
@@ -7,7 +8,6 @@ const debounceDuration = 'debounce-duration';
 const reqInitRequired = 'req-init-required';
 const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
-const baseLinkId = 'base-link-id';
 const req_init = 'req-init';
 /**
  * `xtal-fetch-req`
@@ -17,7 +17,7 @@ const req_init = 'req-init';
  * @polymer
  * @demo demo/index.html
  */
-export class XtalFetchReq extends XtalFetchGet {
+export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     constructor() {
         super();
         this._cacheResults = false;
@@ -115,12 +115,13 @@ export class XtalFetchReq extends XtalFetchGet {
     set insertResults(val) {
         this.attr(insertResults, val, '');
     }
-    get baseLinkId() {
-        return this._baseLinkId;
-    }
-    set baseLinkId(val) {
-        this.setAttribute(baseLinkId, val);
-    }
+    // _baseLinkId : string;
+    // get baseLinkId(){
+    //     return this._baseLinkId;
+    // }
+    // set baseLinkId(val){
+    //     this.setAttribute(baseLinkId, val);
+    // }
     static get observedAttributes() {
         return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults, baseLinkId, req_init]);
     }
@@ -176,11 +177,7 @@ export class XtalFetchReq extends XtalFetchGet {
         }
         this.fetchInProgress = true;
         let href = this.href;
-        if (this._baseLinkId) {
-            const link = self[this._baseLinkId];
-            if (link)
-                href = link.href + href;
-        }
+        href = this.getFullURL(href);
         self.fetch(href, this._reqInit).then(resp => {
             this.fetchInProgress = false;
             resp[this._as]().then(result => {

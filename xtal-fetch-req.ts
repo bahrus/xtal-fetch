@@ -1,5 +1,6 @@
 import { XtalFetchGet, IXtalFetchBaseProperties } from './xtal-fetch-get.js';
 import {define} from 'xtal-latx/define.js';
+import {baseLinkId, BaseLinkId} from 'xtal-latx/base-link-id.js'
 
 export interface IXtalFetchReqProperties extends IXtalFetchBaseProperties {
     reqInit: RequestInit,
@@ -17,7 +18,6 @@ const debounceDuration = 'debounce-duration';
 const reqInitRequired = 'req-init-required';
 const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
-const baseLinkId = 'base-link-id';
 const req_init = 'req-init';
 
 /**
@@ -28,7 +28,7 @@ const req_init = 'req-init';
  * @polymer
  * @demo demo/index.html
  */
-export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqProperties {
+export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetchReqProperties {
     constructor(){
         super();
         this._reqInit = null;
@@ -140,13 +140,13 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
         this.attr(insertResults, val, '');
     }
 
-    _baseLinkId : string;
-    get baseLinkId(){
-        return this._baseLinkId;
-    }
-    set baseLinkId(val){
-        this.setAttribute(baseLinkId, val);
-    }
+    // _baseLinkId : string;
+    // get baseLinkId(){
+    //     return this._baseLinkId;
+    // }
+    // set baseLinkId(val){
+    //     this.setAttribute(baseLinkId, val);
+    // }
 
     static get observedAttributes() {
         return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults, baseLinkId, req_init]);
@@ -207,10 +207,7 @@ export class XtalFetchReq extends XtalFetchGet implements IXtalFetchReqPropertie
         }
         this.fetchInProgress = true;
         let href = this.href;
-        if(this._baseLinkId){
-            const link = self[this._baseLinkId] as HTMLLinkElement;
-            if(link) href = link.href + href;
-        }
+        href = this.getFullURL(href);
         self.fetch(href, this._reqInit).then(resp => {
             this.fetchInProgress = false;
             resp[this._as]().then(result => {
