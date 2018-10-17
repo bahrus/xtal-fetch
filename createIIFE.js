@@ -1,6 +1,7 @@
 //@ts-check
 const jiife = require('jiife');
-jiife.processFiles(['node_modules/xtal-latx/define.js', 'node_modules/xtal-latx/xtal-latx.js', 'xtal-fetch-get.js', 'xtal-fetch-req.js', 'xtal-fetch-entities.js'], 'xtal-fetch.js');
+const xl = 'node_modules/xtal-latx/';
+jiife.processFiles([xl + 'define.js', xl + 'xtal-latx.js', xl + 'base-link-id.js', 'xtal-fetch-get.js', 'xtal-fetch-req.js', 'xtal-fetch-entities.js'], 'xtal-fetch.js');
 
 
 

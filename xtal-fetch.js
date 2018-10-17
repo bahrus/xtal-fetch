@@ -24,9 +24,9 @@ function XtallatX(superClass) {
             return [disabled];
         }
         /**
-         * Any component that emits events should not do so ef it is disabled.
+         * Any component that emits events should not do so if it is disabled.
          * Note that this is not enforced, but the disabled property is made available.
-         * Users of this mix-in sure ensure it doesn't call "de" if this property is set to true.
+         * Users of this mix-in should ensure not to call "de" if this property is set to true.
          */
         get disabled() {
             return this._disabled;
@@ -75,7 +75,7 @@ function XtallatX(superClass) {
         }
         /**
          * Dispatch Custom Event
-         * @param name Name of event to dispatch (with -changed if asIs is false)
+         * @param name Name of event to dispatch ("-changed" will be appended if asIs is false)
          * @param detail Information to be passed with the event
          * @param asIs If true, don't append event name with '-changed'
          */
@@ -102,6 +102,26 @@ function XtallatX(superClass) {
                     this[prop] = value;
                 }
             });
+        }
+    };
+}
+const baseLinkId = 'base-link-id';
+function BaseLinkId(superClass) {
+    return class extends superClass {
+        get baseLinkId() {
+            return this._baseLinkId;
+        }
+        set baseLinkId(val) {
+            this.setAttribute(baseLinkId, val);
+        }
+        getFullURL(tail) {
+            let r = tail;
+            if (this._baseLinkId) {
+                const link = self[this._baseLinkId];
+                if (link)
+                    r = link.href + r;
+            }
+            return r;
         }
     };
 }
@@ -210,7 +230,6 @@ const debounceDuration = 'debounce-duration';
 const reqInitRequired = 'req-init-required';
 const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
-const baseLinkId = 'base-link-id';
 const req_init = 'req-init';
 /**
  * `xtal-fetch-req`
@@ -220,7 +239,7 @@ const req_init = 'req-init';
  * @polymer
  * @demo demo/index.html
  */
-class XtalFetchReq extends XtalFetchGet {
+class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     constructor() {
         super();
         this._cacheResults = false;
@@ -318,12 +337,13 @@ class XtalFetchReq extends XtalFetchGet {
     set insertResults(val) {
         this.attr(insertResults, val, '');
     }
-    get baseLinkId() {
-        return this._baseLinkId;
-    }
-    set baseLinkId(val) {
-        this.setAttribute(baseLinkId, val);
-    }
+    // _baseLinkId : string;
+    // get baseLinkId(){
+    //     return this._baseLinkId;
+    // }
+    // set baseLinkId(val){
+    //     this.setAttribute(baseLinkId, val);
+    // }
     static get observedAttributes() {
         return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults, baseLinkId, req_init]);
     }
@@ -379,11 +399,7 @@ class XtalFetchReq extends XtalFetchGet {
         }
         this.fetchInProgress = true;
         let href = this.href;
-        if (this._baseLinkId) {
-            const link = self[this._baseLinkId];
-            if (link)
-                href = link.href + href;
-        }
+        href = this.getFullURL(href);
         self.fetch(href, this._reqInit).then(resp => {
             this.fetchInProgress = false;
             resp[this._as]().then(result => {
