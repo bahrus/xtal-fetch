@@ -166,7 +166,7 @@ Like the Polymer iron-ajax inspiration, the *debounce-duration* attribute specif
 <custom-element-demo>
   <template>
       <div>
-        <link rel="preconnect" id="baseSampleJsonFolder" href="https://unpkg.com/xtal-fetch@0.0.43/demo/">
+        <link rel="preconnect" id="baseSampleJsonFolder" href="https://cdn.jsdelivr.net/npm/xtal-fetch/demo/">
         <litter-g></litter-g>
         <xtal-fetch disabled base-link-id="baseSampleJsonFolder" fetch href="generated.json" as="json"></xtal-fetch>
         <p-d on="fetch-complete" to="#peopleList{input:target.result};#peopleEntities{inEntities:target.result}" ></p-d>
@@ -183,9 +183,9 @@ Like the Polymer iron-ajax inspiration, the *debounce-duration* attribute specif
                 html`${input.map(i => html`<li>DetailContents: ${i.detail_contents.message}</li>`)}`
             </script>
         </ul>
-        <script type="module" src="https://unpkg.com/p-d.p-u@0.0.69/p-d.p-u.js"></script>
-        <script type="module" src="https://unpkg.com/xtal-fetch@0.0.43/xtal-fetch.js"></script>
-        <script type="module" src="https://unpkg.com/litter-g@0.0.10/litter-g.js?module"></script> 
+        <script type="module" src="https://cdn.jsdelivr.net/npm/p-d.p-u@0.0.69/p-d.p-u.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.43/xtal-fetch.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/litter-g@0.0.15/litter-g.iife.js"></script> 
 
       </div>
 </template>
