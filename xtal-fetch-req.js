@@ -214,6 +214,11 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
                     this.de('fetch-complete', detail, true);
                 }
             });
+        }).catch(err => {
+            if (err.name === 'AbortError') {
+                console.log('Fetch aborted');
+                this.fetchInProgress = false;
+            }
         });
     }
     connectedCallback() {
