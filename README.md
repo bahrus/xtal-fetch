@@ -7,13 +7,12 @@
 
 ## Single Requests
 
-\<xtal-fetch\> is a vanilla-ish web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
+\<xtal-fetch\> is a vanilla web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
 
-Web components that do anything other than pure presentation views may seem unnatural, or wrong in some frameworks, as discussed [here](http://github.com/bahrus/json-merge).  But it is my view that they can still serve a useful purpose even in such settings, in promoting developer productivity, lowering barrier to entry for new developers, and keeping the total code footprint low.
 
 ### Referencing
 
-In order to keep the size of the download(s) as small as possible, the functionality of this component is broken down into three subcomponents.  xtal-fetch-get just supports basic get requests, has no support for error handling.  It requires a browser that supports ES6 Modules.  xtal-fetch-req supports everything xtal-fetch supports, except parallel multiple entity fetch requests.  
+In order to keep the size of the download(s) as small as possible, the functionality of this component is broken down into three subcomponents.  xtal-fetch-get just supports basic get requests, has no support for error handling.  It requires a browser that supports ES6 Modules.  xtal-fetch-req supports everything xtal-fetch supports,except parallel multiple entity fetch requests.  
 
 If you want to just keep things simple and include everything, or need to support browsers that don't support ES6 Modules you can use xtal-fetch.js.  It can use a classic script reference or a module reference.  It weighs 2.5 KB minified and gzipped.  
 
@@ -33,16 +32,14 @@ or
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.45/build/ES6/xtal-fetch.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.46/build/ES6/xtal-fetch.js"></script>
 ```
 
 or
 
 ```html
-<script src="https://unpkg.com/xtal-fetch@0.0.45/build/ES6/xtal-fetch.js"></script>
+<script src="https://unpkg.com/xtal-fetch@0.0.46/build/ES6/xtal-fetch.js"></script>
 ```
-
-CDN links like these should generally *not* be referenced directly from a generic web component meant for code distribution.  If xtal-fetch is part of a suite of components used frequently with other components, some form of primitive bundling would go a long way to bring performance numbers down.
 
 As mentioned, if you don't need all the functionality of xtal-fetch.js, replace the above links with xtal-fetch-get or xtal-fetch-req (and modify the tag name accordingly.)
 
@@ -115,6 +112,10 @@ But more typically, you will want to "post the results of the fetch to a place a
 ## Caching
 
 xtal-fetch supports caching, by setting attribute/property cache-results/cacheResults to true.
+
+## Abort support
+
+set the "abort" property of your xtal-fetch instance to true in order to abort any running request.
 
 ## Fine tuning
 

@@ -337,13 +337,10 @@ class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     set insertResults(val) {
         this.attr(insertResults, val, '');
     }
-    // _baseLinkId : string;
-    // get baseLinkId(){
-    //     return this._baseLinkId;
-    // }
-    // set baseLinkId(val){
-    //     this.setAttribute(baseLinkId, val);
-    // }
+    set abort(val) {
+        if (this._controller)
+            this._controller.abort();
+    }
     static get observedAttributes() {
         return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults, baseLinkId, req_init]);
     }
@@ -400,6 +397,18 @@ class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
         this.fetchInProgress = true;
         let href = this.href;
         href = this.getFullURL(href);
+        if (typeof (AbortController) !== 'undefined') {
+            this._controller = new AbortController();
+            const sig = this._controller.signal;
+            if (this._reqInit) {
+                this._reqInit.signal = sig;
+            }
+            else {
+                this._reqInit = {
+                    signal: sig,
+                };
+            }
+        }
         self.fetch(href, this._reqInit).then(resp => {
             this.fetchInProgress = false;
             resp[this._as]().then(result => {
