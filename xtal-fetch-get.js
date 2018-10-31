@@ -24,7 +24,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
         return this._fetch;
     }
     set fetch(val) {
-        this.attr(fetch$, val, '');
+        this.attr(fetch$, !!val, '');
     }
     get as() {
         return this._as;
@@ -66,7 +66,10 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
     attributeChangedCallback(name, oldVal, newVal) {
         switch (name) {
             case fetch$:
-                this['_' + name] = newVal !== null;
+                const ov = this['_' + name];
+                this._fetch = newVal !== null;
+                if (ov === this._fetch)
+                    return;
                 break;
             default:
                 this['_' + name] = newVal;

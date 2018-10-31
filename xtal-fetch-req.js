@@ -171,6 +171,9 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
                 this.result = val;
                 return;
             }
+            else if (this._fetchInProgress) {
+                return;
+            }
         }
         this.fetchInProgress = true;
         let href = this.href;

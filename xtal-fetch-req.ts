@@ -201,6 +201,8 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
             if (val) {
                 this.result = val;
                 return;
+            }else if(this._fetchInProgress){
+                return;
             }
         }
         this.fetchInProgress = true;
