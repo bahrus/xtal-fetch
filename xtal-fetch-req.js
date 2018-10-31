@@ -172,6 +172,9 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
                 return;
             }
             else if (this._fetchInProgress) {
+                setTimeout(() => {
+                    this.do();
+                }, 100);
                 return;
             }
         }
