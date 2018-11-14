@@ -7,8 +7,23 @@
 
 ## Single Requests
 
-\<xtal-fetch\> is a vanilla web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.
+\<xtal-fetch\> is a vanilla web component wrapper around the fetch api.  It is inspired by Polymer's \<iron-ajax\> component.  But this component has no legacy Polymer dependencies, is a thin transparent wrapper around the native fetch api, and supports some alternative functionality not supported by *iron-ajax*.  However, xtal-fetch is compatible with Polymer's powerful binding mechanism.
 
+## Is this a valid use case for a web component?
+
+NB:  The Polymer/Lit team now touts providing the kind of fetch functionality found in this component, not with a web component, but rather with [directives](https://youtu.be/ypPRdtjGooc?t=890).  
+
+Within the confines of a code-centric web component (which alas is becoming the dominant paradigm for the time being), I concede that the boilerplate savings this component provides is also provided by their directives.  Possibly caching is the only feature this component supports which the directives showcased in the video don't yet support.  But I'm sure that could be worked in if it hasn't already.
+
+The only two admittedly weak arguments in favor of using this component inside a lit-element based component are:
+
+1.  How the component "ticks" could be more transparent using this component, vs directives, as far as inspecting the component using browser dev tools.
+2.  I'm not a stickler for "separation of concerns" by any means, but there is really no separation of concerns whatsoever when using said directives.  
+3.  The claim that the markup is "declarative" becomes even less tenable in my mind.
+
+On the other hand, I recognize that the syntax is more compact, and would likely perform (slightly?) faster.
+
+Whatching the video also made me realize that the implementation of abort, added in a recent release, was incomplete.  With this latest release, if a new request is made, if there's a pending request, it will be aborted.
 
 ### Referencing
 
@@ -94,20 +109,6 @@ The results of the fetch can be inserted inside the xtal-fetch tag, becoming a g
 
 Note, though, that if using a relative path for href, it will be relative to the url of the hosting page, not the url of the component definition.
 
-But more typically, you will want to "post the results of the fetch to a place available to its peers (other nodes inside the containing web component)".  The last phrase is in quotes, because that isn't precisely what happens when one examines the nitty gritty details, but this is the effect we essentially want to have.  If the containing component is also a Polymer component, then this  can be done by specifying a two-way binding path, and no boilerplate code is required in order to achieve the desired effect: 
-
-```html
-<!-- Sample Syntax -->
-<xtal-fetch fetch href="generated.json" as="json" result="{{people}}"></xtl-fetch>
-<p-d on="fetch-complete" to="{input}">
-<ul id="peopleList" data-lit>
-    <script nomodule>
-        html`${input.map(i => html`<li>Name: ${i.name} <br>Email: ${i.email}</li>`)}`
-    </script>
-</ul>
-```
-
-
 
 ## Caching
 
@@ -115,7 +116,7 @@ xtal-fetch supports caching, by setting attribute/property cache-results/cacheRe
 
 ## Abort support
 
-set the "abort" property of your xtal-fetch instance to true in order to abort any running request.
+Set the "abort" property of your xtal-fetch instance to true in order to "manually" abort any running request.  The component also automatically aborts request if a new request is made before the previous request finished.
 
 ## Fine tuning
 
