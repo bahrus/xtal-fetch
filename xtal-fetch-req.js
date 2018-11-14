@@ -76,6 +76,9 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
         return this._errorResponse;
     }
     set errorResponse(val) {
+        //if(this._errorResponse === val) return;
+        if (!this._errorResponse && !val)
+            return;
         this._errorResponse = val;
         if (val !== null) {
             this.de('error-response', {
@@ -92,13 +95,13 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
         return this._errorText;
     }
     set errorText(val) {
+        if (!val && !this._errorText)
+            return;
         this._errorText = val;
-        if (val !== null) {
-            this.attr('errorText', val);
-            this.de('error-text', {
-                value: val
-            });
-        }
+        this.attr('errorText', val);
+        this.de('error-text', {
+            value: val
+        });
     }
     /**
      * @type {Boolean}
