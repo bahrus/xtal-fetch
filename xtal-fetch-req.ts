@@ -95,9 +95,11 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
     }
     set errorResponse(val) {
         this._errorResponse = val;
-        this.de('error-response', {
-            value: val
-        });
+        if(val !== null){
+            this.de('error-response', {
+                value: val
+            });
+        }
     }
 
     _errorText;
@@ -111,9 +113,13 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
     }
     set errorText(val) {
         this._errorText = val;
-        this.de('error-text', {
-            value: val
-        });
+        if(val !== null){
+            this.attr('errorText', val);
+            this.de('error-text', {
+                value: val
+            });
+        }
+
     }
 
     _fetchInProgress = false;
@@ -208,6 +214,9 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
                 return;
             }
         }
+        if(this.fetchInProgress){
+            this.abort = true;
+        }
         this.fetchInProgress = true;
         let href = this.href;
         href = this.getFullURL(href);
@@ -222,7 +231,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
                 }
             }
         }
-             
+        //this.abort = true;     
         self.fetch(href, this._reqInit).then(resp => {
             this.fetchInProgress = false;
             resp[this._as]().then(result => {
@@ -247,7 +256,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
                     }
                     this.de('fetch-complete', detail, true);
                 }
-            })
+            });
         }).catch(err => {
             if (err.name === 'AbortError') {
                 console.log('Fetch aborted');

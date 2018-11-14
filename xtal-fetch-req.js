@@ -77,9 +77,11 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     }
     set errorResponse(val) {
         this._errorResponse = val;
-        this.de('error-response', {
-            value: val
-        });
+        if (val !== null) {
+            this.de('error-response', {
+                value: val
+            });
+        }
     }
     /**
      * @type {String}
@@ -91,9 +93,12 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     }
     set errorText(val) {
         this._errorText = val;
-        this.de('error-text', {
-            value: val
-        });
+        if (val !== null) {
+            this.attr('errorText', val);
+            this.de('error-text', {
+                value: val
+            });
+        }
     }
     /**
      * @type {Boolean}
@@ -178,6 +183,9 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
                 return;
             }
         }
+        if (this.fetchInProgress) {
+            this.abort = true;
+        }
         this.fetchInProgress = true;
         let href = this.href;
         href = this.getFullURL(href);
@@ -193,6 +201,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
                 };
             }
         }
+        //this.abort = true;     
         self.fetch(href, this._reqInit).then(resp => {
             this.fetchInProgress = false;
             resp[this._as]().then(result => {

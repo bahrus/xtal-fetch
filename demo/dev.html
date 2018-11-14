@@ -45,16 +45,25 @@
     <div>
       <p>Test of binding in expression -- need to watch network monitor to see the effects</p>
     </div>
-    <label>Search string: </label><input type="text" value="{{searchString::input}}">
-    <xtal-fetch-req fetch="[[searchString]]" href="generated.json?search=[[searchString]]" debounce-duration="500"></xtal-fetch-req>
+    <label>Search string: </label><input type="text">
+    <p-d on="input" to="{search}"></p-d>
+    <aggregator-fn><script nomodule>
+      ({search}) => {
+        return `https://cors-anywhere.herokuapp.com/https://www.pluralsight.com/courses/vanilla-web-components-practical-guide?search=${search}`;
+      }
+    </script></aggregator-fn>
+    <p-d on="value-changed" to="xtal-fetch-req{href}"></p-d>
+    <p-d on="value-changed" to="{fetch}" skip-init></p-d>
+    <xtal-fetch-req as="text" insert-results></xtal-fetch-req>
 
     <xtal-fetch req-init='{"credentials": "include"}' fetch href="inc.html" as="text" insert-results></xtal-fetch>
 
-    <script type="module" src="https://unpkg.com/p-d.p-u@0.0.69/p-d.js?module"></script>
+    <script type="module" src="https://unpkg.com/p-d.p-u@0.0.76/dist/p-all.iife.js"></script>
     <script type="module" src="../xtal-fetch-get.js"></script>
     <script type="module" src="../xtal-fetch-req.js"></script>
     <script type="module" src="../xtal-fetch-entities.js"></script>
     <script type="module" src="https://unpkg.com/litter-g@0.0.10/litter-g.js?module"></script> 
+    <script type="module" src="https://unpkg.com/aggregator-fn@0.0.12/aggregator-fn.iife.js"></script>
     <script nomodule src="../xtal-fetch.js"></script>
   </div>
 </body>
