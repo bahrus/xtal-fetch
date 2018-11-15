@@ -15,15 +15,15 @@ NB:  The Polymer/Lit team now touts providing the kind of fetch functionality fo
 
 Within the confines of a code-centric web component (which alas is becoming the dominant paradigm for the time being), I concede that the boilerplate savings this component provides is also provided by their directives.  Possibly caching is the only feature this component supports which the directives showcased in the video don't yet support.  But I'm sure that could be worked in if it hasn't already.
 
-The only two admittedly weak arguments in favor of using this component inside a lit-element based component are:
+The only three admittedly weak arguments in favor of using this component inside a lit-element based component are:
 
-1.  How the component "ticks" could be more transparent using this component, vs directives, as far as inspecting the component using browser dev tools.
+1.  What makes the component "tick" could be more transparent using this component, vs directives, as far as inspecting the component using browser dev tools.
 2.  I'm not a stickler for "separation of concerns" by any means, but there is really no separation of concerns whatsoever when using said directives.  
 3.  The claim that the markup is "declarative" becomes even less tenable in my mind.
 
 On the other hand, I recognize that the syntax is more compact, and would likely perform (slightly?) faster.
 
-Whatching the video also made me realize that the implementation of abort, added in a recent release, was incomplete.  With this latest release, if a new request is made, if there's a pending request, it will be aborted.
+Watching the video also made me realize that the implementation of abort, added in a recent release, was incomplete.  With this latest release, if a new request is made, if there's a pending request, it will be aborted.  Multiple requests will be visited next.
 
 ### Referencing
 
