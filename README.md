@@ -1,9 +1,26 @@
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/bahrus/xtal-fetch)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/xtal-fetch)
 
 <a href="https://nodei.co/npm/xtal-fetch/"><img src="https://nodei.co/npm/xtal-fetch.png"></a>
 
+<img src="https://badgen.net/bundlephobia/minzip/trans-render">
 
 # \<xtal-fetch\>
+
+## API
+
+<!--
+```
+<custom-element-demo>
+<template>
+    <div>
+        <wc-info package-name="npm install xtal-fetch" href="https://unpkg.com/xtal-fetch@0.0.53/web-components.json">
+        </wc-info>
+        <script type="module" src="https://unpkg.com/wc-info@0.0.15/dist/wc-info.iife.js"></script>
+    </div>
+</template>
+</custom-element-demo>
+```
+-->
 
 ## Single Requests
 

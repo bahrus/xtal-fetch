@@ -79,7 +79,7 @@ function XtallatX(superClass) {
          * @param detail Information to be passed with the event
          * @param asIs If true, don't append event name with '-changed'
          */
-        de(name, detail, asIs) {
+        de(name, detail, asIs = false) {
             const eventName = name + (asIs ? '' : '-changed');
             const newEvent = new CustomEvent(eventName, {
                 detail: detail,
@@ -301,6 +301,9 @@ class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
         return this._errorResponse;
     }
     set errorResponse(val) {
+        //if(this._errorResponse === val) return;
+        if (!this._errorResponse && !val)
+            return;
         this._errorResponse = val;
         if (val !== null) {
             this.de('error-response', {
@@ -317,13 +320,13 @@ class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
         return this._errorText;
     }
     set errorText(val) {
+        if (!val && !this._errorText)
+            return;
         this._errorText = val;
-        if (val !== null) {
-            this.attr('errorText', val);
-            this.de('error-text', {
-                value: val
-            });
-        }
+        this.attr('errorText', val);
+        this.de('error-text', {
+            value: val
+        });
     }
     /**
      * @type {Boolean}

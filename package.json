@@ -1,19 +1,22 @@
 {
   "name": "xtal-fetch",
   "version": "0.0.52",
+  "keywords": ["fetch", "rest", "web-components"],
   "description": "Dependency free web component wrapper around the fetch function.",
-  "main": "xtal-fetch.js",
+  "main": "xtal-fetch-get.js",
+  "module": "xtal-fetch-get.js",
   "repository": "https://github.com/bahrus/xtal-fetch",
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "xtal-latx": "0.0.46"
+    "xtal-latx": "0.0.88"
   },
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "^2.0.0",
-    "jiife": "^0.0.4",
-    "tape": "^4.9.1",
-    "@types/tape": "4.2.32",
-    "xtal-test": "0.0.8"
+    "@webcomponents/webcomponentsjs": "2.2.4",
+    "jiife": "0.0.11",
+    "tape": "4.9.2",
+    "@types/tape": "4.2.33",
+    "xtal-test": "0.0.10",
+    "p-d.p-u": "0.0.100"
   }
 }
