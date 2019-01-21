@@ -1,7 +1,11 @@
 {
   "name": "xtal-fetch",
-  "version": "0.0.52",
-  "keywords": ["fetch", "rest", "web-components"],
+  "version": "0.0.53",
+  "keywords": [
+    "fetch",
+    "rest",
+    "web-components"
+  ],
   "description": "Dependency free web component wrapper around the fetch function.",
   "main": "xtal-fetch-get.js",
   "module": "xtal-fetch-get.js",
