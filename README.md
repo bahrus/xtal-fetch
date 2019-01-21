@@ -34,7 +34,7 @@ Within the confines of a code-centric web component (which alas is becoming the 
 
 The only three admittedly weak arguments in favor of using this component inside a lit-element based component are:
 
-1.  What makes the component "tick" could be more transparent using this component, vs directives, as far as inspecting the component using browser dev tools.
+1.  What makes the lit-element "tick" could be more transparent using this component, vs directives, as far as inspecting the component using browser dev tools.
 2.  I'm not a stickler for "separation of concerns" by any means, but there is really no separation of concerns whatsoever when using said directives.  
 3.  The claim that the markup is "declarative" becomes even less tenable in my mind.
 
