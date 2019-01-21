@@ -13,7 +13,7 @@
 <custom-element-demo>
 <template>
     <div>
-        <wc-info package-name="npm install xtal-fetch" href="https://unpkg.com/xtal-fetch@0.0.53/web-components.json">
+        <wc-info package-name="npm install xtal-fetch" href="https://unpkg.com/xtal-fetch@0.0.55/web-components.json">
         </wc-info>
         <script type="module" src="https://unpkg.com/wc-info@0.0.15/dist/wc-info.iife.js"></script>
     </div>
