@@ -1,131 +1,132 @@
 {
+    "version": 1,
     "tags": [
         {
-            "label": "xtal-fetch-get",
+            "name": "xtal-fetch-get",
             "description": "A small, basic vanilla web component wrapper around the fetch api.",
             "attributes": [
                 {
-                    "label": "fetch",
+                    "name": "fetch",
                     "description": "Boolean property / attribute -- must be true to enable (or pre-validate) fetch requests."
                 },
                 {
-                    "label": "href",
+                    "name": "href",
                     "description": "URL (path) to fetch."
                 }
 
             ]
         },{
-            "label": "xtal-fetch-req",
+            "name": "xtal-fetch-req",
             "description": "A feature-rich web component wrapper around the fetch api.",
             "attributes":[
                 {
-                    "label": "fetch",
+                    "name": "fetch",
                     "description": "Boolean property / attribute -- must be true to enable (or pre-validate) fetch requests."
                 },
                 {
-                    "label": "href",
+                    "name": "href",
                     "description": "URL (path) to fetch."
                 },
                 {
-                    "label": "req-init",
+                    "name": "req-init",
                     "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format."
                 },
                 {
-                    "label": "cache-results",
+                    "name": "cache-results",
                     "description": "Boolean attribute / property -- indicate whether to pull the response from a previous identical fetch request from cache."
                 },
                 {
-                    "label": "insert-results",
+                    "name": "insert-results",
                     "description": "Boolean attribute / property -- indicate whether to set the innerHTML of the web component with the response from the server.  Make sure the service is protected against XSS."
                 },
                 {
-                    "label":"req-init-required",
+                    "name":"req-init-required",
                     "description":  "Boolean attribute / property -- indicates that no fetch request should proceed until reqInit property / attribute is set."
                 },
                 {
-                    "label": "base-link-id",
+                    "name": "base-link-id",
                     "description": "Specify the id of a link element in document.head which contains a root (base) url, to which the href property/attribute should be appended."
                 }                
             ]
         },{
-            "label": "xtal-fetch-entities",
+            "name": "xtal-fetch-entities",
             "description":  "A robust web component wrapper around the fetch api.",
             "attributes":[
                 {
-                    "label": "fetch",
+                    "name": "fetch",
                     "description": "Boolean property / attribute -- must be true to enable (or pre-validate) fetch requests."
                 },
                 {
-                    "label": "href",
+                    "name": "href",
                     "description": "URL (path) to fetch."
                 },
                 {
-                    "label": "req-init",
+                    "name": "req-init",
                     "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format."
                 },
                 {
-                    "label": "cache-results",
+                    "name": "cache-results",
                     "description": "Boolean attribute / property -- indicate whether to pull the response from a previous identical fetch request from cache."
                 },
                 {
-                    "label": "insert-results",
+                    "name": "insert-results",
                     "description": "Boolean attribute / property -- indicate whether to set the innerHTML of the web component with the response from the server.  Make sure the service is protected against XSS."
                 },
                 {
-                    "label":"req-init-required",
+                    "name":"req-init-required",
                     "description":  "Boolean attribute / property -- indicates that no fetch request should proceed until reqInit property / attribute is set."
                 },
                 {
-                    "label": "for-each",
+                    "name": "for-each",
                     "description": "Comma delimited list of properties to use as input for the fetch urls."
                 },
                 {
-                    "label": "set-path",
+                    "name": "set-path",
                     "description":"Path to set value inside each entity."
                 },
                 {
-                    "label": "base-link-id",
+                    "name": "base-link-id",
                     "description": "Specify the id of a link element in document.head which contains a root (base) url, to which the href property/attribute should be appended."
                 }                  
             ]
         },{
-            "label": "xtal-fetch",
+            "name": "xtal-fetch",
             "description":  "A robust web component wrapper around the fetch api.",
             "attributes":[
                 {
-                    "label": "fetch",
+                    "name": "fetch",
                     "description": "Boolean property / attribute -- must be true to enable (or pre-validate) fetch requests."
                 },
                 {
-                    "label": "href",
+                    "name": "href",
                     "description": "URL (path) to fetch."
                 },
                 {
-                    "label": "req-init",
+                    "name": "req-init",
                     "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format."
                 },
                 {
-                    "label": "cache-results",
+                    "name": "cache-results",
                     "description": "Boolean attribute / property -- indicate whether to pull the response from a previous identical fetch request from cache."
                 },
                 {
-                    "label": "insert-results",
+                    "name": "insert-results",
                     "description": "Boolean attribute / property -- indicate whether to set the innerHTML of the web component with the response from the server.  Make sure the service is protected against XSS."
                 },
                 {
-                    "label":"req-init-required",
+                    "name":"req-init-required",
                     "description":  "Boolean attribute / property -- indicates that no fetch request should proceed until reqInit property / attribute is set."
                 },
                 {
-                    "label": "for-each",
+                    "name": "for-each",
                     "description": "Comma delimited list of properties to use as input for the fetch urls."
                 },
                 {
-                    "label": "set-path",
+                    "name": "set-path",
                     "description":"Path to set value inside each entity."
                 },
                 {
-                    "label": "base-link-id",
+                    "name": "base-link-id",
                     "description": "Specify the id of a link element in document.head which contains a root (base) url, to which the href property/attribute should be appended."
                 }                  
             ]

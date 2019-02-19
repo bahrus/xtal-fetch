@@ -4,5 +4,15 @@
         "**/*.js": {"when": "$(basename).ts"},
         "**/*.js.map" : true
     },
-    "html.experimental.custom.tags": ["./web-components.json","node_modules/p-d.p-u/web-components.json"]
+    "json.schemas": [
+        {
+            "fileMatch": ["/html.json"],
+            "url": "https://raw.githubusercontent.com/Microsoft/vscode-html-languageservice/master/docs/customData.schema.json"
+        },
+        {
+            "fileMatch": ["/css.json"],
+            "url": "https://raw.githubusercontent.com/Microsoft/vscode-css-languageservice/master/docs/customData.schema.json"
+        }
+    ],
+    "html.experimental.customData": ["./html.json"],
 }

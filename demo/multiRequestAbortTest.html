@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <button id="ut">Update Timestamp</button>
+        <xtal-deco><script nomodule>
+            ({
+                vals:{
+                    inEntities: [
+                        {href:'https://code.visualstudio.com/updates/v1_30#_html-custom-tags-attributes-support'},
+                        {href: 'https://marketplace.visualstudio.com/items?itemName=runem.lit-plugin'},
+                        {href: 'https://marketplace.visualstudio.com/items?itemName=bierner.lit-html'},
+                        {href: 'https://marketplace.visualstudio.com/items?itemName=bierner.comment-tagged-templates'},
+                        {href: 'https://opensource.googleblog.com/2018/11/introducing-web-component-and-data-api-for-quick-draw.html'},
+                        {href: 'https://github.com/matthewp/haunted'},
+                        {href: 'https://www.blazeui.com/'},
+                        {href: 'https://www.udemy.com/webcomponents-apps/'},
+                        {href: 'https://livebook.manning.com/#!/book/web-components-in-action/welcome/v-4/'},
+                        {href: 'https://leanpub.com/web-component-essentials'}
+                    ]
+                }
+            })
+        </script></xtal-deco>
+        <xtal-fetch id="fetcher" fetch for-each="href" href="https://cors-anywhere.herokuapp.com/:href" as="text" set-path="result"></xtal-fetch>
+        <script type="module" src="../xtal-fetch-entities.js"></script>
+        <script type="module" src="https://unpkg.com/xtal-decorator@0.0.39/xtal-deco.js?module"></script>
+        <script>
+            ut.addEventListener('click', e =>{
+                fetcher.inEntities.forEach(ent => {
+                    const delim = ent.href.indexOf('?') > -1 ? '&' : '?';
+                    ent.href += delim +  'ts=1';
+                });
+                fetcher.inEntities = fetcher.inEntities;
+            })
+        </script>
+    </div>
+</body>
+</html>

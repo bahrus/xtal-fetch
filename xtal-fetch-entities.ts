@@ -85,12 +85,26 @@ export class XtalFetchEntities extends XtalFetchReq{
             super.do();
             return;
         }
+        if(this.fetchInProgress){
+            this.abort = true;
+        }
         const keys = this._forEach.split(',');
         let remainingCalls = this._inEntities.length;
         this.fetchInProgress = true;
         let counter = 0;
         const base = this._baseLinkId ? self[this._baseLinkId].href : '';
         //this._inEntities.forEach(entity => {
+        if(typeof(AbortController) !== 'undefined'){
+            this._controller = new AbortController();
+            const sig = this._controller.signal;
+            if(this._reqInit){
+                this._reqInit.signal = sig;
+            }else{
+                this._reqInit = {
+                    signal: sig,
+                }
+            }
+        }
         for(let i = 0, ii = this._inEntities.length; i < ii; i++){
             const entity = this._inEntities[i];
             entity['__xtal_idx'] = counter; counter++;
@@ -108,6 +122,7 @@ export class XtalFetchEntities extends XtalFetchReq{
                     return;
                 }
             }
+            
             self.fetch(href, this._reqInit).then(resp => {
                 if (resp.status !== 200) {
                     resp['text']().then(val => {
@@ -141,7 +156,12 @@ export class XtalFetchEntities extends XtalFetchReq{
                 }
 
 
-            })
+            }).catch(err => {
+                if (err.name === 'AbortError') {
+                    console.log('Fetch aborted');
+                    this.fetchInProgress = false;
+                }
+            });
         }
 
 
