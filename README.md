@@ -13,9 +13,9 @@
 <custom-element-demo>
 <template>
     <div>
-        <wc-info package-name="npm install xtal-fetch" href="https://unpkg.com/xtal-fetch@0.0.55/web-components.json">
+        <wc-info package-name="npm install xtal-fetch" href="https://unpkg.com/xtal-fetch@0.0.56/html.json">
         </wc-info>
-        <script type="module" src="https://unpkg.com/wc-info@0.0.15/dist/wc-info.iife.js"></script>
+        <script type="module" src="https://unpkg.com/wc-info@0.0.29/wc-info.js?module"></script>
     </div>
 </template>
 </custom-element-demo>
@@ -40,7 +40,7 @@ The only three admittedly weak arguments in favor of using this component inside
 
 On the other hand, I recognize that the syntax is more compact, and would likely perform (slightly?) faster.
 
-Watching the video also made me realize that the implementation of abort, added in a recent release, was incomplete.  With this latest release, if a new request is made, if there's a pending request, it will be aborted.  Multiple requests will be visited next.
+Watching the video also made me realize that the implementation of abort, added in a recent release, was incomplete.  With this latest release, if a new request is made, if there's a pending request, it will be aborted.  Multiple requests now supports abort as well.
 
 ### Referencing
 
