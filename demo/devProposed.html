@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>xtal-fetch demo</title>
+
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="text/javascript">
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+      document.write('<script src="../IE11-polyfill.js"><\/script>');
+    }
+
+  </script>
+
+
+  
+</head>
+
+<body>
+  <div>
+    <h3>Basic xtal-fetch demo</h3>
+    <div>
+      <litter-g></litter-g>
+      <xtal-fetch-req fetch href="generated.json" as="json"></xtal-fetch-req>
+      <p-d on="fetch-complete" to="{input:target.result};xtal-fetch-entities{inEntities:target.result}" ></p-d>
+      <trans-render>
+          <template id="itemTemplate">
+              <li><div>Name: |.name|</div><div>Email: |.email|</div></li>
+          </template>
+          <script nomodule>({
+              ul: ({target}) => repeatInit(input.length, itemTemplate, target, {
+                li: ({idx}) => {
+                    div: ({target}) => interpolate(target, 'textContent', input[idx]);
+                }
+              })
+          })
+          </script>
+      </trans-render>
+      <ul></ul>
+      
+      <xtal-fetch-entities id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch-entities>
+      <p-d on="fetch-complete" to="{input:target.result}"></p-d>
+      <ul id="detail" data-lit>
+          <script nomodule>
+              html`${input.map(i => html`<li>DetailContents: ${i.detail_contents.message}</li>`)}`
+          </script>
+      </ul>
+    </div>
+
+    <hr>
+    <div>
+      <p>Test of binding in expression -- need to watch network monitor to see the effects</p>
+    </div>
+    <label>Search string: </label><input type="text">
+    <p-d on="input" to="{search}"></p-d>
+    <aggregator-fn><script nomodule>
+      ({search}) => {
+        return `https://cors-anywhere.herokuapp.com/https://www.pluralsight.com/courses/vanilla-web-components-practical-guide?search=${search}`;
+      }
+    </script></aggregator-fn>
+    <p-d on="value-changed" to="xtal-fetch-req{href}"></p-d>
+    <p-d on="value-changed" to="{fetch}" skip-init></p-d>
+    <xtal-fetch-req as="text" insert-results></xtal-fetch-req>
+
+    <xtal-fetch req-init='{"credentials": "include"}' fetch href="inc.html" as="text" insert-results></xtal-fetch>
+
+    <script type="module" src="https://unpkg.com/p-d.p-u@0.0.76/dist/p-all.iife.js"></script>
+    <script type="module" src="../xtal-fetch-get.js"></script>
+    <script type="module" src="../xtal-fetch-req.js"></script>
+    <script type="module" src="../xtal-fetch-entities.js"></script>
+    <script type="module" src="https://unpkg.com/litter-g@0.0.10/litter-g.js?module"></script> 
+    <script type="module" src="https://unpkg.com/aggregator-fn@0.0.12/aggregator-fn.iife.js"></script>
+    <script nomodule src="../xtal-fetch.js"></script>
+  </div>
+</body>
+
+</html>
