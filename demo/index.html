@@ -26,33 +26,32 @@
 
       <div>
         <link rel="preconnect" id="baseSampleJsonFolder" href="https://cdn.jsdelivr.net/npm/xtal-fetch/demo/">
-        <template id="itemTemplate">
+        <template id="personTemplate">
           <li><div>Name: |.name|</div><div>Email: |.email|</div></li>
         </template>
         <xtal-fetch disabled base-link-id="baseSampleJsonFolder" fetch href="generated.json" as="json"></xtal-fetch>
-        <p-d on="fetch-complete" to="trans-render" prop="viewModel" val="target.result" m="1"></p-d>
-        <p-d on="fetch-complete" to="#peopleEntities" prop="inEntities" val="target.result"></p-d>
+        <p-d on="fetch-complete" prop="viewModel" val="target.result"></p-d>
+        <p-d on="fetch-complete" to="xtal-fetch" prop="inEntities" val="target.result" m="1"></p-d>
         <trans-render><script nomodule>({
-            ul: ({ctx, target}) => ctx.repeatInit(itemTemplate, ctx, ctx.viewModel.length, target, {
-                li: {
-                  div: ({ctx, target, idx}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx])
-                }
-            })          
+          'ul#peopleList': ({ctx, target}) => ctx.repeatInit(personTemplate, ctx, ctx.viewModel.length, target, {
+              li: {
+                div: ({ctx, target, idx}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx])
+              }
+          })          
         })</script></trans-render>        
         <ul id="peopleList"></ul>
         
-        <!-- <xtal-fetch disabled id="peopleEntities" as="json" base-link-id="baseSampleJsonFolder" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch>
-        <p-d on="fetch-complete" to="{viewModel:target.result}"></p-d>
+        <template id="fileTemplate">
+          <li>Message |.message|</li>
+        </template>
+        <xtal-fetch disabled id="peopleEntities" as="json" base-link-id="baseSampleJsonFolder" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch>
+        <p-d on="fetch-complete" prop="viewModel" val="target.result"></p-d>
         <trans-render><script nomodule>({
-                ul: ({ctx, target}) => ctx.repeatInit(itemTemplate, ctx, ctx.viewModel.length, target, {
-                    li: ({ctx, idx}) => ctx.viewModel[idx]
-                })          
+          ul: ({ctx, target}) => ctx.repeatInit(fileTemplate, ctx, ctx.viewModel.length, target, {
+              li: ({ctx, idx, target}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx].detail_contents)
+          })          
         })</script></trans-render>
-        <ul id="detail" data-lit>
-            <script nomodule>
-                html`${input.map(i => html`<li>DetailContents: ${i.detail_contents.message}</li>`)}`
-            </script>
-        </ul> -->
+        <ul></ul>
         <script type="module" src="https://unpkg.com/p-d.p-u@0.0.105/p-d.js?module"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.43/xtal-fetch.js"></script>
         <script type="module" src="https://unpkg.com/trans-render@0.0.72/trans-render.js?module"></script>
