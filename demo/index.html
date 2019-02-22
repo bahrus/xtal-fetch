@@ -33,11 +33,14 @@
         <p-d on="fetch-complete" prop="viewModel" val="target.result"></p-d>
         <p-d on="fetch-complete" to="xtal-fetch" prop="inEntities" val="target.result" m="1"></p-d>
         <trans-render><script nomodule>({
-          'ul#peopleList': ({ctx, target}) => ctx.repeatInit(personTemplate, ctx, ctx.viewModel.length, target, {
+          ul: ({ctx, target}) => ctx.repeatInit(personTemplate, ctx, ctx.viewModel.length, target, {
               li: {
                 div: ({ctx, target, idx}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx])
               }
-          })          
+          }),
+          'ul[id]': {
+            SkipSibs: true
+          }         
         })</script></trans-render>        
         <ul id="peopleList"></ul>
         
