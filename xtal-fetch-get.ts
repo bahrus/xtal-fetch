@@ -1,5 +1,5 @@
-import {XtallatX, disabled} from 'xtal-latx/xtal-latx.js';
-import {define} from 'xtal-latx/define.js';
+import {XtallatX, disabled} from 'xtal-element/xtal-latx.js';
+import {define} from 'xtal-element/define.js';
 
 export interface IXtalFetchBaseProperties {
     href: string,
@@ -21,12 +21,12 @@ const as = 'as';
  * @demo demo/index.html
  */
 export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBaseProperties {
-    _reqInit: RequestInit = {
+    _reqInit: RequestInit | undefined = {
         credentials: 'same-origin'
     }
    
     static get is() { return 'xtal-fetch-get'; }
-    _fetch: boolean;
+    _fetch!: boolean;
     get fetch() {
         return this._fetch
     }
@@ -34,7 +34,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
         this.attr(fetch$, !!val, '');
     }
 
-    _as = 'json';
+    _as : 'json' | 'text' = 'json';
     get as(){
         return this._as;
     }
@@ -42,7 +42,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
         this.attr(as, val);
     }
 
-    _href: string;
+    _href!: string;
     get href() {
         return this._href;
     }
@@ -81,13 +81,13 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
     attributeChangedCallback(name: string, oldVal: string, newVal: string) {
         switch (name) {
             case fetch$:
-                const ov = this['_' + name];
+                const ov = (<any>this)['_' + name];
                 this._fetch = newVal !== null;
                 if(ov === this._fetch) return;
                 break;
 
             default:
-                this['_' + name] = newVal;
+                (<any>this)['_' + name] = newVal;
         }
         super.attributeChangedCallback(name, oldVal, newVal);
         this.onPropsChange();
@@ -107,8 +107,8 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
             })
         });
     }
-    _connected: boolean;
-    _initDisp: string;
+    _connected!: boolean;
+    _initDisp!: string | null;
     connectedCallback() {
         this._initDisp = this.style.display;
         this.style.display = 'none';

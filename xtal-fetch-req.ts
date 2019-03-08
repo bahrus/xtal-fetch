@@ -1,17 +1,17 @@
 import { XtalFetchGet, IXtalFetchBaseProperties } from './xtal-fetch-get.js';
-import {define} from 'xtal-latx/define.js';
-import {baseLinkId, BaseLinkId} from 'xtal-latx/base-link-id.js'
+import {define} from 'xtal-element/define.js';
+import {baseLinkId, BaseLinkId} from 'xtal-element/base-link-id.js'
 
 export interface IXtalFetchReqProperties extends IXtalFetchBaseProperties {
-    reqInit: RequestInit,
+    reqInit: RequestInit | undefined,
     reqInitRequired: boolean,
     debounceDuration: number,
-    errorResponse: Response;
+    errorResponse: Response | null;
     fetchInProgress: boolean;
     insertResults: boolean;
     baseLinkId: string;
 }
-export function snakeToCamel(s) {
+export function snakeToCamel(s: string) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
 }
 const debounceDuration = 'debounce-duration';
@@ -31,7 +31,7 @@ const req_init = 'req-init';
 export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetchReqProperties {
     constructor(){
         super();
-        this._reqInit = null;
+        this._reqInit = undefined;
     }
     get reqInit() {
         return this._reqInit;
@@ -64,7 +64,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
         return this._cachedResults;
     }
 
-    _reqInitRequired: boolean;
+    _reqInitRequired!: boolean;
     get reqInitRequired() {
         return this.hasAttribute(reqInitRequired);
     }
@@ -72,7 +72,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
         this.attr(reqInitRequired, val, '');
     }
 
-    _debounceDuration;
+    _debounceDuration! : number;
     /**
      * @type {Number}
      * How long to pause between requests
@@ -84,7 +84,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
         this.setAttribute(debounceDuration, val.toString());
     }
 
-    _errorResponse: Response;
+    _errorResponse!: Response | null;
     /**
      * @type {Object}
      * Error response as an object
@@ -104,7 +104,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
         }
     }
 
-    _errorText;
+    _errorText! : string;
     /**
      * @type {String}
      * Indicates the error text of the last request.
@@ -139,7 +139,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
         })
     }
 
-    _insertResults: boolean;
+    _insertResults!: boolean;
     get insertResults() {
         return this._insertResults;
     }
@@ -147,9 +147,9 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
         this.attr(insertResults, val, '');
     }
 
-    _controller : AbortController;
+    _controller! : AbortController | null;
 
-    set abort(val){
+    set abort(val: boolean){
         if(this._controller)this._controller.abort();
     }
 
@@ -167,7 +167,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
             case reqInitRequired:
             case cacheResults:
             case insertResults:
-                this['_' + snakeToCamel(name)] =  newValue !== null;
+                (<any>this)['_' + snakeToCamel(name)] =  newValue !== null;
                 break;
             case baseLinkId:
                 this._baseLinkId = newValue;
@@ -180,9 +180,9 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
     }
 
 
-    debounce(func, wait, immediate?) {
-        let timeout;
-        return function () {
+    debounce(func: any, wait: number, immediate?: boolean) {
+        let timeout: any;
+        return function ()  {
             const context = this, args = arguments;
             clearTimeout(timeout);
             timeout = setTimeout(function () {
@@ -193,7 +193,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
         };
     }
 
-    __loadNewUrlDebouncer;
+    __loadNewUrlDebouncer!: any;
     debounceDurationHandler() {
         this.__loadNewUrlDebouncer = this.debounce(() => {
             this.loadNewUrl();

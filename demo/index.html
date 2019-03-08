@@ -37,12 +37,11 @@
               li: {
                 div: ({ctx, target, idx}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx])
               }
-          }),
-          'ul[id]': {
-            SkipSibs: true
-          }         
+          })         
         })</script></trans-render>        
-        <ul id="peopleList"></ul>
+        <div>
+          <ul></ul>
+        </div>
         
         <template id="fileTemplate">
           <li>Message |.message|</li>
@@ -54,10 +53,12 @@
               li: ({ctx, idx, target}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx].detail_contents)
           })          
         })</script></trans-render>
-        <ul></ul>
+        <div>
+          <ul></ul>
+        </div>
         <script type="module" src="https://unpkg.com/p-d.p-u@0.0.105/p-d.js?module"></script>
         <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.43/xtal-fetch.js"></script>
-        <script type="module" src="https://unpkg.com/trans-render@0.0.72/trans-render.js?module"></script>
+        <script type="module" src="https://unpkg.com/trans-render@0.0.73/trans-render.js?module"></script>
         
 
       </div>

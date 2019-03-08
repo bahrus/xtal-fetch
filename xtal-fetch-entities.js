@@ -1,5 +1,5 @@
 import { XtalFetchReq, snakeToCamel } from './xtal-fetch-req.js';
-import { define } from 'xtal-latx/define.js';
+import { define } from 'xtal-element/define.js';
 const forEach = 'for-each';
 const setPath = 'set-path';
 /**
@@ -61,7 +61,7 @@ export class XtalFetchEntities extends XtalFetchReq {
     onPropsChange() {
         const hasAtLeastOneProp = this.setPath || this.forEach || this.inEntities;
         if (hasAtLeastOneProp) {
-            this._hasAllThreeProps = this._setPath && this._forEach && this.inEntities;
+            this._hasAllThreeProps = !!(this._setPath && this._forEach && this.inEntities);
             if (!this._hasAllThreeProps) { //need all three
                 return;
             }
@@ -166,4 +166,3 @@ class XtalFetch extends XtalFetchEntities {
     static get is() { return 'xtal-fetch'; }
 }
 define(XtalFetch);
-//# sourceMappingURL=xtal-fetch-entities.js.map

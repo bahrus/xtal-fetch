@@ -1,5 +1,5 @@
 import { XtalFetchReq, IXtalFetchReqProperties, snakeToCamel } from './xtal-fetch-req.js';
-import {define} from 'xtal-latx/define.js';
+import {define} from 'xtal-element/define.js';
 
 export interface IXtalFetchEntitiesProperties extends IXtalFetchReqProperties{
     forEach: string,
@@ -18,7 +18,7 @@ const setPath = 'set-path';
  */
 export class XtalFetchEntities extends XtalFetchReq{
     static get is(){return 'xtal-fetch-entities';}
-    _forEach: string;
+    _forEach!: string;
     /**
      * @type {String}
      * Comma delimited list of properties to use as input for the fetch urls
@@ -29,7 +29,7 @@ export class XtalFetchEntities extends XtalFetchReq{
     set forEach(val){
         this.attr(forEach, val);
     }
-    _setPath: string;
+    _setPath!: string;
     /**
      * @type {String}
      * Path to set value inside each entity
@@ -40,7 +40,7 @@ export class XtalFetchEntities extends XtalFetchReq{
     set setPath(val){
         this.attr(setPath, val);
     }
-    _inEntities : any[];
+    _inEntities! : any[];
     /**
      * @type {Array}
      * Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)
@@ -60,7 +60,7 @@ export class XtalFetchEntities extends XtalFetchReq{
         switch (name) {
             case setPath:
             case forEach:
-                this['_' + snakeToCamel(name)] = newValue;
+                (<any>this)['_' + snakeToCamel(name)] = newValue;
         }
         super.attributeChangedCallback(name, oldValue, newValue);
     }
@@ -68,11 +68,11 @@ export class XtalFetchEntities extends XtalFetchReq{
         super.connectedCallback();
         this._upgradeProperties(['forEach', 'setPath', 'inEntities']);
     }
-    _hasAllThreeProps;
+    _hasAllThreeProps!: boolean;
     onPropsChange(){
         const hasAtLeastOneProp = this.setPath || this.forEach || this.inEntities;
         if(hasAtLeastOneProp){
-            this._hasAllThreeProps = this._setPath && this._forEach && this.inEntities
+            this._hasAllThreeProps = !!(this._setPath && this._forEach && this.inEntities);
             if(!this._hasAllThreeProps){ //need all three
                 return;
             }
@@ -92,7 +92,7 @@ export class XtalFetchEntities extends XtalFetchReq{
         let remainingCalls = this._inEntities.length;
         this.fetchInProgress = true;
         let counter = 0;
-        const base = this._baseLinkId ? self[this._baseLinkId].href : '';
+        const base = this._baseLinkId ? (<any>self)[this._baseLinkId].href : '';
         //this._inEntities.forEach(entity => {
         if(typeof(AbortController) !== 'undefined'){
             this._controller = new AbortController();

@@ -1,6 +1,6 @@
 import { XtalFetchGet } from './xtal-fetch-get.js';
-import { define } from 'xtal-latx/define.js';
-import { baseLinkId, BaseLinkId } from 'xtal-latx/base-link-id.js';
+import { define } from 'xtal-element/define.js';
+import { baseLinkId, BaseLinkId } from 'xtal-element/base-link-id.js';
 export function snakeToCamel(s) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
 }
@@ -23,7 +23,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
         this._cacheResults = false;
         this._cachedResults = {};
         this._fetchInProgress = false;
-        this._reqInit = null;
+        this._reqInit = undefined;
     }
     get reqInit() {
         return this._reqInit;
@@ -245,4 +245,3 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     }
 }
 define(XtalFetchReq);
-//# sourceMappingURL=xtal-fetch-req.js.map
