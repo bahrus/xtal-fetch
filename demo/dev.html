@@ -7,13 +7,7 @@
 
   <title>xtal-fetch demo</title>
 
-  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script type="text/javascript">
-    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
-      document.write('<script src="../IE11-polyfill.js"><\/script>');
-    }
 
-  </script>
 
 
   
@@ -22,21 +16,24 @@
 <body>
   <div>
     <h3>Basic xtal-fetch demo</h3>
+    <xtal-sip><script nomodule>["xtal-fetch-req", "p-d", "xtal-fetch-entities", "aggregator-fn", "litter-g"]</script></xtal-sip>
     <div>
+      
       <litter-g></litter-g>
-      <xtal-fetch-req fetch href="generated.json" as="json"></xtal-fetch-req>
-      <p-d on="fetch-complete" to="#peopleList{input:target.result};xtal-fetch-entities{inEntities:target.result}" ></p-d>
+      <xtal-fetch-req disabled="2" fetch href="generated.json" as="json"></xtal-fetch-req>
+      <p-d on="fetch-complete" prop="_input" value="target.result"></p-d>
+      <p-d on="fetch-complete" prop="inEntities" value="target.result"></p-d>
       <ul id="peopleList" data-lit>
           <script nomodule>
-              html`${input.map(i => html`<li>Name: ${i.name} <br>Email: ${i.email}</li>`)}`
+              html`${_input.map(i => html`<li>Name: ${i.name} <br>Email: ${i.email}</li>`)}`
           </script>
       </ul>
       
       <xtal-fetch-entities id="peopleEntities" as="json" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch-entities>
-      <p-d on="fetch-complete" to="{input:target.result}"></p-d>
+      <p-d on="fetch-complete" prop="_input" val="target.result"></p-d>
       <ul id="detail" data-lit>
           <script nomodule>
-              html`${input.map(i => html`<li>DetailContents: ${i.detail_contents.message}</li>`)}`
+              html`${_input.map(i => html`<li>DetailContents: ${i.detail_contents.message}</li>`)}`
           </script>
       </ul>
     </div>
@@ -46,25 +43,37 @@
       <p>Test of binding in expression -- need to watch network monitor to see the effects</p>
     </div>
     <label>Search string: </label><input type="text">
-    <p-d on="input" to="{search}"></p-d>
-    <aggregator-fn><script nomodule>
-      ({search}) => {
+    <p-d on="input" prop="search"></p-d>
+    <aggregator-fn disabled="2"><script nomodule>
+      fn = ({search}) => {
         return `https://cors-anywhere.herokuapp.com/https://www.pluralsight.com/courses/vanilla-web-components-practical-guide?search=${search}`;
       }
     </script></aggregator-fn>
-    <p-d on="value-changed" to="xtal-fetch-req{href}"></p-d>
-    <p-d on="value-changed" to="{fetch}" skip-init></p-d>
+    <p-d on="value-changed" prop="href"></p-d>
+    <p-d on="value-changed" skip-init></p-d>
     <xtal-fetch-req as="text" insert-results></xtal-fetch-req>
 
-    <xtal-fetch req-init='{"credentials": "include"}' fetch href="inc.html" as="text" insert-results></xtal-fetch>
+    <xtal-fetch-req req-init='{"credentials": "include"}' fetch href="inc.html" as="text" insert-results></xtal-fetch-req>
 
-    <script type="module" src="https://unpkg.com/p-d.p-u@0.0.76/dist/p-all.iife.js"></script>
-    <script type="module" src="../xtal-fetch-get.js"></script>
-    <script type="module" src="../xtal-fetch-req.js"></script>
-    <script type="module" src="../xtal-fetch-entities.js"></script>
-    <script type="module" src="https://unpkg.com/litter-g@0.0.10/litter-g.js?module"></script> 
-    <script type="module" src="https://unpkg.com/aggregator-fn@0.0.12/aggregator-fn.iife.js"></script>
-    <script nomodule src="../xtal-fetch.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/es-module-shims@0.2.7/dist/es-module-shims.js"></script>
+    <script type="importmap-shim">
+    {
+        "imports": {
+            "xtal-element/": "../node_modules/xtal-element/",
+            "trans-render/": "../node_modules/trans-render/",
+            "xtal-sip": "https://cdn.jsdelivr.net/npm/xtal-sip@0.0.85/xtal-sip.js",
+            "xtal-fetch-req": "../xtal-fetch-req.js",
+            "xtal-fetch-entities": "../xtal-fetch-entities.js",
+            "p-d": "https://cdn.jsdelivr.net/npm/p-d.p-u@0.0.123/p-d.js",
+            "litter-g": "https://cdn.jsdelivr.net/npm/litter-g@0.0.24/litter-g.js",
+            "aggregator-fn": "https://cdn.jsdelivr.net/npm/aggregator-fn@0.0.17/aggregator-fn.js"
+        }
+    }
+    </script>
+    <script  type="module-shim">
+        import 'xtal-sip';
+    </script>
   </div>
 </body>
 

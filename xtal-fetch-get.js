@@ -1,5 +1,6 @@
 import { XtallatX } from 'xtal-element/xtal-latx.js';
-import { define } from 'xtal-element/define.js';
+import { define } from 'trans-render/define.js';
+import { hydrate } from 'trans-render/hydrate.js';
 const fetch$ = 'fetch';
 const href = 'href';
 const as = 'as';
@@ -11,7 +12,7 @@ const as = 'as';
  * @polymer
  * @demo demo/index.html
  */
-export class XtalFetchGet extends XtallatX(HTMLElement) {
+export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) {
     constructor() {
         super(...arguments);
         this._reqInit = {
@@ -95,7 +96,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) {
     connectedCallback() {
         this._initDisp = this.style.display;
         this.style.display = 'none';
-        this._upgradeProperties([fetch$, href]);
+        this.propUp([fetch$, href]);
         this._connected = true;
         this.onPropsChange();
     }

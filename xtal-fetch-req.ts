@@ -1,5 +1,5 @@
 import { XtalFetchGet, IXtalFetchBaseProperties } from './xtal-fetch-get.js';
-import {define} from 'xtal-element/define.js';
+import {define} from 'trans-render/define.js';
 import {baseLinkId, BaseLinkId} from 'xtal-element/base-link-id.js'
 
 export interface IXtalFetchReqProperties extends IXtalFetchBaseProperties {
@@ -267,7 +267,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
     }
 
     connectedCallback(){
-        this._upgradeProperties(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit']);
+        this.propUp(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit']);
         super.connectedCallback();
         
     }

@@ -1,5 +1,6 @@
-import {XtallatX, disabled} from 'xtal-element/xtal-latx.js';
-import {define} from 'xtal-element/define.js';
+import {XtallatX} from 'xtal-element/xtal-latx.js';
+import {define} from 'trans-render/define.js';
+import {disabled, hydrate} from 'trans-render/hydrate.js';
 
 export interface IXtalFetchBaseProperties {
     href: string,
@@ -20,7 +21,7 @@ const as = 'as';
  * @polymer
  * @demo demo/index.html
  */
-export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBaseProperties {
+export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements IXtalFetchBaseProperties {
     _reqInit: RequestInit | undefined = {
         credentials: 'same-origin'
     }
@@ -112,7 +113,7 @@ export class XtalFetchGet extends XtallatX(HTMLElement) implements IXtalFetchBas
     connectedCallback() {
         this._initDisp = this.style.display;
         this.style.display = 'none';
-        this._upgradeProperties([fetch$, href]);
+        this.propUp([fetch$, href]);
         this._connected = true;
         this.onPropsChange();
     }

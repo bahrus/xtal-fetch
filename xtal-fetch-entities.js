@@ -1,5 +1,5 @@
 import { XtalFetchReq, snakeToCamel } from './xtal-fetch-req.js';
-import { define } from 'xtal-element/define.js';
+import { define } from 'trans-render/define.js';
 const forEach = 'for-each';
 const setPath = 'set-path';
 /**
@@ -56,7 +56,7 @@ export class XtalFetchEntities extends XtalFetchReq {
     }
     connectedCallback() {
         super.connectedCallback();
-        this._upgradeProperties(['forEach', 'setPath', 'inEntities']);
+        this.propUp(['forEach', 'setPath', 'inEntities']);
     }
     onPropsChange() {
         const hasAtLeastOneProp = this.setPath || this.forEach || this.inEntities;
