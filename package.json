@@ -1,6 +1,6 @@
 {
   "name": "xtal-fetch",
-  "version": "0.0.57",
+  "version": "0.0.58",
   "keywords": [
     "fetch",
     "rest",
@@ -24,7 +24,7 @@
     "xtal-test": "0.0.18",
     "p-d.p-u": "0.0.123"
   },
-  "scripts":{
+  "scripts": {
     "serve": "node node_modules/xtal-test/serve.js"
   }
 }
