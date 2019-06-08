@@ -14,15 +14,15 @@
   "license": "MIT",
   "dependencies": {
     "xtal-element": "0.0.59",
-    "trans-render": "0.0.111"
+    "trans-render": "0.0.112"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "2.2.10",
     "jiife": "0.0.12",
-    "tape": "4.10.1",
+    "tape": "4.10.2",
     "@types/tape": "4.2.33",
-    "xtal-test": "0.0.18",
-    "p-d.p-u": "0.0.123"
+    "xtal-test": "0.0.19",
+    "p-et-alia": "0.0.5"
   },
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js"
