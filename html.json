@@ -14,6 +14,20 @@
                     "description": "URL (path) to fetch."
                 }
 
+            ],
+            "customEvents":[
+                {
+                    "name": "result-changed",
+                    "description": "Result of fetch changed",
+                    "associatedPropName": "result",
+                    "detail":[
+                        {
+                            "name": "value",
+                            "description": "Result of fetch",
+                            "type": "any"
+                        }
+                    ]
+                }
             ]
         },{
             "name": "xtal-fetch-req",
@@ -47,6 +61,60 @@
                     "name": "base-link-id",
                     "description": "Specify the id of a link element in document.head which contains a root (base) url, to which the href property/attribute should be appended."
                 }                
+            ],
+            "customEvents":[
+                {
+                    "name": "result-changed",
+                    "description": "Result of fetch changed",
+                    "associatedPropName": "result",
+                    "detail":[
+                        {
+                            "name": "value",
+                            "description": "Result of fetch",
+                            "type": "any"
+                        }
+                    ]
+                },
+                {
+                    "name": "fetch-in-progress-changed",
+                    "description": "Fired when fetch starts and ends",
+                    "associatedPropName": "fetchInProgress",
+                    "detail":[
+                        {
+                            "name": "value",
+                            "description": "True if fetch in progress, false if not.",
+                            "type": "boolean"
+                        }
+                    ]
+                },
+                {
+                    "name": "error-text-changed",
+                    "description": "Fired when fetch error received or cleared.",
+                    "associatedPropName": "errorText",
+                    "detail":[
+                        {
+                            "name": "value",
+                            "description": "Value of error text (if any).",
+                            "type": "string"
+                        }
+                    ]
+                },
+                {
+                    "name": "fetch-complete",
+                    "description": "Fired when fetch is completed",
+                    "detail":[
+                        {
+                            "name": "href",
+                            "description": "URL that was fetched",
+                            "type": "string"
+                        },
+                        {
+                            "name": "result",
+                            "description": "Result of fetch",
+                            "type": "any"
+                        }
+                    ]
+                }
             ]
         },{
             "name": "xtal-fetch-entities",
