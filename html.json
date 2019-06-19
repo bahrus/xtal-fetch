@@ -4,6 +4,7 @@
         {
             "name": "xtal-fetch-get",
             "description": "A small, basic vanilla web component wrapper around the fetch api.",
+            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.61/xtal-fetch-get.js?module",
             "testCaseNames": ["test1"],
             "attributes": [
                 {
