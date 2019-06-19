@@ -4,6 +4,7 @@
         {
             "name": "xtal-fetch-get",
             "description": "A small, basic vanilla web component wrapper around the fetch api.",
+            "testCaseNames": ["test1"],
             "attributes": [
                 {
                     "name": "fetch",
@@ -11,9 +12,21 @@
                 },
                 {
                     "name": "href",
-                    "description": "URL (path) to fetch."
+                    "description": "URL (path) to fetch.",
+                    "testValues":{
+                        "test1": "https://cdn.jsdelivr.net/npm/xtal-fetch/demo/generated.json"
+                    }
                 }
 
+            ],
+            "properties":[
+                {
+                    "name": "fetch",
+                    "description": "Boolean property / attribute -- must be true to enable (or pre-validate) fetch requests.",
+                    "testValues":{
+                        "test1": true
+                    }
+                }
             ],
             "customEvents":[
                 {
