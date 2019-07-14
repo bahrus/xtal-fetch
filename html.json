@@ -248,23 +248,28 @@
                 },
                 {
                     "name": "reqInit",
-                    "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format."
+                    "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.",
+                    "type": "object"
                 },
                 {
                     "name": "cacheResults",
-                    "description": "Boolean attribute / property -- indicate whether to pull the response from a previous identical fetch request from cache."
+                    "description": "Boolean attribute / property -- indicate whether to pull the response from a previous identical fetch request from cache.",
+                    "type": "boolean"
                 },
                 {
                     "name": "insertResults",
-                    "description": "Boolean attribute / property -- indicate whether to set the innerHTML of the web component with the response from the server.  Make sure the service is protected against XSS."
+                    "description": "Boolean attribute / property -- indicate whether to set the innerHTML of the web component with the response from the server.  Make sure the service is protected against XSS.",
+                    "type": "boolean"
                 },
                 {
                     "name": "reqInitRequired",
-                    "description": "Boolean attribute / property -- indicates that no fetch request should proceed until reqInit property / attribute is set."
+                    "description": "Boolean attribute / property -- indicates that no fetch request should proceed until reqInit property / attribute is set.",
+                    "type": "boolean"
                 },
                 {
                     "name": "baseLinkId",
-                    "description": "Specify the id of a link element in document.head which contains a root (base) url, to which the href property/attribute should be appended."
+                    "description": "Specify the id of a link element in document.head which contains a root (base) url, to which the href property/attribute should be appended.",
+                    "type": "string"
                 }
             ],
             "customEvents": [
