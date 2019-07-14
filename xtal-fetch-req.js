@@ -240,7 +240,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
         });
     }
     connectedCallback() {
-        this.propUp(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit']);
+        this.propUp(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit', 'insertResults']);
         super.connectedCallback();
     }
 }

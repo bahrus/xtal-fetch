@@ -267,7 +267,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetch
     }
 
     connectedCallback(){
-        this.propUp(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit']);
+        this.propUp(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit', 'insertResults']);
         super.connectedCallback();
         
     }
