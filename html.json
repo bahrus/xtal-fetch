@@ -4,7 +4,7 @@
         {
             "name": "xtal-fetch-get",
             "description": "A small, basic vanilla web component wrapper around the fetch api.",
-            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.61/xtal-fetch-get.js?module",
+            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.67/xtal-fetch-get.js?module",
             "testCaseNames": [
                 "test1"
             ],
@@ -198,6 +198,7 @@
         {
             "name": "xtal-fetch-req",
             "description": "A feature-rich web component wrapper around the fetch api.",
+            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.67/xtal-fetch-req.js?module",
             "attributes": [
                 {
                     "name": "fetch",
@@ -324,6 +325,7 @@
         {
             "name": "xtal-fetch-entities",
             "description": "A robust web component wrapper around the fetch api.",
+            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.67/xtal-fetch-entities.js?module",
             "attributes": [
                 {
                     "name": "fetch",
