@@ -373,6 +373,7 @@
                 {
                     "name": "fetch",
                     "description": "Boolean property / attribute -- must be true to enable (or pre-validate) fetch requests.",
+                    "type": "boolean",
                     "testValues": {
                         "test1": true
                     }
@@ -380,41 +381,50 @@
                 {
                     "name": "href",
                     "description": "URL (path) to fetch.",
+                    "type": "string",
                     "testValues": {
                         "test1": "https://cdn.jsdelivr.net/npm/xtal-fetch/demo/generated.json"
                     }
                 },
                 {
                     "name": "reqInit",
-                    "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format."
+                    "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.",
+                    "type": "object"
                 },
                 {
                     "name": "cacheResults",
-                    "description": "Boolean attribute / property -- indicate whether to pull the response from a previous identical fetch request from cache."
+                    "description": "Boolean attribute / property -- indicate whether to pull the response from a previous identical fetch request from cache.",
+                    "type": "boolean"
                 },
                 {
                     "name": "insertResults",
-                    "description": "Boolean attribute / property -- indicate whether to set the innerHTML of the web component with the response from the server.  Make sure the service is protected against XSS."
+                    "description": "Boolean attribute / property -- indicate whether to set the innerHTML of the web component with the response from the server.  Make sure the service is protected against XSS.",
+                    "type": "boolean"
                 },
                 {
                     "name": "reqInitRequired",
-                    "description": "Boolean attribute / property -- indicates that no fetch request should proceed until reqInit property / attribute is set."
+                    "description": "Boolean attribute / property -- indicates that no fetch request should proceed until reqInit property / attribute is set.",
+                    "type": "boolean"
                 },
                 {
                     "name": "baseLinkId",
-                    "description": "Specify the id of a link element in document.head which contains a root (base) url, to which the href property/attribute should be appended."
+                    "description": "Specify the id of a link element in document.head which contains a root (base) url, to which the href property/attribute should be appended.",
+                    "type": "string"
                 },
                 {
                     "name": "inEntities",
-                    "description": "Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)"
+                    "description": "Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)",
+                    "type": "object"
                 },
                 {
                     "name": "setPath",
-                    "description": "Path to set value inside each entity"
+                    "description": "Path to set value inside each entity",
+                    "type": "string"
                 },
                 {
                     "name": "forEach",
-                    "description": "Comma delimited list of properties to use as input for the fetch urls"
+                    "description": "Comma delimited list of properties to use as input for the fetch urls",
+                    "type": "string"
                 }
             ],
             "customEvents": [
@@ -478,7 +488,7 @@
             "attributes": [
                 {
                     "name": "fetch",
-                    "description": "Boolean property / attribute -- must be true to enable (or pre-validate) fetch requests."
+                    "description": "Boolean property / attribute -- must be true to enable (or pre-validate) fetch requests.",
                 },
                 {
                     "name": "href",
@@ -517,6 +527,7 @@
                 {
                     "name": "fetch",
                     "description": "Boolean property / attribute -- must be true to enable (or pre-validate) fetch requests.",
+                    "type": "boolean",
                     "testValues": {
                         "test1": true
                     }
@@ -524,40 +535,49 @@
                 {
                     "name": "href",
                     "description": "URL (path) to fetch.",
+                    "type": "string",
                     "testValues": {
                         "test1": "https://cdn.jsdelivr.net/npm/xtal-fetch/demo/generated.json"
                     }
                 },
                 {
                     "name": "reqInit",
+                    "type": "object",
                     "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format."
                 },
                 {
                     "name": "cacheResults",
+                    "type": "boolean",
                     "description": "Boolean attribute / property -- indicate whether to pull the response from a previous identical fetch request from cache."
                 },
                 {
                     "name": "insertResults",
+                    "type": "boolean",
                     "description": "Boolean attribute / property -- indicate whether to set the innerHTML of the web component with the response from the server.  Make sure the service is protected against XSS."
                 },
                 {
                     "name": "reqInitRequired",
+                    "type": "boolean",
                     "description": "Boolean attribute / property -- indicates that no fetch request should proceed until reqInit property / attribute is set."
                 },
                 {
                     "name": "baseLinkId",
+                    "type": "string",
                     "description": "Specify the id of a link element in document.head which contains a root (base) url, to which the href property/attribute should be appended."
                 },
                 {
                     "name": "inEntities",
+                    "type": "object",
                     "description": "Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)"
                 },
                 {
                     "name": "setPath",
+                    "type": "string",
                     "description": "Path to set value inside each entity"
                 },
                 {
                     "name": "forEach",
+                    "type": "string",
                     "description": "Comma delimited list of properties to use as input for the fetch urls"
                 }
             ],
