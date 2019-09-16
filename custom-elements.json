@@ -2,9 +2,9 @@
   "version": 2,
   "tags": [
     {
-      "name": "",
-      "description": "`xtal-fetch`\n  Feature rich custom element that can make fetch calls, include Post requests.",
-      "jsDoc": "/**\n * `xtal-fetch`\n *  Feature rich custom element that can make fetch calls, include Post requests.\n *\n * @customElement\n * @polymer\n * @demo demo/index.html\n */",
+      "name": "xtal-fetch-entities",
+      "description": "Entire feature set for xtal-fetch, including multiple entity requests.",
+      "jsDoc": "/**\n *  Entire feature set for xtal-fetch, including multiple entity requests.\n *  @element xtal-fetch-entities\n */",
       "attributes": [
         {
           "name": "as",
@@ -41,6 +41,12 @@
           "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
           "jsDoc": "/**\r\n     * Indicate whether to set the innerHTML of the web component with the response from the server.  \r\n     * Make sure the service is protected against XSS.\r\n     * @attr insert-results\r\n     */",
           "type": "boolean"
+        },
+        {
+          "name": "for-each",
+          "description": "Comma delimited list of properties to use as input for the fetch urls",
+          "jsDoc": "/**\n     * Comma delimited list of properties to use as input for the fetch urls\n     * @type {String}\n     * @attr for-each\n     */",
+          "type": "any"
         }
       ],
       "properties": [
@@ -144,32 +150,223 @@
         },
         {
           "name": "forEach",
-          "type": "string"
+          "description": "Comma delimited list of properties to use as input for the fetch urls",
+          "jsDoc": "/**\n     * Comma delimited list of properties to use as input for the fetch urls\n     * @type {String}\n     * @attr for-each\n     */",
+          "type": "any"
         },
         {
           "name": "setPath",
-          "type": "string"
+          "description": "Path to set value inside each entity",
+          "jsDoc": "/**\n     * Path to set value inside each entity\n     * @type {String}\n     * attr set-path\n     */",
+          "type": "any"
         },
         {
           "name": "inEntities",
-          "type": "any[]"
+          "description": "Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)",
+          "jsDoc": "/**\n     * Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)\n     * @type {Array}\n     *\n     */",
+          "type": "any"
         }
       ],
       "events": [
         {
-          "name": "result-changed"
-        },
-        {
-          "name": "error-response-changed"
-        },
-        {
-          "name": "error-text-changed"
+          "name": "fetch-complete"
         },
         {
           "name": "fetch-in-progress-changed"
         },
         {
+          "name": "error-text-changed"
+        },
+        {
+          "name": "error-response-changed"
+        },
+        {
+          "name": "result-changed"
+        }
+      ],
+      "slots": []
+    },
+    {
+      "name": "xtal-fetch",
+      "description": "Feature rich custom element that can make fetch calls, include Post requests.",
+      "jsDoc": "/**\n * Feature rich custom element that can make fetch calls, include Post requests.\n *  @element xtal-fetch\n */",
+      "attributes": [
+        {
+          "name": "as",
+          "description": "How to treat the response",
+          "jsDoc": "/**\r\n     * How to treat the response\r\n     * @attr\r\n     * @type {\"json\"|\"text\"}\r\n     */",
+          "type": "\"text\" | \"json\""
+        },
+        {
+          "name": "href",
+          "description": "URL (path) to fetch.",
+          "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @type {String}\r\n     * @attr\r\n     * \r\n     */",
+          "type": "string"
+        },
+        {
+          "name": "req-init",
+          "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
+          "jsDoc": "/**\r\n     * Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\n     * Supports JSON formatted attribute\r\n     * @type {object}\r\n     * @attr req-init\r\n     */",
+          "type": "RequestInit | undefined"
+        },
+        {
+          "name": "cache-results",
+          "description": "Indicates whether to pull the response from a previous identical fetch request from cache.",
+          "jsDoc": "/**\r\n     * Indicates whether to pull the response from a previous identical fetch request from cache.\r\n     * @attr cache-results\r\n     */",
+          "type": "boolean"
+        },
+        {
+          "name": "debounce-duration",
+          "description": "How long to pause between requests",
+          "jsDoc": "/**\r\n     * How long to pause between requests\r\n     * @attr debounce-duration\r\n     * @type {Number}\r\n     * \r\n     */",
+          "type": "number"
+        },
+        {
+          "name": "insert-results",
+          "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
+          "jsDoc": "/**\r\n     * Indicate whether to set the innerHTML of the web component with the response from the server.  \r\n     * Make sure the service is protected against XSS.\r\n     * @attr insert-results\r\n     */",
+          "type": "boolean"
+        },
+        {
+          "name": "for-each",
+          "description": "Comma delimited list of properties to use as input for the fetch urls",
+          "jsDoc": "/**\n     * Comma delimited list of properties to use as input for the fetch urls\n     * @type {String}\n     * @attr for-each\n     */",
+          "type": "any"
+        }
+      ],
+      "properties": [
+        {
+          "name": "val",
+          "type": "\"set\" | \"remove\""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "name": "evCount",
+          "type": "{ [key: string]: number; }"
+        },
+        {
+          "name": "asIs",
+          "type": "\"\" | \"-changed\""
+        },
+        {
+          "name": "fetch",
+          "type": "boolean"
+        },
+        {
+          "name": "as",
+          "description": "How to treat the response",
+          "jsDoc": "/**\r\n     * How to treat the response\r\n     * @attr\r\n     * @type {\"json\"|\"text\"}\r\n     */",
+          "type": "\"text\" | \"json\""
+        },
+        {
+          "name": "href",
+          "description": "URL (path) to fetch.",
+          "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @type {String}\r\n     * @attr\r\n     * \r\n     */",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "type": "any"
+        },
+        {
+          "name": "result",
+          "description": "⚡ Fires event result-changed\r\nResult of fetch request",
+          "jsDoc": "/**\r\n     * ⚡ Fires event result-changed\r\n     * Result of fetch request\r\n     * @type {Object}\r\n     * \r\n     * \r\n     */",
+          "type": "any"
+        },
+        {
+          "name": "baseLinkId",
+          "type": "string"
+        },
+        {
+          "name": "reqInit",
+          "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
+          "jsDoc": "/**\r\n     * Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\n     * Supports JSON formatted attribute\r\n     * @type {object}\r\n     * @attr req-init\r\n     */",
+          "type": "RequestInit | undefined"
+        },
+        {
+          "name": "cacheResults",
+          "description": "Indicates whether to pull the response from a previous identical fetch request from cache.",
+          "jsDoc": "/**\r\n     * Indicates whether to pull the response from a previous identical fetch request from cache.\r\n     * @attr cache-results\r\n     */",
+          "type": "boolean"
+        },
+        {
+          "name": "reqInitRequired",
+          "description": "Indicates that no fetch request should proceed until reqInit property / attribute is set.",
+          "jsDoc": "/**\r\n     * Indicates that no fetch request should proceed until reqInit property / attribute is set.\r\n     */",
+          "type": "boolean"
+        },
+        {
+          "name": "debounceDuration",
+          "description": "How long to pause between requests",
+          "jsDoc": "/**\r\n     * How long to pause between requests\r\n     * @attr debounce-duration\r\n     * @type {Number}\r\n     * \r\n     */",
+          "type": "number"
+        },
+        {
+          "name": "errorResponse",
+          "description": "Error response as an object\r\n⚡ Fires event error-response-changed",
+          "jsDoc": "/**\r\n     * Error response as an object\r\n     * ⚡ Fires event error-response-changed\r\n     * @type {Object}\r\n     * \r\n     */",
+          "type": "Response | null"
+        },
+        {
+          "name": "errorText",
+          "description": "Indicates the error text of the last request.\r\n⚡ Fires event error-text-changed.",
+          "jsDoc": "/**\r\n     * Indicates the error text of the last request.\r\n     * ⚡ Fires event error-text-changed.\r\n     * @type {String}\r\n     */",
+          "type": "string"
+        },
+        {
+          "name": "fetchInProgress",
+          "description": "Indicates Fetch is in progress\r\n⚡ Fires event fetch-in-progress-changed",
+          "jsDoc": "/**\r\n     * Indicates Fetch is in progress\r\n     * ⚡ Fires event fetch-in-progress-changed\r\n     * @type {Boolean}\r\n     */",
+          "type": "boolean"
+        },
+        {
+          "name": "insertResults",
+          "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
+          "jsDoc": "/**\r\n     * Indicate whether to set the innerHTML of the web component with the response from the server.  \r\n     * Make sure the service is protected against XSS.\r\n     * @attr insert-results\r\n     */",
+          "type": "boolean"
+        },
+        {
+          "name": "abort",
+          "type": "boolean"
+        },
+        {
+          "name": "forEach",
+          "description": "Comma delimited list of properties to use as input for the fetch urls",
+          "jsDoc": "/**\n     * Comma delimited list of properties to use as input for the fetch urls\n     * @type {String}\n     * @attr for-each\n     */",
+          "type": "any"
+        },
+        {
+          "name": "setPath",
+          "description": "Path to set value inside each entity",
+          "jsDoc": "/**\n     * Path to set value inside each entity\n     * @type {String}\n     * attr set-path\n     */",
+          "type": "any"
+        },
+        {
+          "name": "inEntities",
+          "description": "Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)",
+          "jsDoc": "/**\n     * Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)\n     * @type {Array}\n     *\n     */",
+          "type": "any"
+        }
+      ],
+      "events": [
+        {
           "name": "fetch-complete"
+        },
+        {
+          "name": "fetch-in-progress-changed"
+        },
+        {
+          "name": "error-text-changed"
+        },
+        {
+          "name": "error-response-changed"
+        },
+        {
+          "name": "result-changed"
         }
       ],
       "slots": []

@@ -3,42 +3,41 @@ import { define } from 'trans-render/define.js';
 const forEach = 'for-each';
 const setPath = 'set-path';
 /**
- * `xtal-fetch-entities`
- *  Entire feature set for fetch, including multiple entity requests.
- *
- * @customElement
- * @polymer
- * @demo demo/index.html
+ *  Entire feature set for xtal-fetch, including multiple entity requests.
+ *  @element xtal-fetch-entities
  */
 export class XtalFetchEntities extends XtalFetchReq {
     static get is() { return 'xtal-fetch-entities'; }
-    /**
-     * @type {String}
-     * Comma delimited list of properties to use as input for the fetch urls
-     */
     get forEach() {
         return this._forEach || this.getAttribute(forEach);
     }
+    /**
+     * Comma delimited list of properties to use as input for the fetch urls
+     * @type {String}
+     * @attr for-each
+     */
     set forEach(val) {
         this.attr(forEach, val);
     }
-    /**
-     * @type {String}
-     * Path to set value inside each entity
-     */
     get setPath() {
         return this._setPath || this.getAttribute(setPath);
     }
+    /**
+     * Path to set value inside each entity
+     * @type {String}
+     * attr set-path
+     */
     set setPath(val) {
         this.attr(setPath, val);
     }
-    /**
-     * @type {Array}
-     * Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)
-     */
     get inEntities() {
         return this._inEntities;
     }
+    /**
+     * Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)
+     * @type {Array}
+     *
+     */
     set inEntities(val) {
         this._inEntities = val;
         this.onPropsChange();
@@ -155,12 +154,8 @@ export class XtalFetchEntities extends XtalFetchReq {
 }
 define(XtalFetchEntities);
 /**
- * `xtal-fetch`
- *  Feature rich custom element that can make fetch calls, include Post requests.
- *
- * @customElement
- * @polymer
- * @demo demo/index.html
+ * Feature rich custom element that can make fetch calls, include Post requests.
+ *  @element xtal-fetch
  */
 class XtalFetch extends XtalFetchEntities {
     static get is() { return 'xtal-fetch'; }
