@@ -25,6 +25,7 @@
     "p-et-alia": "0.0.44"
   },
   "scripts": {
-    "serve": "node node_modules/xtal-test/serve.js"
+    "serve": "node node_modules/xtal-test/serve.js",
+    "doc": "wca analyze xtal-*.js --outFile custom-elements.json"
   }
 }

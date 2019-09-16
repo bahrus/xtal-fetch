@@ -14,12 +14,9 @@ const fetch$ = 'fetch';
 const href = 'href';
 const as = 'as';
 /**
- * `xtal-fetch-get`
  *  Barebones custom element that can make fetch calls.
- *
- * @customElement
- * @polymer
- * @demo demo/index.html
+ * @element xtal-fetch-get
+ * @event result-changed
  */
 export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements IXtalFetchBaseProperties {
     _reqInit: RequestInit | undefined = {
@@ -39,6 +36,11 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements IXta
     get as(){
         return this._as;
     }
+    /**
+     * How to treat the response
+     * @attr
+     * @type {"json"|"text"}
+     */
     set as(val){
         this.attr(as, val);
     }
@@ -47,19 +49,29 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements IXta
     get href() {
         return this._href;
     }
+    /**
+     * URL (path) to fetch.
+     * @type {String}
+     * @attr
+     * 
+     */
     set href(val) {
         this.attr(href, val);
     }
     value!: any;
     _result: any;
-    /**
-     * @type{Object}
-     * Result of fetch request
-     * ⚡ Fires event result-changed
-     */
+
     get result() {
         return this._result;
     }
+
+    /**
+     * ⚡ Fires event result-changed
+     * Result of fetch request
+     * @type {Object}
+     * 
+     * 
+     */
     set result(val) {
         //this.updateResultProp(val, 'result', '_result', null);
         this._result = val;

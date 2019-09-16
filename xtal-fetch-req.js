@@ -10,12 +10,12 @@ const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
 const req_init = 'req-init';
 /**
- * `xtal-fetch-req`
- *  Feature rich custom element that can make fetch calls, include Post requests.
- *
- * @customElement
- * @polymer
- * @demo demo/index.html
+ * Feature rich custom element that can make fetch calls, including post requests.
+ * @element xtal-fetch-req
+ * @event error-response-changed
+ * @event error-text-changed
+ * @event fetch-in-progress-changed
+ * @event fetch-complete
  */
 export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     constructor() {
@@ -23,11 +23,18 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
         this._cacheResults = false;
         this._cachedResults = {};
         this._fetchInProgress = false;
+        this._insertResults = false;
         this._reqInit = undefined;
     }
     get reqInit() {
         return this._reqInit;
     }
+    /**
+     * Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.
+     * Supports JSON formatted attribute
+     * @type {object}
+     * @attr req-init
+     */
     set reqInit(val) {
         this._reqInit = val;
         //this.__loadNewUrlDebouncer();
@@ -45,6 +52,10 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     get cacheResults() {
         return this._cacheResults;
     }
+    /**
+     * Indicates whether to pull the response from a previous identical fetch request from cache.
+     * @attr cache-results
+     */
     set cacheResults(val) {
         this.attr(cacheResults, val, '');
     }
@@ -54,27 +65,33 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     get reqInitRequired() {
         return this.hasAttribute(reqInitRequired);
     }
+    /**
+     * Indicates that no fetch request should proceed until reqInit property / attribute is set.
+     */
     set reqInitRequired(val) {
         this.attr(reqInitRequired, val, '');
     }
-    /**
-     * @type {Number}
-     * How long to pause between requests
-     */
     get debounceDuration() {
         return this._debounceDuration;
     }
+    /**
+     * How long to pause between requests
+     * @attr debounce-duration
+     * @type {Number}
+     *
+     */
     set debounceDuration(val) {
         this.setAttribute(debounceDuration, val.toString());
     }
-    /**
-     * @type {Object}
-     * Error response as an object
-     * ⚡ Fires event error-response-changed.
-     */
     get errorResponse() {
         return this._errorResponse;
     }
+    /**
+     * Error response as an object
+     * ⚡ Fires event error-response-changed
+     * @type {Object}
+     *
+     */
     set errorResponse(val) {
         //if(this._errorResponse === val) return;
         if (!this._errorResponse && !val)
@@ -86,14 +103,14 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
             });
         }
     }
-    /**
-     * @type {String}
-     * Indicates the error text of the last request.
-     * ⚡ Fires event error-text-changed.
-     */
     get errorText() {
         return this._errorText;
     }
+    /**
+     * Indicates the error text of the last request.
+     * ⚡ Fires event error-text-changed.
+     * @type {String}
+     */
     set errorText(val) {
         if (!val && !this._errorText)
             return;
@@ -103,14 +120,14 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
             value: val
         });
     }
-    /**
-     * @type {Boolean}
-     * Indicates Fetch is in progress
-     * ⚡ Fires event fetch-in-progress-changed
-     */
     get fetchInProgress() {
         return this._fetchInProgress;
     }
+    /**
+     * Indicates Fetch is in progress
+     * ⚡ Fires event fetch-in-progress-changed
+     * @type {Boolean}
+     */
     set fetchInProgress(val) {
         this._fetchInProgress = val;
         this.de('fetch-in-progress', {
@@ -120,6 +137,11 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     get insertResults() {
         return this._insertResults;
     }
+    /**
+     * Indicate whether to set the innerHTML of the web component with the response from the server.
+     * Make sure the service is protected against XSS.
+     * @attr insert-results
+     */
     set insertResults(val) {
         this.attr(insertResults, val, '');
     }
