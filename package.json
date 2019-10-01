@@ -13,19 +13,20 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "xtal-element": "0.0.82",
-    "trans-render": "0.0.131"
+    "xtal-element": "0.0.84",
+    "trans-render": "0.0.132"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "2.2.10",
-    "jiife": "0.0.12",
-    "tape": "4.10.2",
+    "jiife": "0.0.14",
+    "tape": "4.11.0",
     "@types/tape": "4.2.33",
     "xtal-test": "0.0.20",
-    "p-et-alia": "0.0.44"
+    "p-et-alia": "0.0.47",
+    "json-file-patch": "0.0.1"
   },
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",
-    "doc": "wca analyze xtal-*.js --outFile custom-elements.json"
+   "doc": "wca analyze xtal-*.js --outFile custom-elements.json && node patchJSON.js"
   }
 }
