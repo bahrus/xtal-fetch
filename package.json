@@ -1,6 +1,6 @@
 {
   "name": "xtal-fetch",
-  "version": "0.0.73",
+  "version": "0.0.74",
   "keywords": [
     "fetch",
     "rest",
@@ -27,6 +27,6 @@
   },
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",
-   "doc": "wca analyze xtal-*.js --outFile custom-elements.json && node patchJSON.js"
+    "doc": "wca analyze xtal-*.js --outFile custom-elements.json && node patchJSON.js"
   }
 }
