@@ -436,7 +436,7 @@
                 }
             ],
             "slots": [],
-            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.72/xtal-fetch.js?module"
+            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.75/xtal-fetch.js?module"
         },
         {
             "name": "xtal-fetch-get",
@@ -666,7 +666,7 @@
                 }
             ],
             "slots": [],
-            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.72/xtal-fetch-get.js?module"
+            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.75/xtal-fetch-get.js?module"
         },
         {
             "name": "xtal-fetch-req",
@@ -877,7 +877,7 @@
                 }
             ],
             "slots": [],
-            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.72/xtal-fetch-req.js?module"
+            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.75/xtal-fetch-req.js?module"
         }
     ]
 }

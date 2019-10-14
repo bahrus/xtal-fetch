@@ -3,7 +3,7 @@
     "tags": [
         {
             "name": "xtal-fetch-get",
-            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.72/xtal-fetch-get.js?module",
+            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.75/xtal-fetch-get.js?module",
             "testCaseNames": [
                 "test1"
             ],
@@ -184,7 +184,7 @@
         },
         {
             "name": "xtal-fetch-req",
-            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.72/xtal-fetch-req.js?module",
+            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.75/xtal-fetch-req.js?module",
             "testCaseNames": [
                 "test1"
             ],
@@ -252,7 +252,7 @@
         },
         {
             "name": "xtal-fetch",
-            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.72/xtal-fetch.js?module",
+            "selfResolvingModulePath": "https://unpkg.com/xtal-fetch@0.0.75/xtal-fetch.js?module",
             "properties": [
                 {
                     "name": "fetch",
