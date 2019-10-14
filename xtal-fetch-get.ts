@@ -51,13 +51,15 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements IXta
     }
     /**
      * URL (path) to fetch.
-     * @type {String}
      * @attr
+     * @type {string}
+     * 
      * 
      */
     set href(val) {
         this.attr(href, val);
     }
+    
     value!: any;
     _result: any;
 

@@ -7,6 +7,12 @@
             "testCaseNames": [
                 "test1"
             ],
+            "attributes":[
+                {
+                    "name": "href",
+                    "type": "string"
+                }
+            ],
             "properties": [
                 {
                     "name": "fetch",
@@ -16,6 +22,7 @@
                 },
                 {
                     "name": "href",
+                    "type": "string",
                     "testValues": {
                         "test1": "https://cdn.jsdelivr.net/npm/xtal-fetch/demo/generated.json"
                     }

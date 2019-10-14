@@ -40,8 +40,9 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) {
     }
     /**
      * URL (path) to fetch.
-     * @type {String}
      * @attr
+     * @type {string}
+     *
      *
      */
     set href(val) {

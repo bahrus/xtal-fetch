@@ -21,7 +21,7 @@
                 {
                     "name": "href",
                     "description": "URL (path) to fetch.",
-                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @type {String}\r\n     * @attr\r\n     * \r\n     */",
+                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @attr\r\n     * @type {string}\r\n     * \r\n     * \r\n     */",
                     "type": "string"
                 },
                 {
@@ -89,7 +89,7 @@
                 {
                     "name": "href",
                     "description": "URL (path) to fetch.",
-                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @type {String}\r\n     * @attr\r\n     * \r\n     */",
+                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @attr\r\n     * @type {string}\r\n     * \r\n     * \r\n     */",
                     "type": "string"
                 },
                 {
@@ -216,7 +216,7 @@
                 {
                     "name": "href",
                     "description": "URL (path) to fetch.",
-                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @type {String}\r\n     * @attr\r\n     * \r\n     */",
+                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @attr\r\n     * @type {string}\r\n     * \r\n     * \r\n     */",
                     "type": "string"
                 },
                 {
@@ -287,7 +287,7 @@
                 {
                     "name": "href",
                     "description": "URL (path) to fetch.",
-                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @type {String}\r\n     * @attr\r\n     * \r\n     */",
+                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @attr\r\n     * @type {string}\r\n     * \r\n     * \r\n     */",
                     "type": "string",
                     "testValues": {
                         "test1": "https://cdn.jsdelivr.net/npm/xtal-fetch/demo/generated.json"
@@ -458,8 +458,8 @@
                 {
                     "name": "href",
                     "description": "URL (path) to fetch.",
-                    "jsDoc": "/**\n     * URL (path) to fetch.\n     * @type {String}\n     * @attr\n     *\n     */",
-                    "type": "any"
+                    "jsDoc": "/**\n     * URL (path) to fetch.\n     * @attr\n     * @type {string}\n     *\n     *\n     */",
+                    "type": "string"
                 }
             ],
             "properties": [
@@ -499,8 +499,8 @@
                 {
                     "name": "href",
                     "description": "URL (path) to fetch.",
-                    "jsDoc": "/**\n     * URL (path) to fetch.\n     * @type {String}\n     * @attr\n     *\n     */",
-                    "type": "any",
+                    "jsDoc": "/**\n     * URL (path) to fetch.\n     * @attr\n     * @type {string}\n     *\n     *\n     */",
+                    "type": "string",
                     "testValues": {
                         "test1": "https://cdn.jsdelivr.net/npm/xtal-fetch/demo/generated.json"
                     }
@@ -688,7 +688,7 @@
                 {
                     "name": "href",
                     "description": "URL (path) to fetch.",
-                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @type {String}\r\n     * @attr\r\n     * \r\n     */",
+                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @attr\r\n     * @type {string}\r\n     * \r\n     * \r\n     */",
                     "type": "string"
                 },
                 {
@@ -753,7 +753,7 @@
                 {
                     "name": "href",
                     "description": "URL (path) to fetch.",
-                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @type {String}\r\n     * @attr\r\n     * \r\n     */",
+                    "jsDoc": "/**\r\n     * URL (path) to fetch.\r\n     * @attr\r\n     * @type {string}\r\n     * \r\n     * \r\n     */",
                     "type": "string",
                     "testValues": {
                         "test1": "https://cdn.jsdelivr.net/npm/xtal-fetch/demo/generated.json"
