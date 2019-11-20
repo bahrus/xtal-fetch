@@ -18,15 +18,17 @@
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "2.2.10",
+    "@types/node": "12.12.8",
+    "@types/tape": "4.2.33",
     "jiife": "0.0.14",
     "tape": "4.11.0",
-    "@types/tape": "4.2.33",
     "xtal-test": "0.0.20",
     "p-et-alia": "0.0.47",
     "json-file-patch": "0.0.1"
   },
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",
-    "doc": "wca analyze xtal-*.js --outFile custom-elements.json && node patchJSON.js"
+    "doc": "wca analyze xtal-*.js --outFile custom-elements.json && node patchJSON.js",
+    "test": "tape test/*.js"
   }
 }
