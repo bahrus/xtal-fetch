@@ -4,6 +4,8 @@
 
 <img src="https://badgen.net/bundlephobia/minzip/trans-render">
 
+[![Actions Status](https://github.com/bahrus/p-et-alia/workflows/CI/badge.svg)](https://github.com/bahrus/p-et-alia/actions?query=workflow%3ACI)
+
 # \<xtal-fetch\>
 
 ## API
