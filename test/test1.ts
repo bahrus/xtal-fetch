@@ -20,7 +20,8 @@ async function customTests(page: Page) {
 
 (async () => {
     await xt.runTests({
-        path: 'test/fly.html'
+        
+        path: 'test/fly-get.html'
     }, customTests);
 })();
 

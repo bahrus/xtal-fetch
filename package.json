@@ -24,7 +24,8 @@
     "tape": "4.11.0",
     "xtal-test": "0.0.21",
     "p-et-alia": "0.0.66",
-    "json-file-patch": "0.0.1"
+    "json-file-patch": "0.0.1",
+    "es-module-shims": "0.4.6"
   },
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",
