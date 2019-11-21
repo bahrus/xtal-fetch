@@ -7,11 +7,15 @@
     <title>Document</title>
 </head>
 <body>
+    <template id=title>
+            There was an old lady who swallowed a fly;
+            <div id=flyMark mark data-covg="91%" style="display:block;"></div>
+    </template>
     <xtal-fetch-get id="fetcher" fetch href=old-lady.json as=json></xtal-fetch-get>
     <div id=target></div>
     <script>
         fetcher.addEventListener('result-changed', e=>{
-            target.textContent = e.detail.value;
+            target.appendChild(self[e.detail.value[0]].content.cloneNode(true));
         });
     </script>
     <script defer src="../node_modules/es-module-shims/dist/es-module-shims.js"></script>
