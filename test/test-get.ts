@@ -10,7 +10,7 @@ async function customTests(page: Page) {
     const TapeTestRunner = {
         test: test
     } as Test;
-    TapeTestRunner.test('testing dev.html', (t: any) => {
+    TapeTestRunner.test('testing fly-get.html', (t: any) => {
         t.equal(errorTags.length, 0);
         t.equals(markings.length, 1);
         t.end();
