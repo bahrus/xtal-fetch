@@ -3,7 +3,7 @@ const xt = require('xtal-test/index') as IXtalTestRunner;
 
 
 (async () => {
-    await xt.runTests([
+    const passed = await xt.runTests([
         {
             path: 'test/fly-get.html',
             expectedNoOfSuccessMarkers: 1,
@@ -14,6 +14,6 @@ const xt = require('xtal-test/index') as IXtalTestRunner;
             expectedNoOfSuccessMarkers: 1,
         }
     ]);
-    console.log("Tests Passed.  Have a nice day.");
+    if(passed) console.log("Tests Passed.  Have a nice day.");
 })();
 
