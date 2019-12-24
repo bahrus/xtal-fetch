@@ -1,14 +1,7 @@
 import {XtallatX} from 'xtal-element/xtal-latx.js';
 import {define} from 'trans-render/define.js';
 import {disabled, hydrate} from 'trans-render/hydrate.js';
-
-export interface IXtalFetchBaseProperties {
-    href: string,
-    fetch: boolean,
-    disabled: boolean,
-    result: any,
-}
-
+import {XtalFetchBasePropertiesIfc} from './types.js';
 
 const fetch$ = 'fetch';
 const href = 'href';
@@ -18,7 +11,7 @@ const as = 'as';
  * @element xtal-fetch-get
  * @event result-changed
  */
-export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements IXtalFetchBaseProperties {
+export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements XtalFetchBasePropertiesIfc {
     _reqInit: RequestInit | undefined = {
         credentials: 'same-origin'
     }

@@ -1,16 +1,8 @@
-import { XtalFetchGet, IXtalFetchBaseProperties } from './xtal-fetch-get.js';
+import { XtalFetchGet} from './xtal-fetch-get.js';
 import {define} from 'trans-render/define.js';
 import {baseLinkId, BaseLinkId} from 'xtal-element/base-link-id.js'
+import {XtalFetchBasePropertiesIfc} from './types.d.js';
 
-export interface IXtalFetchReqProperties extends IXtalFetchBaseProperties {
-    reqInit: RequestInit | undefined,
-    reqInitRequired: boolean,
-    debounceDuration: number,
-    errorResponse: Response | null;
-    fetchInProgress: boolean;
-    insertResults: boolean;
-    baseLinkId: string;
-}
 export function snakeToCamel(s: string) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
 }
@@ -28,7 +20,7 @@ const req_init = 'req-init';
  * @event fetch-in-progress-changed
  * @event fetch-complete
  */
-export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements IXtalFetchReqProperties {
+export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchBasePropertiesIfc {
     constructor(){
         super();
         this._reqInit = undefined;
