@@ -1,11 +1,7 @@
-import { XtalFetchReq, IXtalFetchReqProperties, snakeToCamel } from './xtal-fetch-req.js';
+import { XtalFetchReq,  snakeToCamel } from './xtal-fetch-req.js';
 import {define} from 'trans-render/define.js';
+import {XtalFetchEntitiesAddedProperties, XtalFetchEntitiesPropertiesIfc} from './types.d.js';
 
-export interface IXtalFetchEntitiesProperties extends IXtalFetchReqProperties{
-    forEach: string,
-    setPath: string,
-    inEntities: any[],
-}
 const forEach = 'for-each';
 const setPath = 'set-path';
 /**

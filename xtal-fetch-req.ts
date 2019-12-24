@@ -1,7 +1,7 @@
 import { XtalFetchGet} from './xtal-fetch-get.js';
 import {define} from 'trans-render/define.js';
 import {baseLinkId, BaseLinkId} from 'xtal-element/base-link-id.js'
-import {XtalFetchBasePropertiesIfc} from './types.d.js';
+import {XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties} from './types.d.js';
 
 export function snakeToCamel(s: string) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
@@ -12,6 +12,8 @@ const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
 const req_init = 'req-init';
 
+type prop = keyof XtalFetchReqAddedProperties;
+
 /**
  * Feature rich custom element that can make fetch calls, including post requests.
  * @element xtal-fetch-req
@@ -20,7 +22,7 @@ const req_init = 'req-init';
  * @event fetch-in-progress-changed
  * @event fetch-complete
  */
-export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchBasePropertiesIfc {
+export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchReqPropertiesIfc {
     constructor(){
         super();
         this._reqInit = undefined;
@@ -284,7 +286,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchB
     }
 
     connectedCallback(){
-        this.propUp(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit', 'insertResults']);
+        this.propUp<prop[]>(['baseLinkId', 'cacheResults', 'debounceDuration', 'insertResults', 'reqInitRequired', 'reqInit']);
         super.connectedCallback();
         
     }

@@ -5,8 +5,9 @@ export interface XtalFetchBasePropertiesIfc {
     result: any,
 }
 
-export interface IXtalFetchReqProperties extends XtalFetchBasePropertiesIfc {
+export interface XtalFetchReqAddedProperties{
     reqInit: RequestInit | undefined,
+    cacheResults: boolean | undefined,
     reqInitRequired: boolean,
     debounceDuration: number,
     errorResponse: Response | null;
@@ -14,3 +15,13 @@ export interface IXtalFetchReqProperties extends XtalFetchBasePropertiesIfc {
     insertResults: boolean;
     baseLinkId: string;
 }
+
+export interface XtalFetchReqPropertiesIfc extends XtalFetchBasePropertiesIfc, XtalFetchReqAddedProperties {}
+
+export interface XtalFetchEntitiesAddedProperties{
+    forEach: string,
+    setPath: string,
+    inEntities: any[],
+}
+
+export interface XtalFetchEntitiesPropertiesIfc extends XtalFetchBasePropertiesIfc, XtalFetchReqAddedProperties, XtalFetchEntitiesAddedProperties{}

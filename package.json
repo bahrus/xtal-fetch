@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "xtal-element": "0.0.90",
-    "trans-render": "0.0.141"
+    "trans-render": "0.0.142"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "2.2.10",

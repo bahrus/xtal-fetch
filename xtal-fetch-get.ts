@@ -6,6 +6,7 @@ import {XtalFetchBasePropertiesIfc} from './types.js';
 const fetch$ = 'fetch';
 const href = 'href';
 const as = 'as';
+type prop = keyof XtalFetchBasePropertiesIfc;
 /**
  *  Barebones custom element that can make fetch calls.
  * @element xtal-fetch-get
@@ -120,7 +121,7 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
     connectedCallback() {
         this._initDisp = this.style.display;
         this.style.display = 'none';
-        this.propUp([fetch$, href]);
+        this.propUp<prop[]>([fetch$, href]);
         this._connected = true;
         this.onPropsChange();
     }
