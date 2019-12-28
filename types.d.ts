@@ -25,3 +25,10 @@ export interface XtalFetchEntitiesAddedProperties{
 }
 
 export interface XtalFetchEntitiesPropertiesIfc extends XtalFetchBasePropertiesIfc, XtalFetchReqAddedProperties, XtalFetchEntitiesAddedProperties{}
+
+export interface StandardDetail{
+    value: any;
+}
+export interface XtalFetchGetEventNameMap{
+    'result-changed': StandardDetail;
+}

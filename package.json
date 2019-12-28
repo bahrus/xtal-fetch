@@ -13,12 +13,12 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "xtal-element": "0.0.90",
+    "xtal-element": "0.0.99",
     "trans-render": "0.0.142"
   },
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "2.2.10",
-    "@types/node": "12.12.8",
+    "@webcomponents/webcomponentsjs": "2.4.0",
+    "@types/node": "13.1.1",
     "xtal-test": "0.0.31",
     "p-et-alia": "0.0.66",
     "json-file-patch": "0.0.1",
