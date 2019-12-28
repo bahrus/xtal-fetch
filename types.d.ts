@@ -34,7 +34,8 @@ export interface StandardDetail{
 
 export interface FetchDetail{
     href: string,
-    result: any
+    result?: any,
+    entity?: any
 }
 export interface XtalFetchGetEventNameMap{
     'result-changed': StandardDetail;

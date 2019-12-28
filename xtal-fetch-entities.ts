@@ -132,10 +132,7 @@ export class XtalFetchEntities extends XtalFetchReq{
                         remainingCalls--;
                         if (remainingCalls === 0) {
                             this.fetchInProgress = false;
-                            //this.result = Object.assign({}, this.inEntities);
                             this.result = this.inEntities.slice(0);
-                            //this.result = [];
-                            //this.de('result')
                         }
                         if (this._cacheResults) this.cachedResults[href] = val;
                         entity[this._setPath] = val;
@@ -143,11 +140,7 @@ export class XtalFetchEntities extends XtalFetchReq{
                             entity: entity,
                             href: href
                         }
-                        this.dispatchEvent(new CustomEvent('fetch-complete', {
-                            detail: detail,
-                            bubbles: true,
-                            composed: false,
-                        } as CustomEventInit));
+                        this.emit('fetch-complete', detail)
                         
 
                     });
