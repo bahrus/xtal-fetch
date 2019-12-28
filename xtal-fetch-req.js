@@ -26,6 +26,13 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
         this._insertResults = false;
         this._reqInit = undefined;
     }
+    /**
+    * All events emitted pass through this method
+    * @param evt
+    */
+    emit(type, detail) {
+        this.de(type, detail, true);
+    }
     get reqInit() {
         return this._reqInit;
     }
@@ -98,7 +105,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
             return;
         this._errorResponse = val;
         if (val !== null) {
-            this.de('error-response', {
+            this.emit('error-response-changed', {
                 value: val
             });
         }
@@ -116,7 +123,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
             return;
         this._errorText = val;
         this.attr('errorText', val);
-        this.de('error-text', {
+        this.emit('error-text-changed', {
             value: val
         });
     }
@@ -130,7 +137,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
      */
     set fetchInProgress(val) {
         this._fetchInProgress = val;
-        this.de('fetch-in-progress', {
+        this.emit('fetch-in-progress-changed', {
             value: val
         });
     }
@@ -251,7 +258,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
                         href: this.href,
                         result: result
                     };
-                    this.de('fetch-complete', detail, true);
+                    this.emit('fetch-complete', detail);
                 }
             });
         }).catch(err => {
@@ -262,7 +269,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
         });
     }
     connectedCallback() {
-        this.propUp(['debounceDuration', 'reqInitRequired', 'cacheResults', 'reqInit', 'insertResults']);
+        this.propUp(['baseLinkId', 'cacheResults', 'debounceDuration', 'insertResults', 'reqInitRequired', 'reqInit']);
         super.connectedCallback();
     }
 }

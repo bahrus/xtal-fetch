@@ -1,7 +1,7 @@
 import {XtallatX} from 'xtal-element/xtal-latx.js';
 import {define} from 'trans-render/define.js';
 import {disabled, hydrate} from 'trans-render/hydrate.js';
-import {XtalFetchBasePropertiesIfc} from './types.js';
+import {XtalFetchBasePropertiesIfc, XtalFetchGetEventNameMap} from './types.js';
 
 const fetch$ = 'fetch';
 const href = 'href';
@@ -61,6 +61,14 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
         return this._result;
     }
 
+  /**
+   * All events emitted pass through this method
+   * @param evt 
+   */
+  emit<K extends keyof XtalFetchGetEventNameMap>(type: K,  detail: XtalFetchGetEventNameMap[K]){
+    this.de(type, detail, true);
+  }
+
     /**
      * ⚡ Fires event result-changed
      * Result of fetch request
@@ -72,7 +80,7 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
         //this.updateResultProp(val, 'result', '_result', null);
         this._result = val;
         this.value = val;
-        this.de('result', {value:val});
+        this.emit("result-changed", {value:val})
     }
 
     static get observedAttributes() {

@@ -52,6 +52,13 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) {
         return this._result;
     }
     /**
+     * All events emitted pass through this method
+     * @param evt
+     */
+    emit(type, detail) {
+        this.de(type, detail, true);
+    }
+    /**
      * ⚡ Fires event result-changed
      * Result of fetch request
      * @type {Object}
@@ -62,7 +69,7 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) {
         //this.updateResultProp(val, 'result', '_result', null);
         this._result = val;
         this.value = val;
-        this.de('result', { value: val });
+        this.emit("result-changed", { value: val });
     }
     static get observedAttributes() {
         return super.observedAttributes.concat([

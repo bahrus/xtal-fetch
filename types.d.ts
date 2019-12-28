@@ -1,3 +1,5 @@
+import { XtalFetchGet } from "./xtal-fetch-get";
+
 export interface XtalFetchBasePropertiesIfc {
     href: string,
     fetch: boolean,
@@ -29,6 +31,18 @@ export interface XtalFetchEntitiesPropertiesIfc extends XtalFetchBasePropertiesI
 export interface StandardDetail{
     value: any;
 }
+
+export interface FetchDetail{
+    href: string,
+    result: any
+}
 export interface XtalFetchGetEventNameMap{
     'result-changed': StandardDetail;
+}
+
+export interface XtalFetchReqEventNameMap extends XtalFetchGetEventNameMap{
+    'error-response-changed': StandardDetail;
+    'error-text-changed': StandardDetail;
+    'fetch-in-progress-changed': StandardDetail;
+    'fetch-complete': FetchDetail;
 }

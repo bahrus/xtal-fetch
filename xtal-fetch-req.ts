@@ -1,7 +1,7 @@
 import { XtalFetchGet} from './xtal-fetch-get.js';
 import {define} from 'trans-render/define.js';
 import {baseLinkId, BaseLinkId} from 'xtal-element/base-link-id.js'
-import {XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties} from './types.d.js';
+import {XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
 
 export function snakeToCamel(s: string) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
@@ -26,6 +26,14 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
     constructor(){
         super();
         this._reqInit = undefined;
+    }
+
+   /**
+   * All events emitted pass through this method
+   * @param evt 
+   */
+    emit<K extends keyof XtalFetchReqEventNameMap>(type: K,  detail: XtalFetchReqEventNameMap[K]){
+        this.de(type, detail, true);
     }
     get reqInit() {
         return this._reqInit;
@@ -110,8 +118,8 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
         if(!this._errorResponse && !val) return;
         this._errorResponse = val;
         if(val !== null){
-            this.de('error-response', {
-                value: val
+            this.emit('error-response-changed', {
+                value:val
             });
         }
     }
@@ -130,7 +138,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
         if(!val && !this._errorText) return;
         this._errorText = val;
         this.attr('errorText', val);
-        this.de('error-text', {
+        this.emit('error-text-changed', {
             value: val
         });
 
@@ -148,9 +156,9 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
      */
     set fetchInProgress(val) {
         this._fetchInProgress = val;
-        this.de('fetch-in-progress', {
+        this.emit('fetch-in-progress-changed', {
             value: val
-        })
+        });
     }
 
     _insertResults: boolean = false;
@@ -274,7 +282,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
                         href: this.href,
                         result: result
                     }
-                    this.de('fetch-complete', detail, true);
+                    this.emit('fetch-complete', detail)
                 }
             });
         }).catch(err => {
