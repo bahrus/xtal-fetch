@@ -8,21 +8,7 @@
 
 # \<xtal-fetch\>
 
-## API
-
-<!--
-```
-<custom-element-demo>
-<template>
-    <div>
-        <wc-info package-name="npm install xtal-fetch" href="https://unpkg.com/xtal-fetch@0.0.56/html.json">
-        </wc-info>
-        <script type="module" src="https://unpkg.com/wc-info@0.0.29/wc-info.js?module"></script>
-    </div>
-</template>
-</custom-element-demo>
-```
--->
+## [API](https://bahrus.github.io/api-viewer/index.html?npmPackage=xtal-fetch&jsPath=xtal-fetch-entities.js&jsonPath=custom-elements.json)
 
 ## Single Requests
 
