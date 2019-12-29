@@ -28,6 +28,7 @@
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",
     "doc": "wca analyze xtal-*.js --outFile custom-elements.json && node patchJSON.js",
-    "test": "node test/test-all.js"
+    "test": "node test/test-all.js",
+    "test::spec": "wca analyze xtal-fetch-example1.js --outFile xtal-fetch-example1.json"
   }
 }

@@ -22,6 +22,9 @@ interface XtalFetchTest<
   expectedEvent: XtalFetchExpectedEvent<eventName, assocPropName>;
 }
 
+/**
+ * @element xtal-fetch-example1
+ */
 export class XtalFetchExample1 extends XtalFetchEntities {
   href = "https://unpkg.com/xtal-fetch@0.0.75/demo/generated.json";
   resultChangedContract: XtalFetchTest<"result-changed", "result"> = {
