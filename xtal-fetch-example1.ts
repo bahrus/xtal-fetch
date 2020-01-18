@@ -1,3 +1,4 @@
+import {define} from 'trans-render/define.js';
 import { XtalFetchEntities } from "./xtal-fetch-entities.js";
 import {
   XtalFetchReqEventNameMap,
@@ -23,10 +24,12 @@ interface XtalFetchTest<
 }
 
 /**
- * @element xtal-fetch-example1
+ * @element xtal-fetch
  */
 export class XtalFetchExample1 extends XtalFetchEntities {
+  fetch = true;
   href = "https://unpkg.com/xtal-fetch@0.0.75/demo/generated.json";
+  
   resultChangedContract: XtalFetchTest<"result-changed", "result"> = {
     expectedEvent: {
       name: "result-changed",

@@ -1,10 +1,11 @@
 import { XtalFetchEntities } from "./xtal-fetch-entities.js";
 /**
- * @element xtal-fetch-example1
+ * @element xtal-fetch
  */
 export class XtalFetchExample1 extends XtalFetchEntities {
     constructor() {
         super(...arguments);
+        this.fetch = true;
         this.href = "https://unpkg.com/xtal-fetch@0.0.75/demo/generated.json";
         this.resultChangedContract = {
             expectedEvent: {

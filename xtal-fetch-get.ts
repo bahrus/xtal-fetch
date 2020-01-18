@@ -13,9 +13,7 @@ type prop = keyof XtalFetchBasePropertiesIfc;
  * @event result-changed
  */
 export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements XtalFetchBasePropertiesIfc {
-    _reqInit: RequestInit | undefined = {
-        credentials: 'same-origin'
-    }
+    _reqInit: RequestInit | undefined;
    
     static get is() { return 'xtal-fetch-get'; }
     _fetch!: boolean;

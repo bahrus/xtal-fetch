@@ -12,9 +12,6 @@ const as = 'as';
 export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) {
     constructor() {
         super(...arguments);
-        this._reqInit = {
-            credentials: 'same-origin'
-        };
         this._as = 'json';
     }
     static get is() { return 'xtal-fetch-get'; }
