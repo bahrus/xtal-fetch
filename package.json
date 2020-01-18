@@ -23,7 +23,8 @@
     "p-et-alia": "0.0.66",
     "json-file-patch": "0.0.1",
     "es-module-shims": "0.4.6",
-    "for-instance": "0.0.16"
+    "for-instance": "0.0.16",
+    "if-diff": "0.0.42"
   },
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",

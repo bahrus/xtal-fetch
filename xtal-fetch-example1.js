@@ -8,6 +8,9 @@ export class XtalFetchExample1 extends XtalFetchEntities {
         this.fetch = true;
         this.href = "https://unpkg.com/xtal-fetch@0.0.75/demo/generated.json";
         this.resultChangedContract = {
+            trigger: /* JS */ `
+    import 'https://unpkg.com/xtal-fetch/xtal-fetch-entities.js?module';
+    `,
             expectedEvent: {
                 name: "result-changed",
                 detail: {

@@ -30,7 +30,11 @@ export class XtalFetchExample1 extends XtalFetchEntities {
   fetch = true;
   href = "https://unpkg.com/xtal-fetch@0.0.75/demo/generated.json";
   
+  
   resultChangedContract: XtalFetchTest<"result-changed", "result"> = {
+    trigger: /* JS */`
+    import 'https://unpkg.com/xtal-fetch/xtal-fetch-entities.js?module';
+    `,
     expectedEvent: {
       name: "result-changed",
       detail: {
