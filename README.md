@@ -42,24 +42,14 @@ An example of such a polyfill can be found [here](https://github.com/bahrus/xtal
 
 ### To use  \<xtal-fetch\>
 
-
->yarn add xtal-fetch
-
-or
-
 >npm install xtal-fetch
 
 or
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.46/build/ES6/xtal-fetch.js"></script>
+<script src="https://unpkg.com/xtal-fetch@0.0.76/xtal-fetch-entities.js?module"></script>
 ```
 
-or
-
-```html
-<script src="https://unpkg.com/xtal-fetch@0.0.46/build/ES6/xtal-fetch.js"></script>
-```
 
 As mentioned, if you don't need all the functionality of xtal-fetch.js, replace the above links with xtal-fetch-get or xtal-fetch-req (and modify the tag name accordingly.)
 
