@@ -159,6 +159,11 @@ export class XtalFetchEntities extends XtalFetchReq{
     }
 }
 define(XtalFetchEntities);
+declare global {
+    interface HTMLElementTagNameMap {
+        "xtal-fetch-entities": XtalFetchEntities,
+    }
+}
 
 /**
  * Feature rich custom element that can make fetch calls, include Post requests.
@@ -168,3 +173,8 @@ class XtalFetch extends XtalFetchEntities{
     static get is(){return 'xtal-fetch';}
 }
 define(XtalFetch);
+declare global {
+    interface HTMLElementTagNameMap {
+        "xtal-fetch": XtalFetch,
+    }
+}

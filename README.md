@@ -119,7 +119,7 @@ It is often mistakenly assumed that the "fetch" api only supports get, not post.
 
  ```html
  <xtal-fetch fetch href="api/persistService/id/[[id]]" as="json" 
- result="{{people}}" req-init="[[myRequestConfig]]"></xatl-fetch>
+ result="{{people}}" req-init="[[myRequestConfig]]"></xtal-fetch>
  ```
  
  myRequestConfig could be initialized inside the containing component, or come from another component that posts to "myRequestConfig".

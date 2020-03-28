@@ -300,3 +300,8 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
     }
 }
 define(XtalFetchReq);
+declare global {
+    interface HTMLElementTagNameMap {
+        "xtal-fetch-req": XtalFetchReq,
+    }
+}

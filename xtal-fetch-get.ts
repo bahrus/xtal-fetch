@@ -133,3 +133,8 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
     }
 }
 define(XtalFetchGet);
+declare global {
+    interface HTMLElementTagNameMap {
+        "xtal-fetch-get": XtalFetchGet,
+    }
+}
