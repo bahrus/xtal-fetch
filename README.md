@@ -158,32 +158,47 @@ One can enable caching  of the same href value using the cache-results attribute
 
 Like the Polymer iron-ajax inspiration, the *debounce-duration* attribute specifies how much to wait for the request to "settle down" before proceeding.
 
+[Demo](https://jsfiddle.net/bahrus/6Ls9yuxj/1/)
+
 <!--
 ```
 <custom-element-demo>
   <template>
       <div>
-        <link rel="preconnect" id="baseSampleJsonFolder" href="https://cdn.jsdelivr.net/npm/xtal-fetch/demo/">
-        <litter-g></litter-g>
-        <xtal-fetch disabled base-link-id="baseSampleJsonFolder" fetch href="generated.json" as="json"></xtal-fetch>
-        <p-d on="fetch-complete" to="#peopleList{input:target.result};#peopleEntities{inEntities:target.result}" ></p-d>
-        <ul id="peopleList" data-lit>
-            <script nomodule>
-                html`${input.map(i => html`<li>Name: ${i.name} <br>Email: ${i.email}</li>`)}`
-            </script>
-        </ul>
+        <link rel=preconnect id=baseSampleJsonFolder href="https://cdn.jsdelivr.net/">
+        <template id=personTemplate>
+          <li><div>Name: |.name|</div><div>Email: |.email|</div></li>
+        </template>
+        <xtal-fetch disabled=2 base-link-id=baseSampleJsonFolder fetch href="npm/xtal-fetch/demo/generated.json" as=json></xtal-fetch>
+        <p-d on=fetch-complete to=[-view-model] m=1></p-d>
+        <p-d on=fetch-complete to=[-in-entities] m=1></p-d>
+        <trans-render -view-model><script nomodule>({
+          ul: ({ctx, target}) => ctx.repeat(personTemplate, ctx, ctx.viewModel.length, target, {
+              li: {
+                div: ({ctx, target, idx}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx])
+              }
+          })         
+        })</script></trans-render>        
+        <div>
+          <ul></ul>
+        </div>
         
-        <xtal-fetch disabled id="peopleEntities" as="json" base-link-id="baseSampleJsonFolder" fetch href="detail_:_id.json" for-each="_id" set-path="detail_contents"></xtal-fetch>
-        <p-d on="fetch-complete" to="{input:target.result}"></p-d>
-        <ul id="detail" data-lit>
-            <script nomodule>
-                html`${input.map(i => html`<li>DetailContents: ${i.detail_contents.message}</li>`)}`
-            </script>
-        </ul>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/p-d.p-u@0.0.69/p-d.p-u.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/xtal-fetch@0.0.43/xtal-fetch.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/npm/litter-g@0.0.15/litter-g.iife.js"></script> 
-
+        <template id="fileTemplate">
+          <li>Message |.message|</li>
+        </template>
+        <xtal-fetch disabled base-link-id="baseSampleJsonFolder" fetch href="npm/xtal-fetch/demo/detail_:_id.json" for-each="_id" -in-entities  as="json"   set-path="detail_contents"></xtal-fetch>
+        <p-d on=fetch-complete to=[-view-model] m=1></p-d>
+        <trans-render -view-model><script nomodule>({
+          ul: ({ctx, target}) => ctx.repeat(fileTemplate, ctx, ctx.viewModel.length, target, {
+              li: ({ctx, idx, target}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx].detail_contents)
+          })          
+        })</script></trans-render>
+        <div>
+          <ul></ul>
+        </div>
+        <script type="module" src="https://unpkg.com/p-et-alia@0.0.74/p-d.js?module"></script>
+        <script type="module" src="https://unpkg.com/xtal-fetch@0.0.76/xtal-fetch-entities.js?module"></script>
+        <script type="module" src="https://unpkg.com/trans-render@0.0.143/trans-render.js?module"></script>
       </div>
 </template>
 </custom-element-demo>
@@ -196,9 +211,11 @@ First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polyme
 ## Viewing Your Element
 
 ```
-$ polymer serve
+$ npm run serve
 ```
 
 ## Running Tests
 
-WIP.
+```
+$ npm run test
+```
