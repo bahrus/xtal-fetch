@@ -34,9 +34,9 @@
         <p-d on=fetch-complete to=[-in-entities] m=1></p-d>
         <trans-render -view-model><script nomodule>({
           ul: ({ctx, target}) => ctx.repeat(personTemplate, ctx, ctx.viewModel.length, target, {
-              li: {
-                div: ({ctx, target, idx}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx])
-              }
+              li: ({idx}) => ({
+                div: ({ctx, target}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx])
+              })
           })         
         })</script></trans-render>        
         <div>

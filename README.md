@@ -158,7 +158,7 @@ One can enable caching  of the same href value using the cache-results attribute
 
 Like the Polymer iron-ajax inspiration, the *debounce-duration* attribute specifies how much to wait for the request to "settle down" before proceeding.
 
-[Demo](https://jsfiddle.net/bahrus/6Ls9yuxj/1/)
+[Demo](https://jsfiddle.net/bahrus/6Ls9yuxj/3/)
 
 <!--
 ```
@@ -174,11 +174,11 @@ Like the Polymer iron-ajax inspiration, the *debounce-duration* attribute specif
         <p-d on=fetch-complete to=[-in-entities] m=1></p-d>
         <trans-render -view-model><script nomodule>({
           ul: ({ctx, target}) => ctx.repeat(personTemplate, ctx, ctx.viewModel.length, target, {
-              li: {
-                div: ({ctx, target, idx}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx])
-              }
+              li: ({idx}) => ({
+                div: ({ctx, target}) => ctx.interpolate(target, 'textContent', ctx.viewModel[idx])
+              })
           })         
-        })</script></trans-render>        
+        })</script></trans-render>         
         <div>
           <ul></ul>
         </div>
