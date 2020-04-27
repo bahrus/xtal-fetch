@@ -9,7 +9,7 @@ export interface XtalFetchBasePropertiesIfc {
 
 export interface XtalFetchReqAddedProperties{
     reqInit: RequestInit | undefined,
-    cacheResults: boolean | undefined,
+    cacheResults: boolean | 'global' | undefined,
     reqInitRequired: boolean,
     debounceDuration: number,
     errorResponse: Response | null;

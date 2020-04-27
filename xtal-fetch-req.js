@@ -1,6 +1,7 @@
 import { XtalFetchGet } from './xtal-fetch-get.js';
 import { define } from 'trans-render/define.js';
 import { baseLinkId, BaseLinkId } from 'xtal-element/base-link-id.js';
+import { setSymbol } from 'trans-render/manageSymbols.js';
 export function snakeToCamel(s) {
     return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
 }
@@ -9,6 +10,7 @@ const reqInitRequired = 'req-init-required';
 const cacheResults = 'cache-results';
 const insertResults = 'insert-results';
 const req_init = 'req-init';
+export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
 /**
  * Feature rich custom element that can make fetch calls, including post requests.
  * @element xtal-fetch-req
@@ -61,10 +63,17 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     }
     /**
      * Indicates whether to pull the response from a previous identical fetch request from cache.
+     * If set to true, cache is stored locally within the instance of the web component.
+     * If set to 'global', cache is retained after web component goes out of scope.
      * @attr cache-results
      */
     set cacheResults(val) {
-        this.attr(cacheResults, val, '');
+        if (typeof (val) === 'boolean') {
+            this.attr(cacheResults, val, '');
+        }
+        else {
+            this.attr(cacheResults, val);
+        }
     }
     get cachedResults() {
         return this._cachedResults;
@@ -165,11 +174,21 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
                 this._debounceDuration = parseFloat(newValue);
                 this.debounceDurationHandler();
                 break;
-            //boolean
             case reqInitRequired:
-            case cacheResults:
+            //case cacheResults:
             case insertResults:
                 this['_' + snakeToCamel(name)] = newValue !== null;
+                break;
+            case cacheResults:
+                if (newValue === 'global') {
+                    this._cacheResults = newValue;
+                    if (XtalFetchGet[cacheSymbol] === undefined) {
+                        XtalFetchGet[cacheSymbol] = {};
+                    }
+                }
+                else {
+                    this._cacheResults = newValue !== null;
+                }
                 break;
             case baseLinkId:
                 this._baseLinkId = newValue;
@@ -202,8 +221,14 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     //overrides
     do() {
         this.errorResponse = null;
-        if (this._cacheResults) {
-            const val = this.cachedResults[this._href];
+        if (this._cacheResults !== false) {
+            let val = undefined;
+            if (this._cacheResults === 'global') {
+                val = XtalFetchGet[cacheSymbol][this._href];
+            }
+            else {
+                val = this.cachedResults[this._href];
+            }
             if (val) {
                 this.result = val;
                 return;
@@ -247,8 +272,13 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
                 }
                 else {
                     this.result = result;
-                    if (this.cachedResults) {
-                        this.cachedResults[this._href] = result;
+                    if (this._cacheResults !== false) {
+                        if (this._cacheResults === 'global') {
+                            XtalFetchGet[cacheSymbol] = result;
+                        }
+                        else {
+                            this.cachedResults[this._href] = result;
+                        }
                     }
                     if (typeof result === 'string' && this._insertResults) {
                         this.style.display = this._initDisp;
