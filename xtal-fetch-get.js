@@ -1,8 +1,5 @@
 import { XtallatX, define } from 'xtal-element/xtal-latx.js';
 import { hydrate } from 'trans-render/hydrate.js';
-const fetch$ = 'fetch';
-const href = 'href';
-const as = 'as';
 /**
  *  Barebones custom element that can make fetch calls.
  * @element xtal-fetch-get

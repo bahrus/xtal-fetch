@@ -3,9 +3,6 @@ import {AttributeProps} from 'xtal-element/types.d.js';
 import {disabled, hydrate} from 'trans-render/hydrate.js';
 import {XtalFetchBasePropertiesIfc, XtalFetchGetEventNameMap} from './types.js';
 
-const fetch$ = 'fetch';
-const href = 'href';
-const as = 'as';
 type prop = keyof XtalFetchBasePropertiesIfc;
 /**
  *  Barebones custom element that can make fetch calls.

@@ -87,13 +87,16 @@ export class XtalFetchEntities extends XtalFetchReq {
     }
 }
 XtalFetchEntities.is = 'xtal-fetch-entities';
-XtalFetchEntities.attributeProps = ({ disabled, fetch, as, href, reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults, forEach, setPath, inEntities }) => ({
-    boolean: [disabled, fetch, reqInitRequired, insertResults],
-    string: [as, href, cacheResults, forEach, setPath],
-    number: [debounceDuration],
-    object: [reqInit, inEntities],
-    parsedObject: [reqInit]
-});
+XtalFetchEntities.attributeProps = ({ forEach, setPath, inEntities }) => {
+    const sProps = XtalFetchReq.evaluatedProps;
+    return {
+        boolean: sProps.boolean,
+        string: sProps.string.concat([forEach, setPath]),
+        number: sProps.number,
+        object: sProps.object.concat([inEntities]),
+        parsedObject: sProps.parsedObject,
+    };
+};
 define(XtalFetchEntities);
 /**
  * Feature rich custom element that can make fetch calls, include Post requests.

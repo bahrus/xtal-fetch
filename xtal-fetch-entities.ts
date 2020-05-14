@@ -10,13 +10,16 @@ import {AttributeProps} from 'xtal-element/types.d.js';
 export class XtalFetchEntities extends XtalFetchReq{
     static is =  'xtal-fetch-entities';
 
-    static attributeProps = ({disabled, fetch, as, href, reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults, forEach, setPath, inEntities} : XtalFetchEntities) => ({
-        boolean: [disabled, fetch, reqInitRequired, insertResults],
-        string: [as, href, cacheResults, forEach, setPath], //TODO:  use super
-        number: [debounceDuration],
-        object: [reqInit, inEntities],
-        parsedObject: [reqInit]
-    }  as AttributeProps);
+    static attributeProps = ({forEach, setPath, inEntities} : XtalFetchEntities) => {
+        const sProps = (<any>XtalFetchReq).evaluatedProps;
+        return {
+            boolean: sProps.boolean,
+            string: sProps.string.concat([forEach, setPath]), //TODO:  use super
+            number: sProps.number,
+            object: sProps.object.concat([inEntities]),
+            parsedObject: sProps.parsedObject,
+        }  as AttributeProps;
+    }
 
     /**
      * Comma delimited list of properties to use as input for the fetch urls

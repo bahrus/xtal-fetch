@@ -200,11 +200,14 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
     }
 }
 XtalFetchReq.is = 'xtal-fetch-req';
-XtalFetchReq.attributeProps = ({ disabled, fetch, as, href, reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults }) => ({
-    boolean: [disabled, fetch, reqInitRequired, insertResults],
-    string: [as, href, cacheResults],
-    number: [debounceDuration],
-    object: [reqInit],
-    parsedObject: [reqInit]
-});
+XtalFetchReq.attributeProps = ({ reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults }) => {
+    const sProps = XtalFetchGet.evaluatedProps;
+    return {
+        boolean: sProps.boolean.concat([reqInitRequired, insertResults]),
+        string: sProps.string.concat([cacheResults]),
+        number: [debounceDuration],
+        object: [reqInit],
+        parsedObject: [reqInit]
+    };
+};
 define(XtalFetchReq);

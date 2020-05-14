@@ -19,14 +19,16 @@ type prop = keyof XtalFetchReqAddedProperties;
 export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchReqPropertiesIfc {
 
     static is = 'xtal-fetch-req';
-
-    static attributeProps = ({disabled, fetch, as, href, reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults} : XtalFetchReq) => ({
-        boolean: [disabled, fetch, reqInitRequired, insertResults],
-        string: [as, href, cacheResults],
-        number: [debounceDuration],
-        object: [reqInit],
-        parsedObject: [reqInit]
-    }  as AttributeProps);
+    static attributeProps = ({reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults} : XtalFetchReq) => {
+        const sProps = (<any>XtalFetchGet).evaluatedProps;
+        return{
+            boolean:  sProps.boolean.concat([reqInitRequired, insertResults]),
+            string: sProps.string.concat([cacheResults]),
+            number: [debounceDuration],
+            object: [reqInit],
+            parsedObject: [reqInit]
+        }  as AttributeProps;
+    };
 
 
    /**
