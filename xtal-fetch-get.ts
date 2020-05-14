@@ -18,7 +18,7 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
     static is = 'xtal-fetch-get';
     static attributeProps = ({disabled, fetch, as, href} : XtalFetchGet) => ({
         boolean: [disabled, fetch],
-        string: [name, as, href],
+        string: [as, href],
     }  as AttributeProps);
     /**
      * Must be true for fetch to proceed
@@ -97,7 +97,7 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
         this._initDisp = this.style.display;
         this.style.display = 'none';
         this._connected = true;
-        this.onPropsChange('disabled');
+        super.connectedCallback();
     }
 }
 define(XtalFetchGet);

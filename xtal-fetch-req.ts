@@ -1,18 +1,10 @@
 import { XtalFetchGet} from './xtal-fetch-get.js';
-import {define} from 'trans-render/define.js';
+import {define} from 'xtal-element/xtal-latx.js';
 import {baseLinkId, BaseLinkId} from 'xtal-element/base-link-id.js'
 import {XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
 import {setSymbol} from 'trans-render/manageSymbols.js';
-import { XtalFetchExample1 } from './xtal-fetch-example1.js';
+import {AttributeProps} from 'xtal-element/types.d.js';
 
-export function snakeToCamel(s: string) {
-    return s.replace(/(\-\w)/g, function (m) { return m[1].toUpperCase(); });
-}
-const debounceDuration = 'debounce-duration';
-const reqInitRequired = 'req-init-required';
-const cacheResults = 'cache-results';
-const insertResults = 'insert-results';
-const req_init = 'req-init';
 export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
 type prop = keyof XtalFetchReqAddedProperties;
 
@@ -25,10 +17,17 @@ type prop = keyof XtalFetchReqAddedProperties;
  * @event fetch-complete
  */
 export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchReqPropertiesIfc {
-    constructor(){
-        super();
-        this._reqInit = undefined;
-    }
+
+    static is = 'xtal-fetch-req';
+
+    static attributeProps = ({disabled, fetch, as, href, reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults} : XtalFetchReq) => ({
+        boolean: [disabled, fetch, reqInitRequired, insertResults],
+        string: [as, href, cacheResults],
+        number: [debounceDuration],
+        object: [reqInit],
+        parsedObject: [reqInit]
+    }  as AttributeProps);
+
 
    /**
    * All events emitted pass through this method
@@ -37,20 +36,15 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
     emit<K extends keyof XtalFetchReqEventNameMap>(type: K,  detail: XtalFetchReqEventNameMap[K]){
         this.de(type, detail, true);
     }
-    get reqInit() {
-        return this._reqInit;
-    }
+
     /**
      * Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.
      * Supports JSON formatted attribute
      * @type {object}
      * @attr req-init
      */
-    set reqInit(val) {
-        this._reqInit = val;
-        //this.__loadNewUrlDebouncer();
-        this.onPropsChange();
-    }
+    reqInit: RequestInit;
+
     onPropsChange(){
         if(this.reqInitRequired && !this.reqInit) return;
         if(!this.__loadNewUrlDebouncer){
@@ -59,57 +53,35 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
         this.__loadNewUrlDebouncer();
     }
 
-    static get is() { return 'xtal-fetch-req'; }
+    
 
-    _cacheResults : boolean | 'global' = false;
-    get cacheResults() {
-        return this._cacheResults;
-    }
     /**
      * Indicates whether to pull the response from a previous identical fetch request from cache.
      * If set to true, cache is stored locally within the instance of the web component.
      * If set to 'global', cache is retained after web component goes out of scope.
      * @attr cache-results
      */
-    set cacheResults(val: boolean | 'global') {
-        if(typeof(val) === 'boolean'){
-            this.attr(cacheResults, val, '');
-        }else{
-            this.attr(cacheResults, val)
-        }
-        
-    }
+    cacheResults: '' | 'global' | undefined;
+
 
     private _cachedResults: { [key: string]: any } = {};
     get cachedResults() {
         return this._cachedResults;
     }
 
-    _reqInitRequired!: boolean;
-    get reqInitRequired() {
-        return this.hasAttribute(reqInitRequired);
-    }
+
     /**
      * Indicates that no fetch request should proceed until reqInit property / attribute is set.
      */
-    set reqInitRequired(val) {
-        this.attr(reqInitRequired, val, '');
-    }
+    reqInitRequired: boolean;
 
-    _debounceDuration! : number;
-
-    get debounceDuration() {
-        return this._debounceDuration;
-    }
     /**
      * How long to pause between requests
      * @attr debounce-duration
      * @type {Number}
      * 
      */
-    set debounceDuration(val) {
-        this.setAttribute(debounceDuration, val.toString());
-    }
+    debounceDuration: number = 16;
 
     _errorResponse!: Response | null;
 
@@ -170,60 +142,18 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
         });
     }
 
-    _insertResults: boolean = false;
-    get insertResults() {
-        return this._insertResults;
-    }
     /**
      * Indicate whether to set the innerHTML of the web component with the response from the server.  
      * Make sure the service is protected against XSS.
      * @attr insert-results
      */
-    set insertResults(val) {
-        this.attr(insertResults, val, '');
-    }
+    insertResults: boolean;
 
     _controller! : AbortController | null;
 
     set abort(val: boolean){
         if(this._controller)this._controller.abort();
     }
-
-    static get observedAttributes() {
-        return super.observedAttributes.concat([debounceDuration, reqInitRequired, cacheResults, insertResults, baseLinkId, req_init]);
-    }
-
-    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-        switch (name) {
-            case debounceDuration:
-                this._debounceDuration = parseFloat(newValue);
-                this.debounceDurationHandler();
-                break;
-            case reqInitRequired:
-            //case cacheResults:
-            case insertResults:
-                (<any>this)['_' + snakeToCamel(name)] =  newValue !== null;
-                break;
-            case cacheResults:
-                if(newValue === 'global'){
-                    this._cacheResults = newValue;
-                    if(XtalFetchGet[cacheSymbol] === undefined){
-                        XtalFetchGet[cacheSymbol] = {};
-                    }
-                }else{
-                    this._cacheResults = newValue !== null;
-                }
-                break;
-            case baseLinkId:
-                this._baseLinkId = newValue;
-                break;
-            case req_init:
-                this._reqInit = JSON.parse(newValue);
-                break;
-        }
-        super.attributeChangedCallback(name, oldValue, newValue);
-    }
-
 
     debounce(func: any, wait: number, immediate?: boolean) {
         let timeout: any;
@@ -242,18 +172,19 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
     debounceDurationHandler() {
         this.__loadNewUrlDebouncer = this.debounce(() => {
             this.loadNewUrl();
-        }, this._debounceDuration);
+        }, this.debounceDuration);
     }
 
     //overrides
     do() {
         this.errorResponse = null;
-        if (this._cacheResults !== false) {
+        if (this.cacheResults !== undefined) {
             let val = undefined;
-            if(this._cacheResults === 'global'){
-                val = XtalFetchGet[cacheSymbol][this._href];
+            if(this.cacheResults === 'global'){
+                if(XtalFetchGet[cacheSymbol] === undefined) XtalFetchGet[cacheSymbol] = {};
+                val = XtalFetchGet[cacheSymbol][this.href];
             }else{
-                val = this.cachedResults[this._href];
+                val = this.cachedResults[this.href];
             }
             if (val) {
                 this.result = val;
@@ -285,7 +216,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
         //this.abort = true;     
         self.fetch(href, this._reqInit).then(resp => {
             this.fetchInProgress = false;
-            resp[this._as]().then(result => {
+            resp[this.as]().then(result => {
                 if (resp.status !== 200) {
                     this.errorResponse = resp;
                     const respText = resp['text'];
@@ -294,15 +225,15 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
                     })
                 } else {
                     this.result = result;
-                    if (this._cacheResults !== false) {
-                        if(this._cacheResults === 'global'){
+                    if (this.cacheResults !== undefined) {
+                        if(this.cacheResults === 'global'){
                             XtalFetchGet[cacheSymbol] = result;
                         }else{
-                            this.cachedResults[this._href] = result;
+                            this.cachedResults[this.href] = result;
                         }
                         
                     }
-                    if (typeof result === 'string' && this._insertResults) {
+                    if (typeof result === 'string' && this.insertResults) {
                         this.style.display = this._initDisp;
                         this.innerHTML = result;
                     }
@@ -321,11 +252,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
         });
     }
 
-    connectedCallback(){
-        this.propUp<prop[]>(['baseLinkId', 'cacheResults', 'debounceDuration', 'insertResults', 'reqInitRequired', 'reqInit']);
-        super.connectedCallback();
-        
-    }
+
 }
 define(XtalFetchReq);
 declare global {

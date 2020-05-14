@@ -61,12 +61,12 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) {
         this._initDisp = this.style.display;
         this.style.display = 'none';
         this._connected = true;
-        this.onPropsChange('disabled');
+        super.connectedCallback();
     }
 }
 XtalFetchGet.is = 'xtal-fetch-get';
 XtalFetchGet.attributeProps = ({ disabled, fetch, as, href }) => ({
     boolean: [disabled, fetch],
-    string: [name, as, href],
+    string: [as, href],
 });
 define(XtalFetchGet);
