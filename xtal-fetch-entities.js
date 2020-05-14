@@ -1,82 +1,23 @@
-import { XtalFetchReq, snakeToCamel } from './xtal-fetch-req.js';
-import { define } from 'trans-render/define.js';
-const forEach = 'for-each';
-const setPath = 'set-path';
+import { XtalFetchReq } from './xtal-fetch-req.js';
+import { define } from 'xtal-element/xtal-latx.js';
 /**
  *  Entire feature set for xtal-fetch, including multiple entity requests.
  *  @element xtal-fetch-entities
  */
 export class XtalFetchEntities extends XtalFetchReq {
-    static get is() { return 'xtal-fetch-entities'; }
-    get forEach() {
-        return this._forEach || this.getAttribute(forEach);
-    }
-    /**
-     * Comma delimited list of properties to use as input for the fetch urls
-     * @type {String}
-     * @attr for-each
-     */
-    set forEach(val) {
-        this.attr(forEach, val);
-    }
-    get setPath() {
-        return this._setPath || this.getAttribute(setPath);
-    }
-    /**
-     * Path to set value inside each entity
-     * @type {String}
-     * attr set-path
-     */
-    set setPath(val) {
-        this.attr(setPath, val);
-    }
-    get inEntities() {
-        return this._inEntities;
-    }
-    /**
-     * Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)
-     * @type {Array}
-     *
-     */
-    set inEntities(val) {
-        this._inEntities = val;
-        this.onPropsChange();
-    }
-    static get observedAttributes() {
-        return super.observedAttributes.concat([forEach, setPath]);
-    }
-    attributeChangedCallback(name, oldValue, newValue) {
-        switch (name) {
-            case setPath:
-            case forEach:
-                this['_' + snakeToCamel(name)] = newValue;
-        }
-        super.attributeChangedCallback(name, oldValue, newValue);
-    }
-    connectedCallback() {
-        super.connectedCallback();
-        this.propUp(['forEach', 'setPath', 'inEntities']);
-    }
-    onPropsChange() {
-        const hasAtLeastOneProp = this.setPath || this.forEach || this.inEntities;
-        if (hasAtLeastOneProp) {
-            this._hasAllThreeProps = !!(this._setPath && this._forEach && this.inEntities);
-            if (!this._hasAllThreeProps) { //need all three
-                return;
-            }
-        }
-        super.onPropsChange();
+    get hasAllThreeProps() {
+        return this.forEach !== undefined && this.setPath !== undefined && this.inEntities !== undefined;
     }
     do() {
-        if (!this._hasAllThreeProps) {
+        if (!this.hasAllThreeProps) {
             super.do();
             return;
         }
         if (this.fetchInProgress) {
             this.abort = true;
         }
-        const keys = this._forEach.split(',');
-        let remainingCalls = this._inEntities.length;
+        const keys = this.forEach.split(',');
+        let remainingCalls = this.inEntities.length;
         this.fetchInProgress = true;
         let counter = 0;
         const base = this._baseLinkId ? self[this._baseLinkId].href : '';
@@ -93,19 +34,19 @@ export class XtalFetchEntities extends XtalFetchReq {
                 };
             }
         }
-        for (let i = 0, ii = this._inEntities.length; i < ii; i++) {
-            const entity = this._inEntities[i];
+        for (let i = 0, ii = this.inEntities.length; i < ii; i++) {
+            const entity = this.inEntities[i];
             entity['__xtal_idx'] = counter;
             counter++;
-            let href = this._href;
+            let href = this.href;
             keys.forEach(key => {
                 href = href.replace(':' + key, entity[key]);
             });
             href = base + href;
-            if (this._cacheResults) {
+            if (this.cacheResults) {
                 const val = this.cachedResults[href];
                 if (val) {
-                    entity[this._setPath] = val;
+                    entity[this.setPath] = val;
                     remainingCalls--;
                     if (remainingCalls === 0)
                         this.fetchInProgress = false;
@@ -120,15 +61,15 @@ export class XtalFetchEntities extends XtalFetchReq {
                     this.errorResponse = resp;
                 }
                 else {
-                    resp[this._as]().then(val => {
+                    resp[this.as]().then(val => {
                         remainingCalls--;
                         if (remainingCalls === 0) {
                             this.fetchInProgress = false;
                             this.result = this.inEntities.slice(0);
                         }
-                        if (this._cacheResults)
+                        if (this.cacheResults)
                             this.cachedResults[href] = val;
-                        entity[this._setPath] = val;
+                        entity[this.setPath] = val;
                         const detail = {
                             entity: entity,
                             href: href
@@ -145,6 +86,14 @@ export class XtalFetchEntities extends XtalFetchReq {
         }
     }
 }
+XtalFetchEntities.is = 'xtal-fetch-entities';
+XtalFetchEntities.attributeProps = ({ disabled, fetch, as, href, reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults, forEach, setPath, inEntities }) => ({
+    boolean: [disabled, fetch, reqInitRequired, insertResults],
+    string: [as, href, cacheResults, forEach, setPath],
+    number: [debounceDuration],
+    object: [reqInit, inEntities],
+    parsedObject: [reqInit]
+});
 define(XtalFetchEntities);
 /**
  * Feature rich custom element that can make fetch calls, include Post requests.
