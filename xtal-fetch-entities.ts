@@ -44,8 +44,12 @@ export class XtalFetchEntities extends XtalFetchReq{
     get hasAllThreeProps(){
         return this.forEach !== undefined && this.setPath !== undefined && this.inEntities !== undefined;
     }
+    get hasAnyThreeProps(){
+        return this.forEach !== undefined || this.setPath !== undefined || this.inEntities !== undefined;
+    }
     do() {
         if(!this.hasAllThreeProps){
+            if(this.hasAnyThreeProps) return;
             super.do();
             return;
         }

@@ -23,7 +23,9 @@
     "json-file-patch": "0.0.1",
     "es-module-shims": "0.4.6",
     "for-instance": "0.0.20",
-    "if-diff": "0.0.43"
+    "if-diff": "0.0.43",
+    "aggregator-fn": "0.0.23",
+    "litter-g": "0.0.34"
   },
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",
