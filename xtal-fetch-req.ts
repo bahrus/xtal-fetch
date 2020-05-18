@@ -1,9 +1,9 @@
 import { XtalFetchGet} from './xtal-fetch-get.js';
-import {define} from 'xtal-element/xtal-latx.js';
+import {define, mergeProps} from 'xtal-element/xtal-latx.js';
 import {baseLinkId, BaseLinkId} from 'xtal-element/base-link-id.js'
 import {XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
 import {setSymbol} from 'trans-render/manageSymbols.js';
-import {AttributeProps} from 'xtal-element/types.d.js';
+import {AttributeProps, EvaluatedAttributeProps} from 'xtal-element/types.d.js';
 
 export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
 type prop = keyof XtalFetchReqAddedProperties;
@@ -20,14 +20,14 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
 
     static is = 'xtal-fetch-req';
     static attributeProps = ({reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults} : XtalFetchReq) => {
-        const sProps = (<any>XtalFetchGet).evaluatedProps;
-        return{
-            boolean:  sProps.boolean.concat([reqInitRequired, insertResults]),
-            string: sProps.string.concat([cacheResults]),
+        const ap = {
+            boolean: [reqInitRequired, insertResults],
+            string: [cacheResults],
             number: [debounceDuration],
             object: [reqInit],
             parsedObject: [reqInit]
         }  as AttributeProps;
+        return mergeProps(ap as EvaluatedAttributeProps, (<any>XtalFetchGet).props);
     };
 
 

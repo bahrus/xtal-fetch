@@ -1,5 +1,5 @@
 import { XtalFetchGet } from './xtal-fetch-get.js';
-import { define } from 'xtal-element/xtal-latx.js';
+import { define, mergeProps } from 'xtal-element/xtal-latx.js';
 import { BaseLinkId } from 'xtal-element/base-link-id.js';
 import { setSymbol } from 'trans-render/manageSymbols.js';
 export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
@@ -201,13 +201,13 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) {
 }
 XtalFetchReq.is = 'xtal-fetch-req';
 XtalFetchReq.attributeProps = ({ reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults }) => {
-    const sProps = XtalFetchGet.evaluatedProps;
-    return {
-        boolean: sProps.boolean.concat([reqInitRequired, insertResults]),
-        string: sProps.string.concat([cacheResults]),
+    const ap = {
+        boolean: [reqInitRequired, insertResults],
+        string: [cacheResults],
         number: [debounceDuration],
         object: [reqInit],
         parsedObject: [reqInit]
     };
+    return mergeProps(ap, XtalFetchGet.props);
 };
 define(XtalFetchReq);

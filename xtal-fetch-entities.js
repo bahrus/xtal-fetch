@@ -1,5 +1,5 @@
 import { XtalFetchReq } from './xtal-fetch-req.js';
-import { define } from 'xtal-element/xtal-latx.js';
+import { define, mergeProps } from 'xtal-element/xtal-latx.js';
 /**
  *  Entire feature set for xtal-fetch, including multiple entity requests.
  *  @element xtal-fetch-entities
@@ -94,13 +94,11 @@ export class XtalFetchEntities extends XtalFetchReq {
 XtalFetchEntities.is = 'xtal-fetch-entities';
 XtalFetchEntities.attributeProps = ({ forEach, setPath, inEntities }) => {
     const sProps = XtalFetchReq.evaluatedProps;
-    return {
-        boolean: sProps.boolean,
-        string: sProps.string.concat([forEach, setPath]),
-        number: sProps.number,
-        object: sProps.object.concat([inEntities]),
-        parsedObject: sProps.parsedObject,
+    const ap = {
+        string: [forEach, setPath],
+        object: [inEntities],
     };
+    return mergeProps(ap, XtalFetchReq.props);
 };
 define(XtalFetchEntities);
 /**
