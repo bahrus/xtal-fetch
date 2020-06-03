@@ -1,6 +1,6 @@
 import {XtallatX, define} from 'xtal-element/xtal-latx.js';
 import {AttributeProps} from 'xtal-element/types.d.js';
-import {disabled, hydrate} from 'trans-render/hydrate.js';
+import { hydrate} from 'trans-render/hydrate.js';
 import {XtalFetchBasePropertiesIfc, XtalFetchGetEventNameMap} from './types.js';
 
 type prop = keyof XtalFetchBasePropertiesIfc;
@@ -14,8 +14,8 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
    
     static is = 'xtal-fetch-get';
     static attributeProps = ({disabled, fetch, as, href} : XtalFetchGet) => ({
-        boolean: [disabled, fetch],
-        string: [as, href],
+        bool: [disabled, fetch],
+        str: [as, href],
     }  as AttributeProps);
     /**
      * Must be true for fetch to proceed
@@ -74,11 +74,12 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
 
 
     onPropsChange(name: string) {
+        super.onPropsChange(name)
         this.loadNewUrl();
     }
 
     loadNewUrl() {
-        if (!this.fetch || !this.href || this.disabled || !this._connected) return;
+        if (!this.fetch || !this.href || this.disabled || !this._xlConnected) return;
         this.do();
     }
     do() {
@@ -89,11 +90,9 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
         });
     }
     _initDisp!: string | null;
-    _connected = false;
     connectedCallback() {
         this._initDisp = this.style.display;
         this.style.display = 'none';
-        this._connected = true;
         super.connectedCallback();
     }
 }

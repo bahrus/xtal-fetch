@@ -1,9 +1,9 @@
 import { XtalFetchGet} from './xtal-fetch-get.js';
-import {define, mergeProps} from 'xtal-element/xtal-latx.js';
-import {baseLinkId, BaseLinkId} from 'xtal-element/base-link-id.js'
-import {XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
-import {setSymbol} from 'trans-render/manageSymbols.js';
-import {AttributeProps, EvaluatedAttributeProps} from 'xtal-element/types.d.js';
+import { define, mergeProps} from 'xtal-element/xtal-latx.js';
+import { IBaseLinkContainer, getFullURL} from 'xtal-element/base-link-id.js';
+import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
+import { setSymbol} from 'trans-render/manageSymbols.js';
+import { AttributeProps} from 'xtal-element/types.d.js';
 
 export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
 type prop = keyof XtalFetchReqAddedProperties;
@@ -16,18 +16,18 @@ type prop = keyof XtalFetchReqAddedProperties;
  * @event fetch-in-progress-changed
  * @event fetch-complete
  */
-export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchReqPropertiesIfc {
+export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqPropertiesIfc, IBaseLinkContainer {
 
     static is = 'xtal-fetch-req';
     static attributeProps = ({reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults} : XtalFetchReq) => {
         const ap = {
-            boolean: [reqInitRequired, insertResults],
-            string: [cacheResults],
-            number: [debounceDuration],
-            object: [reqInit],
-            parsedObject: [reqInit]
+            bool: [reqInitRequired, insertResults],
+            str: [cacheResults],
+            num: [debounceDuration],
+            obj: [reqInit],
+            jsonProp: [reqInit]
         }  as AttributeProps;
-        return mergeProps(ap as EvaluatedAttributeProps, (<any>XtalFetchGet).props);
+        return mergeProps(ap, (<any>XtalFetchGet).props);
     };
 
 
@@ -151,6 +151,12 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
      */
     insertResults: boolean;
 
+    /**
+     * DOM ID  of link (preload) tag, typical in head element.  
+     * Used to prov
+     */
+    baseLinkId: string | undefined;
+
     _controller! : AbortController | null;
 
     set abort(val: boolean){
@@ -203,7 +209,7 @@ export class XtalFetchReq extends BaseLinkId(XtalFetchGet) implements XtalFetchR
         }
         this.fetchInProgress = true;
         let href = this.href;
-        href = this.getFullURL(href);
+        href = getFullURL(this, href);
         if(typeof(AbortController) !== 'undefined'){
             this._controller = new AbortController();
             const sig = this._controller.signal;

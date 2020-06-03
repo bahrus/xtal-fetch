@@ -1,7 +1,7 @@
 import { XtalFetchReq} from './xtal-fetch-req.js';
-import {define, mergeProps} from 'xtal-element/xtal-latx.js';
-import {XtalFetchEntitiesAddedProperties, XtalFetchEntitiesPropertiesIfc} from './types.d.js';
-import {AttributeProps, EvaluatedAttributeProps} from 'xtal-element/types.d.js';
+import { define, mergeProps} from 'xtal-element/xtal-latx.js';
+import { AttributeProps} from 'xtal-element/types.d.js';
+import { getFullURL} from 'xtal-element/base-link-id.js';
 
 /**
  *  Entire feature set for xtal-fetch, including multiple entity requests.
@@ -13,10 +13,10 @@ export class XtalFetchEntities extends XtalFetchReq{
     static attributeProps = ({forEach, setPath, inEntities} : XtalFetchEntities) => {
         const sProps = (<any>XtalFetchReq).evaluatedProps;
         const ap = {
-            string: [forEach, setPath], //TODO:  use super
-            object: [inEntities],
+            str: [forEach, setPath], //TODO:  use super
+            obj: [inEntities],
         }  as AttributeProps;
-        return mergeProps(ap as EvaluatedAttributeProps, (<any>XtalFetchReq).props);
+        return mergeProps(ap, (<any>XtalFetchReq).props);
     }
 
     /**
@@ -58,8 +58,7 @@ export class XtalFetchEntities extends XtalFetchReq{
         let remainingCalls = this.inEntities.length;
         this.fetchInProgress = true;
         let counter = 0;
-        const base = this._baseLinkId ? (<any>self)[this._baseLinkId].href : '';
-        //this._inEntities.forEach(entity => {
+        const base =  getFullURL(this, '');
         if(typeof(AbortController) !== 'undefined'){
             this._controller = new AbortController();
             const sig = this._controller.signal;
