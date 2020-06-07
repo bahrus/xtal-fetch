@@ -1,5 +1,5 @@
 import { XtalFetchGet } from './xtal-fetch-get.js';
-import { define, mergeProps } from 'xtal-element/xtal-latx.js';
+import { define, mergeProps, de } from 'xtal-element/xtal-latx.js';
 import { getFullURL } from 'xtal-element/base-link-id.js';
 import { setSymbol } from 'trans-render/manageSymbols.js';
 export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
@@ -30,7 +30,7 @@ let XtalFetchReq = /** @class */ (() => {
         * @param evt
         */
         emit(type, detail) {
-            this.de(type, detail, true);
+            this[de](type, detail, true);
         }
         onPropsChange() {
             if (this.reqInitRequired && !this.reqInit)

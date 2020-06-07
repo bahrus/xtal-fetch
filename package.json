@@ -13,13 +13,13 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "xtal-element": "0.0.183",
-    "trans-render": "0.0.184"
+    "xtal-element": "0.0.196",
+    "trans-render": "0.0.188"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "2.4.3",
     "xtal-test": "0.0.44",
-    "p-et-alia": "0.0.91",
+    "p-et-alia": "0.0.95",
     "json-file-patch": "0.0.1",
     "es-module-shims": "0.4.6",
     "for-instance": "0.0.22",

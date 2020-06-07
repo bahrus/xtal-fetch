@@ -1,4 +1,4 @@
-import { XtallatX, define } from 'xtal-element/xtal-latx.js';
+import { XtallatX, define, de } from 'xtal-element/xtal-latx.js';
 import { hydrate } from 'trans-render/hydrate.js';
 /**
  *  Barebones custom element that can make fetch calls.
@@ -24,7 +24,7 @@ let XtalFetchGet = /** @class */ (() => {
          * @param evt
          */
         emit(type, detail) {
-            this.de(type, detail, true);
+            this[de](type, detail, true);
         }
         /**
          * ⚡ Fires event result-changed

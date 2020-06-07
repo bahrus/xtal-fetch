@@ -1,5 +1,5 @@
 import { XtalFetchGet} from './xtal-fetch-get.js';
-import { define, mergeProps} from 'xtal-element/xtal-latx.js';
+import { define, mergeProps, de} from 'xtal-element/xtal-latx.js';
 import { IBaseLinkContainer, getFullURL} from 'xtal-element/base-link-id.js';
 import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
 import { setSymbol} from 'trans-render/manageSymbols.js';
@@ -36,7 +36,7 @@ export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqProperties
    * @param evt 
    */
     emit<K extends keyof XtalFetchReqEventNameMap>(type: K,  detail: XtalFetchReqEventNameMap[K]){
-        this.de(type, detail, true);
+        this[de](type, detail, true);
     }
 
     /**

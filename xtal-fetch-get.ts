@@ -1,4 +1,4 @@
-import {XtallatX, define} from 'xtal-element/xtal-latx.js';
+import {XtallatX, define, de} from 'xtal-element/xtal-latx.js';
 import {AttributeProps} from 'xtal-element/types.d.js';
 import { hydrate} from 'trans-render/hydrate.js';
 import {XtalFetchBasePropertiesIfc, XtalFetchGetEventNameMap} from './types.js';
@@ -55,7 +55,7 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
    * @param evt 
    */
   emit<K extends keyof XtalFetchGetEventNameMap>(type: K,  detail: XtalFetchGetEventNameMap[K]){
-    this.de(type, detail, true);
+    this[de](type, detail, true);
   }
 
     /**
