@@ -1,11 +1,11 @@
-import {XtallatX, define, de} from 'xtal-element/xtal-latx.js';
-import {AttributeProps} from 'xtal-element/types.d.js';
+import { XtallatX, define, de} from 'xtal-element/xtal-latx.js';
+import { AttributeProps} from 'xtal-element/types.d.js';
 import { hydrate} from 'trans-render/hydrate.js';
-import {XtalFetchBasePropertiesIfc, XtalFetchGetEventNameMap} from './types.js';
+import { XtalFetchBasePropertiesIfc, XtalFetchGetEventNameMap} from './types.js';
 
 type prop = keyof XtalFetchBasePropertiesIfc;
 /**
- *  Barebones custom element that can make fetch calls.
+ * Barebones custom element that can make fetch calls.
  * @element xtal-fetch-get
  * @event result-changed
  */
@@ -20,7 +20,6 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
     /**
      * Must be true for fetch to proceed
      * @attr
-     * @type {"json" | "text"}
      */
     fetch!: boolean;
 
@@ -66,7 +65,6 @@ export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) implements Xtal
      * 
      */
     set result(val) {
-        //this.updateResultProp(val, 'result', '_result', null);
         this._result = val;
         this.value = val;
         this.emit("result-changed", {value:val})

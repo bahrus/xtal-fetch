@@ -13,8 +13,8 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "xtal-element": "0.0.196",
-    "trans-render": "0.0.188"
+    "xtal-element": "0.0.266",
+    "trans-render": "0.0.239"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "2.4.3",
@@ -22,15 +22,15 @@
     "p-et-alia": "0.0.95",
     "json-file-patch": "0.0.1",
     "es-module-shims": "0.4.6",
-    "for-instance": "0.0.22",
-    "if-diff": "0.0.60",
+    "for-instance": "0.0.27",
+    "if-diff": "0.0.61",
     "aggregator-fn": "0.0.24",
     "litter-g": "0.0.34"
   },
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",
-    "doc": "wca analyze xtal-*.js --outFile custom-elements.json && node patchJSON.js",
+    "doc": "wca analyze xtal-*.js --outFile custom-elements.json",
     "test": "node test/test-all.js",
-    "test::spec": "wca analyze xtal-fetch-example1.js --outFile xtal-fetch-example1.json"
+    "example1": "wca analyze xtal-fetch-example1.js --outFile xtal-fetch-example1.json"
   }
 }
