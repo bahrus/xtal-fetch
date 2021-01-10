@@ -20,10 +20,16 @@ const propDefGetter = [
         stopReactionsIfFalsy: true,
         reflect: true
     }),
-    ({value, result, reqInit}: XtalFetchGet) => ({
+    ({value, reqInit}: XtalFetchGet) => ({
         type: Object,
         dry: true,
         notify: true
+    }),
+    ({result}: XtalFetchGet) => ({
+        type: Object,
+        dry: true,
+        notify: true,
+        echoTo: 'value',
     }),
     ({reqInit}: XtalFetchGet) => ({
         type: Object,

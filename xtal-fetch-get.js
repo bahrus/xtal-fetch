@@ -1,68 +1,75 @@
-import { XtallatX, define, de } from 'xtal-element/xtal-latx.js';
-import { hydrate } from 'trans-render/hydrate.js';
+import { define } from 'xtal-element/lib/define.js';
+import { letThereBeProps } from 'xtal-element/lib/letThereBeProps.js';
+import { getPropDefs } from 'xtal-element/lib/getPropDefs.js';
+import { getSlicedPropDefs } from 'xtal-element/lib/getSlicedPropDefs.js';
+import { hydrate } from 'xtal-element/lib/hydrate.js';
+import { Reactor } from 'xtal-element/lib/Reactor.js';
+const propDefGetter = [
+    ({ disabled, fetch }) => ({
+        type: Boolean,
+        dry: true,
+        stopReactionsIfFalsy: true,
+        reflect: true,
+    }),
+    ({ as, href }) => ({
+        type: String,
+        dry: true,
+        stopReactionsIfFalsy: true,
+        reflect: true
+    }),
+    ({ value, reqInit }) => ({
+        type: Object,
+        dry: true,
+        notify: true
+    }),
+    ({ result }) => ({
+        type: Object,
+        dry: true,
+        notify: true,
+        echoTo: 'value',
+    }),
+    ({ reqInit }) => ({
+        type: Object,
+        dry: true,
+    })
+];
+const propDefs = getPropDefs(propDefGetter);
+const slicedPropDefs = getSlicedPropDefs(propDefs);
+const linkResult = ({ href, disabled, fetch, reqInit, as, self }) => {
+    if (!fetch || href === undefined || disabled)
+        return;
+    window.fetch(href, reqInit).then(resp => {
+        resp[as]().then(result => {
+            self.result = result;
+        });
+    });
+};
+const propActions = [
+    linkResult
+];
 /**
- * Barebones custom element that can make fetch calls.
+ * Bare-bones custom element that can make fetch calls.
  * @element xtal-fetch-get
  * @event result-changed
  */
-export class XtalFetchGet extends XtallatX(hydrate(HTMLElement)) {
+export class XtalFetchGet extends HTMLElement {
     constructor() {
         super(...arguments);
-        /**
-         *  How to treat the response
-         * @attr
-         * @type {"json"|"text"}
-         */
-        this.as = 'json';
+        this.propActions = propActions;
+        this.reactor = new Reactor(this);
+        this.self = this;
     }
-    get result() {
-        return this._result;
-    }
-    /**
-     * ⚡ Fires event result-changed
-     * Result of fetch request
-     * @type {Object}
-     *
-     *
-     */
-    set result(val) {
-        this._result = val;
-        this.value = val;
-        this.emit("result-changed", { value: val });
-    }
-    /**
-     * All events emitted pass through this method
-     * @param evt
-     */
-    emit(type, detail) {
-        this[de](type, detail, true);
-    }
-    onPropsChange(name) {
-        super.onPropsChange(name);
-        this.loadNewUrl();
-    }
-    loadNewUrl() {
-        if (!this.fetch || !this.href || this.disabled || !this._xlConnected)
-            return;
-        this.do();
-    }
-    do() {
-        self.fetch(this.href, this._reqInit).then(resp => {
-            resp[this.as]().then(result => {
-                this.result = result;
-            });
-        });
+    onPropChange(name, prop, nv) {
+        this.reactor.addToQueue(prop, nv);
     }
     connectedCallback() {
         this._initDisp = this.style.display;
         this.style.display = 'none';
-        super.connectedCallback();
+        hydrate(this, propDefs, {
+            as: 'json',
+        });
     }
 }
 XtalFetchGet.is = 'xtal-fetch-get';
-XtalFetchGet.attributeProps = ({ disabled, fetch, as, href }) => ({
-    bool: [disabled, fetch],
-    str: [as, href],
-    reflect: [as, href, fetch]
-});
+letThereBeProps(XtalFetchGet, slicedPropDefs.propDefs, 'onPropChange');
 define(XtalFetchGet);
