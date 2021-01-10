@@ -17,3 +17,4 @@ const xt = require('xtal-test/index');
     if (passed)
         console.log("Tests Passed.  Have a nice day.");
 })();
+export {};

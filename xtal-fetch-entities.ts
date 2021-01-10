@@ -15,6 +15,7 @@ export class XtalFetchEntities extends XtalFetchReq{
         const ap = {
             str: [forEach, setPath], //TODO:  use super
             obj: [inEntities],
+            reflect:[forEach, setPath]
         }  as AttributeProps;
         return mergeProps(ap, (<any>XtalFetchReq).props);
     }

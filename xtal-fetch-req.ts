@@ -25,7 +25,8 @@ export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqProperties
             str: [cacheResults],
             num: [debounceDuration],
             obj: [reqInit],
-            jsonProp: [reqInit]
+            jsonProp: [reqInit],
+            reflect:[insertResults, reqInitRequired, debounceDuration]
         }  as AttributeProps;
         return mergeProps(ap, (<any>XtalFetchGet).props);
     };

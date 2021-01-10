@@ -1,0 +1,16 @@
+{
+  "version": "experimental",
+  "tags": [
+    {
+      "name": "my-example",
+      "path": "./MyExample.js",
+      "properties": [
+        {
+          "name": "myProp",
+          "type": "string",
+          "default": "\"myVal\""
+        }
+      ]
+    }
+  ]
+}

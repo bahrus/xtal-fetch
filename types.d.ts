@@ -1,10 +1,11 @@
 import { XtalFetchGet } from "./xtal-fetch-get";
 
-export interface XtalFetchBasePropertiesIfc {
-    href: string,
-    fetch: boolean,
-    disabled: boolean,
-    result: any,
+export interface XtalFetchBasePropertiesIfc extends Partial<HTMLElement> {
+    href?: string,
+    fetch?: boolean,
+    disabled?: boolean,
+    result?: any,
+    as?: 'text' | 'json';
 }
 
 export interface XtalFetchReqAddedProperties{

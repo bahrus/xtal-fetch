@@ -3,6 +3,7 @@
   "tags": [
     {
       "name": "xtal-fetch",
+      "path": "./xtal-fetch-example1.js",
       "attributes": [
         {
           "name": "for-each",
@@ -10,9 +11,37 @@
           "type": "String"
         },
         {
+          "name": "req-init",
+          "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
+          "type": "object"
+        },
+        {
+          "name": "cache-results",
+          "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope.",
+          "type": "\"\" | \"global\" | undefined"
+        },
+        {
+          "name": "debounce-duration",
+          "description": "How long to pause between requests",
+          "type": "Number",
+          "default": "16"
+        },
+        {
+          "name": "insert-results",
+          "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
+          "type": "boolean"
+        },
+        {
+          "name": "fetch",
+          "description": "Must be true for fetch to proceed",
+          "type": "boolean",
+          "default": "true"
+        },
+        {
           "name": "as",
           "description": "How to treat the response",
-          "type": "\"json\"|\"text\""
+          "type": "\"json\"|\"text\"",
+          "default": "\"json\""
         },
         {
           "name": "href",
@@ -23,26 +52,6 @@
         {
           "name": "disabled",
           "description": "Any component that emits events should not do so if it is disabled.\r\nNote that this is not enforced, but the disabled property is made available.\r\nUsers of this mix-in should ensure not to call \"de\" if this property is set to true.",
-          "type": "boolean"
-        },
-        {
-          "name": "req-init",
-          "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
-          "type": "object"
-        },
-        {
-          "name": "cache-results",
-          "description": "Indicates whether to pull the response from a previous identical fetch request from cache.",
-          "type": "boolean"
-        },
-        {
-          "name": "debounce-duration",
-          "description": "How long to pause between requests",
-          "type": "Number"
-        },
-        {
-          "name": "insert-results",
-          "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
           "type": "boolean"
         }
       ],
@@ -69,6 +78,14 @@
           "type": "Array"
         },
         {
+          "name": "hasAllThreeProps",
+          "type": "boolean"
+        },
+        {
+          "name": "hasAnyThreeProps",
+          "type": "boolean"
+        },
+        {
           "name": "cachedResults",
           "type": "{ [key: string]: any; }"
         },
@@ -82,44 +99,6 @@
           "type": "boolean"
         },
         {
-          "name": "as",
-          "attribute": "as",
-          "description": "How to treat the response",
-          "type": "\"json\"|\"text\""
-        },
-        {
-          "name": "value"
-        },
-        {
-          "name": "evCount",
-          "description": "Tracks how many times each event type was called.",
-          "type": "{ [key: string]: number; }",
-          "default": "{}"
-        },
-        {
-          "name": "href",
-          "attribute": "href",
-          "description": "URL (path) to fetch.",
-          "type": "string",
-          "default": "\"https://unpkg.com/xtal-fetch@0.0.75/demo/generated.json\""
-        },
-        {
-          "name": "fetch",
-          "type": "boolean",
-          "default": "true"
-        },
-        {
-          "name": "disabled",
-          "attribute": "disabled",
-          "description": "Any component that emits events should not do so if it is disabled.\r\nNote that this is not enforced, but the disabled property is made available.\r\nUsers of this mix-in should ensure not to call \"de\" if this property is set to true.",
-          "type": "boolean"
-        },
-        {
-          "name": "result",
-          "description": "⚡ Fires event result-changed\r\nResult of fetch request",
-          "type": "Object"
-        },
-        {
           "name": "reqInit",
           "attribute": "req-init",
           "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
@@ -128,8 +107,8 @@
         {
           "name": "cacheResults",
           "attribute": "cache-results",
-          "description": "Indicates whether to pull the response from a previous identical fetch request from cache.",
-          "type": "boolean"
+          "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope.",
+          "type": "\"\" | \"global\" | undefined"
         },
         {
           "name": "reqInitRequired",
@@ -140,7 +119,8 @@
           "name": "debounceDuration",
           "attribute": "debounce-duration",
           "description": "How long to pause between requests",
-          "type": "Number"
+          "type": "Number",
+          "default": "16"
         },
         {
           "name": "errorResponse",
@@ -160,7 +140,53 @@
         },
         {
           "name": "baseLinkId",
-          "type": "string"
+          "description": "DOM ID  of link (preload) tag, typical in head element.  \r\nUsed to prov",
+          "type": "string | undefined"
+        },
+        {
+          "name": "is",
+          "type": "string",
+          "default": "\"xtal-fetch-entities\""
+        },
+        {
+          "name": "fetch",
+          "attribute": "fetch",
+          "description": "Must be true for fetch to proceed",
+          "type": "boolean",
+          "default": "true"
+        },
+        {
+          "name": "as",
+          "attribute": "as",
+          "description": "How to treat the response",
+          "type": "\"json\"|\"text\"",
+          "default": "\"json\""
+        },
+        {
+          "name": "href",
+          "attribute": "href",
+          "description": "URL (path) to fetch.",
+          "type": "string",
+          "default": "\"https://unpkg.com/xtal-fetch@0.0.75/demo/generated.json\""
+        },
+        {
+          "name": "value"
+        },
+        {
+          "name": "result",
+          "description": "⚡ Fires event result-changed\r\nResult of fetch request",
+          "type": "Object"
+        },
+        {
+          "name": "attributeProps",
+          "type": "({ forEach, setPath, inEntities }: XtalFetchEntities) => EvaluatedAttributeProps",
+          "default": "\"({forEach, setPath, inEntities} : XtalFetchEntities) => {\\r\\n        const sProps = (<any>XtalFetchReq).evaluatedProps;\\r\\n        const ap = {\\r\\n            str: [forEach, setPath], //TODO:  use super\\r\\n            obj: [inEntities],\\r\\n        }  as AttributeProps;\\r\\n        return mergeProps(ap, (<any>XtalFetchReq).props);\\r\\n    }\""
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "description": "Any component that emits events should not do so if it is disabled.\r\nNote that this is not enforced, but the disabled property is made available.\r\nUsers of this mix-in should ensure not to call \"de\" if this property is set to true.",
+          "type": "boolean"
         }
       ],
       "events": [
