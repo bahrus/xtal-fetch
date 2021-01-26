@@ -1,5 +1,5 @@
 import { xc } from 'xtal-element/lib/XtalCore.js';
-const bool1 = {
+export const bool1 = {
     type: Boolean,
     dry: true,
 };

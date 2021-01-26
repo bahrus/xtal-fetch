@@ -1,7 +1,9 @@
-import { XtalFetchGet } from './xtal-fetch-get.js';
-import { define } from 'xtal-element/lib/define.js';
+import { XtalFetchGet, bool1 } from './xtal-fetch-get.js';
 import { getFullURL } from 'xtal-element/base-link-id.js';
 //import { setSymbol} from 'trans-render/manageSymbols.js';
+export const propDefMap = {
+    reqInitRequired: bool1, insertResults: bool1,
+};
 //export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
 //type prop = keyof XtalFetchReqAddedProperties;
 /**

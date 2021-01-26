@@ -1,12 +1,12 @@
-import { XtalFetchGet} from './xtal-fetch-get.js';
-import { define } from 'xtal-element/lib/define.js';
-import {getPropDefs} from 'xtal-element/lib/getPropDefs.js';
-import {getSlicedPropDefs} from 'xtal-element/lib/getSlicedPropDefs.js';
+import { XtalFetchGet, bool1} from './xtal-fetch-get.js';
+import { xc, PropDef, PropDefMap } from 'xtal-element/lib/XtalCore.js';
 import { IBaseLinkContainer, getFullURL} from 'xtal-element/base-link-id.js';
 import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
 //import { setSymbol} from 'trans-render/manageSymbols.js';
 
-
+export const propDefMap: PropDefMap<XtalFetchReqPropertiesIfc> = {
+    reqInitRequired: bool1, insertResults: bool1,
+};
 
 //export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
 //type prop = keyof XtalFetchReqAddedProperties;
@@ -24,7 +24,6 @@ export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqProperties
     static is = 'xtal-fetch-req';
     // static attributeProps = ({reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults} : XtalFetchReq) => {
     //     const ap = {
-    //         bool: [reqInitRequired, insertResults],
     //         str: [cacheResults],
     //         num: [debounceDuration],
     //         obj: [reqInit],

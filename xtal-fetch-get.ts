@@ -1,7 +1,7 @@
 import { XtalFetchBasePropertiesIfc, XtalFetchGetEventNameMap} from './types.js';
 import {xc, ReactiveSurface, PropDef, PropDefMap, PropAction} from 'xtal-element/lib/XtalCore.js';
 
-const bool1: PropDef = {
+export const bool1: PropDef = {
     type: Boolean,
     dry: true,
 };
@@ -17,7 +17,11 @@ const obj1: PropDef = {
     notify: true
 };
 const propDefMap: PropDefMap<XtalFetchGet> = {
-    disabled: bool1, fetch: bool1,
+    disabled: bool1, fetch: {
+        type: Boolean,
+        dry: true,
+        stopReactionsIfFalsy: true,
+    },
     as: str1, href: str1,
     value: obj1,
     result: {
@@ -33,8 +37,7 @@ const propDefMap: PropDefMap<XtalFetchGet> = {
 };
 
 const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
-const linkResult = ({href, disabled, fetch, reqInit, as, self}: XtalFetchGet) => {
-    if (!fetch || href === undefined || disabled) return;
+const linkResult = ({href, fetch, reqInit, as, self}: XtalFetchGet) => {
     window.fetch(href, reqInit).then(resp => {
         resp[as]().then(result => {
             self.result = result;
