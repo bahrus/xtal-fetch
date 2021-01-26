@@ -1,8 +1,9 @@
 import { XtalFetchGet } from './xtal-fetch-get.js';
-import { define, mergeProps, de } from 'xtal-element/xtal-latx.js';
+import { define } from 'xtal-element/lib/define.js';
 import { getFullURL } from 'xtal-element/base-link-id.js';
-import { setSymbol } from 'trans-render/manageSymbols.js';
-export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
+//import { setSymbol} from 'trans-render/manageSymbols.js';
+//export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
+//type prop = keyof XtalFetchReqAddedProperties;
 /**
  * Feature rich custom element that can make fetch calls, including post requests.
  * @element xtal-fetch-req
@@ -23,13 +24,6 @@ export class XtalFetchReq extends XtalFetchGet {
          */
         this.debounceDuration = 16;
         this._fetchInProgress = false;
-    }
-    /**
-    * All events emitted pass through this method
-    * @param evt
-    */
-    emit(type, detail) {
-        this[de](type, detail, true);
     }
     onPropsChange() {
         if (this.reqInitRequired && !this.reqInit)
@@ -57,9 +51,9 @@ export class XtalFetchReq extends XtalFetchGet {
             return;
         this._errorResponse = val;
         if (val !== null) {
-            this.emit('error-response-changed', {
-                value: val
-            });
+            // this.emit('error-response-changed', {
+            //     value:val
+            // });
         }
     }
     get errorText() {
@@ -200,15 +194,4 @@ export class XtalFetchReq extends XtalFetchGet {
     }
 }
 XtalFetchReq.is = 'xtal-fetch-req';
-XtalFetchReq.attributeProps = ({ reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults }) => {
-    const ap = {
-        bool: [reqInitRequired, insertResults],
-        str: [cacheResults],
-        num: [debounceDuration],
-        obj: [reqInit],
-        jsonProp: [reqInit],
-        reflect: [insertResults, reqInitRequired, debounceDuration]
-    };
-    return mergeProps(ap, XtalFetchGet.props);
-};
 define(XtalFetchReq);

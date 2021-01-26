@@ -1,40 +1,34 @@
-import { define } from 'xtal-element/lib/define.js';
-import { letThereBeProps } from 'xtal-element/lib/letThereBeProps.js';
-import { getPropDefs } from 'xtal-element/lib/getPropDefs.js';
-import { getSlicedPropDefs } from 'xtal-element/lib/getSlicedPropDefs.js';
-import { hydrate } from 'xtal-element/lib/hydrate.js';
-import { Reactor } from 'xtal-element/lib/Reactor.js';
-const propDefGetter = [
-    ({ disabled, fetch }) => ({
-        type: Boolean,
-        dry: true,
-        stopReactionsIfFalsy: true,
-        reflect: true,
-    }),
-    ({ as, href }) => ({
-        type: String,
-        dry: true,
-        stopReactionsIfFalsy: true,
-        reflect: true
-    }),
-    ({ value, reqInit }) => ({
-        type: Object,
-        dry: true,
-        notify: true
-    }),
-    ({ result }) => ({
+import { xc } from 'xtal-element/lib/XtalCore.js';
+const bool1 = {
+    type: Boolean,
+    dry: true,
+};
+const str1 = {
+    type: String,
+    dry: true,
+    reflect: true
+};
+const obj1 = {
+    type: Object,
+    dry: true,
+    notify: true
+};
+const propDefMap = {
+    disabled: bool1, fetch: bool1,
+    as: str1, href: str1,
+    value: obj1,
+    result: {
         type: Object,
         dry: true,
         notify: true,
         echoTo: 'value',
-    }),
-    ({ reqInit }) => ({
+    },
+    reqInit: {
         type: Object,
         dry: true,
-    })
-];
-const propDefs = getPropDefs(propDefGetter);
-const slicedPropDefs = getSlicedPropDefs(propDefs);
+    }
+};
+const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
 const linkResult = ({ href, disabled, fetch, reqInit, as, self }) => {
     if (!fetch || href === undefined || disabled)
         return;
@@ -56,7 +50,7 @@ export class XtalFetchGet extends HTMLElement {
     constructor() {
         super(...arguments);
         this.propActions = propActions;
-        this.reactor = new Reactor(this);
+        this.reactor = new xc.Reactor(this);
         this.self = this;
     }
     onPropChange(name, prop, nv) {
@@ -65,11 +59,11 @@ export class XtalFetchGet extends HTMLElement {
     connectedCallback() {
         this._initDisp = this.style.display;
         this.style.display = 'none';
-        hydrate(this, propDefs, {
+        xc.hydrate(this, slicedPropDefs, {
             as: 'json',
         });
     }
 }
 XtalFetchGet.is = 'xtal-fetch-get';
-letThereBeProps(XtalFetchGet, slicedPropDefs.propDefs, 'onPropChange');
-define(XtalFetchGet);
+xc.letThereBeProps(XtalFetchGet, slicedPropDefs.propDefs, 'onPropChange');
+xc.define(XtalFetchGet);

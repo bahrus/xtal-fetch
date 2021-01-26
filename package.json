@@ -13,7 +13,8 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "xtal-element": "0.0.321"
+    "trans-render": "0.0.273",
+    "xtal-element": "0.0.334"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "2.5.0",

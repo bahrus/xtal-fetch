@@ -1,12 +1,15 @@
 import { XtalFetchGet} from './xtal-fetch-get.js';
-import { define, mergeProps, de} from 'xtal-element/xtal-latx.js';
+import { define } from 'xtal-element/lib/define.js';
+import {getPropDefs} from 'xtal-element/lib/getPropDefs.js';
+import {getSlicedPropDefs} from 'xtal-element/lib/getSlicedPropDefs.js';
 import { IBaseLinkContainer, getFullURL} from 'xtal-element/base-link-id.js';
 import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
-import { setSymbol} from 'trans-render/manageSymbols.js';
-import { AttributeProps} from 'xtal-element/types.d.js';
+//import { setSymbol} from 'trans-render/manageSymbols.js';
 
-export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
-type prop = keyof XtalFetchReqAddedProperties;
+
+
+//export const cacheSymbol = setSymbol(XtalFetchGet.is, 'cache');
+//type prop = keyof XtalFetchReqAddedProperties;
 
 /**
  * Feature rich custom element that can make fetch calls, including post requests.
@@ -19,26 +22,26 @@ type prop = keyof XtalFetchReqAddedProperties;
 export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqPropertiesIfc, IBaseLinkContainer {
 
     static is = 'xtal-fetch-req';
-    static attributeProps = ({reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults} : XtalFetchReq) => {
-        const ap = {
-            bool: [reqInitRequired, insertResults],
-            str: [cacheResults],
-            num: [debounceDuration],
-            obj: [reqInit],
-            jsonProp: [reqInit],
-            reflect:[insertResults, reqInitRequired, debounceDuration]
-        }  as AttributeProps;
-        return mergeProps(ap, (<any>XtalFetchGet).props);
-    };
+    // static attributeProps = ({reqInit, cacheResults, reqInitRequired, debounceDuration, insertResults} : XtalFetchReq) => {
+    //     const ap = {
+    //         bool: [reqInitRequired, insertResults],
+    //         str: [cacheResults],
+    //         num: [debounceDuration],
+    //         obj: [reqInit],
+    //         jsonProp: [reqInit],
+    //         reflect:[insertResults, reqInitRequired, debounceDuration]
+    //     }  as AttributeProps;
+    //     return mergeProps(ap, (<any>XtalFetchGet).props);
+    // };
 
 
-   /**
-   * All events emitted pass through this method
-   * @param evt 
-   */
-    emit<K extends keyof XtalFetchReqEventNameMap>(type: K,  detail: XtalFetchReqEventNameMap[K]){
-        this[de](type, detail, true);
-    }
+//    /**
+//    * All events emitted pass through this method
+//    * @param evt 
+//    */
+//     emit<K extends keyof XtalFetchReqEventNameMap>(type: K,  detail: XtalFetchReqEventNameMap[K]){
+//         this[de](type, detail, true);
+//     }
 
     /**
      * Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.
@@ -102,9 +105,9 @@ export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqProperties
         if(!this._errorResponse && !val) return;
         this._errorResponse = val;
         if(val !== null){
-            this.emit('error-response-changed', {
-                value:val
-            });
+            // this.emit('error-response-changed', {
+            //     value:val
+            // });
         }
     }
 
