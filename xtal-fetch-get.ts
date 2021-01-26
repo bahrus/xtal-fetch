@@ -8,7 +8,8 @@ const bool1: PropDef = {
 const str1: PropDef = {
     type: String,
     dry: true,
-    reflect: true
+    reflect: true,
+    stopReactionsIfFalsy: true,
 };
 const obj1: PropDef = {
     type: Object,

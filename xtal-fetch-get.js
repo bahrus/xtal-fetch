@@ -6,7 +6,8 @@ const bool1 = {
 const str1 = {
     type: String,
     dry: true,
-    reflect: true
+    reflect: true,
+    stopReactionsIfFalsy: true,
 };
 const obj1 = {
     type: Object,
