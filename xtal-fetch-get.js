@@ -15,7 +15,11 @@ const obj1 = {
     notify: true
 };
 const propDefMap = {
-    disabled: bool1, fetch: bool1,
+    disabled: bool1, fetch: {
+        type: Boolean,
+        dry: true,
+        stopReactionsIfFalsy: true,
+    },
     as: str1, href: str1,
     value: obj1,
     result: {
@@ -27,12 +31,11 @@ const propDefMap = {
     reqInit: {
         type: Object,
         dry: true,
+        parse: true,
     }
 };
 const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
-const linkResult = ({ href, disabled, fetch, reqInit, as, self }) => {
-    if (!fetch || href === undefined || disabled)
-        return;
+const linkResult = ({ href, fetch, reqInit, as, self }) => {
     window.fetch(href, reqInit).then(resp => {
         resp[as]().then(result => {
             self.result = result;

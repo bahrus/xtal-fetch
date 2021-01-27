@@ -13,7 +13,8 @@ export interface XtalFetchReqAddedProperties{
     cacheResults: '' | 'global' | undefined,
     reqInitRequired: boolean,
     debounceDuration: number,
-    errorResponse: Response | null;
+    errorResponse: Response | undefined;
+    errorText: string | undefined;
     fetchInProgress: boolean;
     insertResults: boolean;
     baseLinkId: string;

@@ -33,6 +33,7 @@ const propDefMap: PropDefMap<XtalFetchGet> = {
     reqInit: {
         type: Object,
         dry: true,
+        parse: true,
     }
 };
 
