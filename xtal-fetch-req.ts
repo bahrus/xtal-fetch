@@ -48,8 +48,12 @@ const triggerDebounce = ({href, fetch, reqInit, reqInitRequired, as, self}: Xtal
     self.__loadNewUrlDebouncer();
 }
 
+const updateDebounce = ({debounceDuration, self}: XtalFetchReq) => {
+    self.debounceDurationHandler();
+}
+
 const propActions = [
-    triggerDebounce
+    triggerDebounce, updateDebounce
 ] as PropAction[];
 const linkResult = ({href, fetch, reqInit, reqInitRequired, as, self}: XtalFetchReq) => {
     
@@ -195,7 +199,7 @@ export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqProperties
      * @type {Number}
      * 
      */
-    debounceDuration: number | undefined = 1000;
+    debounceDuration: number | undefined;
 
     /**
      * Error response as an object
@@ -258,7 +262,9 @@ export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqProperties
 
     connectedCallback(){
         super.connectedCallback();
-        xc.hydrate(this, slicedPropDefs);
+        xc.hydrate<Partial<XtalFetchReqPropertiesIfc>>(this, slicedPropDefs, {
+            debounceDuration: 16
+        });
     }
 
 

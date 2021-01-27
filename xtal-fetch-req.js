@@ -43,8 +43,11 @@ const triggerDebounce = ({ href, fetch, reqInit, reqInitRequired, as, self }) =>
     }
     self.__loadNewUrlDebouncer();
 };
+const updateDebounce = ({ debounceDuration, self }) => {
+    self.debounceDurationHandler();
+};
 const propActions = [
-    triggerDebounce
+    triggerDebounce, updateDebounce
 ];
 const linkResult = ({ href, fetch, reqInit, reqInitRequired, as, self }) => {
     self.errorResponse = undefined;
@@ -143,13 +146,6 @@ export class XtalFetchReq extends XtalFetchGet {
         super(...arguments);
         this.propActions = propActions;
         this._cachedResults = {};
-        /**
-         * How long to pause between requests
-         * @attr debounce-duration
-         * @type {Number}
-         *
-         */
-        this.debounceDuration = 1000;
     }
     get cachedResults() {
         return this._cachedResults;
@@ -175,7 +171,9 @@ export class XtalFetchReq extends XtalFetchGet {
     }
     connectedCallback() {
         super.connectedCallback();
-        xc.hydrate(this, slicedPropDefs);
+        xc.hydrate(this, slicedPropDefs, {
+            debounceDuration: 16
+        });
     }
 }
 XtalFetchReq.is = 'xtal-fetch-req';
