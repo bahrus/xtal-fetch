@@ -1,12 +1,13 @@
 import { XtalFetchGet, bool1 } from './xtal-fetch-get.js';
 import { xc } from 'xtal-element/lib/XtalCore.js';
 import { getFullURL } from 'xtal-element/base-link-id.js';
+export const str2 = {
+    type: String,
+    dry: true,
+};
 export const propDefMap = {
     reqInitRequired: bool1, insertResults: bool1,
-    cacheResults: {
-        type: String,
-        dry: true,
-    },
+    cacheResults: str2,
     debounceDuration: {
         type: Number,
         dry: true,
@@ -35,7 +36,7 @@ export const propDefMap = {
 const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
 export const cacheSymbol = Symbol.for(XtalFetchGet.is + '_cache');
 //type prop = keyof XtalFetchReqAddedProperties;
-const triggerDebounce = ({ href, fetch, reqInit, reqInitRequired, as, self }) => {
+export const triggerDebounce = ({ href, fetch, reqInit, reqInitRequired, as, self }) => {
     if (reqInitRequired && reqInit === undefined)
         return;
     if (!self.__loadNewUrlDebouncer) {
@@ -43,7 +44,7 @@ const triggerDebounce = ({ href, fetch, reqInit, reqInitRequired, as, self }) =>
     }
     self.__loadNewUrlDebouncer();
 };
-const updateDebounce = ({ debounceDuration, self }) => {
+export const updateDebounce = ({ debounceDuration, self }) => {
     self.debounceDurationHandler();
 };
 const propActions = [

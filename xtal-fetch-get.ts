@@ -11,7 +11,7 @@ const str1: PropDef = {
     reflect: true,
     stopReactionsIfFalsy: true,
 };
-const obj1: PropDef = {
+export const obj1: PropDef = {
     type: Object,
     dry: true,
     notify: true

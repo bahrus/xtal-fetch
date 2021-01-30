@@ -9,7 +9,7 @@ const str1 = {
     reflect: true,
     stopReactionsIfFalsy: true,
 };
-const obj1 = {
+export const obj1 = {
     type: Object,
     dry: true,
     notify: true

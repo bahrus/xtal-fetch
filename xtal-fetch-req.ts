@@ -3,12 +3,14 @@ import { xc, PropDef, PropDefMap, PropAction } from 'xtal-element/lib/XtalCore.j
 import { IBaseLinkContainer, getFullURL} from 'xtal-element/base-link-id.js';
 import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
 
+export const str2: PropDef = {
+    type: String,
+    dry: true,
+};
+
 export const propDefMap: PropDefMap<XtalFetchReqPropertiesIfc> = {
     reqInitRequired: bool1, insertResults: bool1,
-    cacheResults: {
-        type: String,
-        dry: true,
-    },
+    cacheResults: str2,
     debounceDuration: {
         type: Number,
         dry: true,
@@ -40,7 +42,7 @@ const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
 export const cacheSymbol = Symbol.for(XtalFetchGet.is + '_cache');
 //type prop = keyof XtalFetchReqAddedProperties;
 
-const triggerDebounce = ({href, fetch, reqInit, reqInitRequired, as, self}: XtalFetchReq) => {
+export const triggerDebounce = ({href, fetch, reqInit, reqInitRequired, as, self}: XtalFetchReq) => {
     if(reqInitRequired && reqInit === undefined) return;
     if(!self.__loadNewUrlDebouncer){
         self.debounceDurationHandler();
@@ -48,7 +50,7 @@ const triggerDebounce = ({href, fetch, reqInit, reqInitRequired, as, self}: Xtal
     self.__loadNewUrlDebouncer();
 }
 
-const updateDebounce = ({debounceDuration, self}: XtalFetchReq) => {
+export const updateDebounce = ({debounceDuration, self}: XtalFetchReq) => {
     self.debounceDurationHandler();
 }
 
@@ -162,14 +164,6 @@ export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqProperties
      * @attr req-init
      */
     reqInit: RequestInit;
-
-    // onPropsChange(){
-    //     if(this.reqInitRequired && !this.reqInit) return;
-    //     if(!this.__loadNewUrlDebouncer){
-    //         this.debounceDurationHandler();
-    //     }
-    //     this.__loadNewUrlDebouncer();
-    // }
 
     
 
