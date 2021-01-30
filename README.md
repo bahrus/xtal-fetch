@@ -139,7 +139,7 @@ The reqInit property is also an attribute, allowing you to specify common proper
 <xtal-fetch fetch href="https://myDomain/myPath/mySubpath" req-init='{"credentials": "same-origin"}' as="json"></xtal-fetch>
 ```
 
-## Multiple requests
+## Multiple requests [Work In Progress]
 
 \<xtal-fetch\> allows for spawning multiple fetch requests tied to an array of entities.  This is often useful when drilling down from some parent entity ('customer', e.g.) to multiple 1-n relations ('purchases', e.g.)
 
