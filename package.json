@@ -43,8 +43,9 @@
   "typings": "types.d.ts",
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",
-    "doc": "wca analyze xtal-*.js --outFile custom-elements.json",
     "test": "node test/test-all.js",
-    "package-check": "package-check"
-  }
+    "package-check": "package-check",
+    "doc": "custom-elements-manifest analyze"
+  },
+  "customElements": "custom-elements.json"
 }
