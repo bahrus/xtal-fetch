@@ -1,7 +1,7 @@
 import { XtalFetchReq, str2, triggerDebounce, updateDebounce} from './xtal-fetch-req.js';
 import {obj1} from './xtal-fetch-get.js';
 import { xc, PropDefMap, PropAction } from 'xtal-element/lib/XtalCore.js';
-import { getFullURL} from 'xtal-element/base-link-id.js';
+import { getFullURL} from 'xtal-element/lib/base-link-id.js';
 
 const doFetch = ({href, fetch, reqInit, reqInitRequired, as, self, forEach, setPath, inEntities}: XtalFetchEntities) => {
     const hasAllThreeProps = forEach !== undefined && setPath !== undefined && inEntities !== undefined;
