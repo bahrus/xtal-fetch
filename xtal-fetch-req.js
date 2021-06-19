@@ -1,6 +1,6 @@
 import { XtalFetchGet, bool1 } from './xtal-fetch-get.js';
 import { xc } from 'xtal-element/lib/XtalCore.js';
-import { getFullURL } from 'xtal-element/base-link-id.js';
+import { getFullURL } from 'xtal-element/lib/base-link-id.js';
 /**
  * Feature rich custom element that can make fetch calls, including post requests.
  * @element xtal-fetch-req

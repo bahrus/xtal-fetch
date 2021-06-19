@@ -1,6 +1,6 @@
 import { XtalFetchGet, bool1} from './xtal-fetch-get.js';
 import { xc, PropDef, PropDefMap, PropAction } from 'xtal-element/lib/XtalCore.js';
-import { IBaseLinkContainer, getFullURL} from 'xtal-element/base-link-id.js';
+import { IBaseLinkContainer, getFullURL} from 'xtal-element/lib/base-link-id.js';
 import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
 
 /**

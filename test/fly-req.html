@@ -8,8 +8,7 @@
 </head>
 <body>
     <xtal-fetch-req fetch href="title.html" as=text  debounce-duration=100  insert-results></xtal-fetch-req>
-    <script defer src="../node_modules/es-module-shims/dist/es-module-shims.js"></script>
-    <script type="importmap-shim">
+    <script type=importmap>
     {
         "imports": {
             "xtal-element/": "../node_modules/xtal-element/",
@@ -17,7 +16,7 @@
         }
     }
     </script>
-    <script  type="module-shim">
+    <script  type=module>
         import '../xtal-fetch-req.js';
     </script>
 </body>

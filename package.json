@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "trans-render": "0.0.289",
-    "xtal-element": "0.0.400"
+    "xtal-element": "0.0.401"
   },
   "devDependencies": {
     "aggregator-fn": "0.0.27",
@@ -23,7 +23,9 @@
     "json-file-patch": "0.0.1",
     "litter-g": "0.0.36",
     "on-to-me": "0.0.23",
-    "xtal-test": "0.0.51"
+    "xtal-test": "0.0.51",
+    "@skypack/package-check": "0.2.2",
+    "@custom-elements-manifest/analyzer": "0.2.1"
   },
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",
