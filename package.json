@@ -4,7 +4,8 @@
   "keywords": [
     "fetch",
     "rest",
-    "web-components"
+    "web-components",
+    "custom-elements"
   ],
   "description": "Dependency free web component wrapper around the fetch function.",
   "main": "xtal-fetch-get.js",
@@ -27,11 +28,23 @@
     "@skypack/package-check": "0.2.2",
     "@custom-elements-manifest/analyzer": "0.2.1"
   },
+  "files": [
+    "xtal-*.*",
+    "custom-elements.json",
+    "types.d.ts"
+  ],
+  "exports": {
+    ".": "./xtal-fetch.js",
+    "./xtal-fetch-get.js": "./xtal-fetch-get.js",
+    "./xtal-fetch-req.js": "./xtal-fetch-req.js",
+    "./xtal-fetch-entities.js": "./xtal-fetch-entities.js",
+    "./xtal-fetch.js": "./xtal-fetch.js"
+  },
+  "typings": "types.d.ts",
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",
     "doc": "wca analyze xtal-*.js --outFile custom-elements.json",
     "test": "node test/test-all.js",
-    "example1": "wca analyze xtal-fetch-example1.js --outFile xtal-fetch-example1.json",
-    "temp": "wca analyze MyExample.js --outFile MyExample.json"
+    "package-check": "package-check"
   }
 }
