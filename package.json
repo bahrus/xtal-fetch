@@ -13,19 +13,17 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "trans-render": "0.0.273",
-    "xtal-element": "0.0.335"
+    "trans-render": "0.0.289",
+    "xtal-element": "0.0.400"
   },
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "2.5.0",
-    "aggregator-fn": "0.0.24",
-    "es-module-shims": "0.8.0",
+    "aggregator-fn": "0.0.27",
     "for-instance": "0.0.27",
-    "if-diff": "0.0.61",
+    "if-diff": "0.0.70",
     "json-file-patch": "0.0.1",
     "litter-g": "0.0.36",
-    "on-to-me": "0.0.6",
-    "xtal-test": "0.0.48"
+    "on-to-me": "0.0.23",
+    "xtal-test": "0.0.51"
   },
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",

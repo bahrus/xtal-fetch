@@ -1,5 +1,67 @@
 import { XtalFetchBasePropertiesIfc, XtalFetchGetEventNameMap} from './types.js';
-import {xc, ReactiveSurface, PropDef, PropDefMap, PropAction} from 'xtal-element/lib/XtalCore.js';
+import {xc, ReactiveSurface, PropDef, PropDefMap, PropAction, IReactor} from 'xtal-element/lib/XtalCore.js';
+
+/**
+ * Bare-bones custom element that can make fetch calls.
+ * @element xtal-fetch-get
+ * @event result-changed
+ */
+ export class XtalFetchGet extends HTMLElement implements XtalFetchBasePropertiesIfc, ReactiveSurface {
+    
+    static is = 'xtal-fetch-get';
+    propActions = propActions;
+    reactor: IReactor = new xc.Rx(this);
+    self = this;
+    onPropChange(name: string, prop: PropDef, nv: any){
+        this.reactor.addToQueue(prop, nv);
+    }
+    disabled: boolean | undefined;
+
+    /**
+     * Must be true for fetch to proceed
+     * @attr
+     */
+    fetch!: boolean;
+
+
+    /**
+     *  How to treat the response
+     * @attr
+     * @type {"json"|"text"}
+     */
+    as : 'json' | 'text' | undefined; 
+
+    /**
+     * URL (path) to fetch.
+     * @attr
+     * @type {string}
+     * 
+     * 
+     */
+    href: string | undefined;
+
+    reqInit: RequestInit | undefined;
+    
+    value: any | undefined;
+
+    /**
+     * ⚡ Fires event result-changed
+     * Result of fetch request
+     * @type {Object}
+     * 
+     * 
+     */
+    result: any | undefined;
+
+    _initDisp!: string | null;
+    connectedCallback() {
+        this._initDisp = this.style.display;
+        this.style.display = 'none';
+        xc.mergeProps<XtalFetchBasePropertiesIfc>(this, slicedPropDefs, {
+            as: 'json',
+        });
+    }
+}
 
 export const bool1: PropDef = {
     type: Boolean,
@@ -48,68 +110,8 @@ const linkResult = ({href, fetch, reqInit, as, self}: XtalFetchGet) => {
 const propActions = [
     linkResult
 ] as PropAction[];
-/**
- * Bare-bones custom element that can make fetch calls.
- * @element xtal-fetch-get
- * @event result-changed
- */
-export class XtalFetchGet extends HTMLElement implements XtalFetchBasePropertiesIfc, ReactiveSurface {
-    
-    static is = 'xtal-fetch-get';
-    propActions = propActions;
-    reactor = new xc.Reactor(this);
-    self = this;
-    onPropChange(name: string, prop: PropDef, nv: any){
-        this.reactor.addToQueue(prop, nv);
-    }
-    disabled: boolean | undefined;
 
-    /**
-     * Must be true for fetch to proceed
-     * @attr
-     */
-    fetch!: boolean;
-
-
-    /**
-     *  How to treat the response
-     * @attr
-     * @type {"json"|"text"}
-     */
-    as : 'json' | 'text' | undefined; 
-
-    /**
-     * URL (path) to fetch.
-     * @attr
-     * @type {string}
-     * 
-     * 
-     */
-    href: string | undefined;
-
-    reqInit: RequestInit | undefined;
-    
-    value: any | undefined;
-
-    /**
-     * ⚡ Fires event result-changed
-     * Result of fetch request
-     * @type {Object}
-     * 
-     * 
-     */
-    result: any | undefined;
-
-    _initDisp!: string | null;
-    connectedCallback() {
-        this._initDisp = this.style.display;
-        this.style.display = 'none';
-        xc.hydrate<XtalFetchBasePropertiesIfc>(this, slicedPropDefs, {
-            as: 'json',
-        });
-    }
-}
-xc.letThereBeProps(XtalFetchGet, slicedPropDefs.propDefs, 'onPropChange');
+xc.letThereBeProps(XtalFetchGet, slicedPropDefs, 'onPropChange');
 xc.define(XtalFetchGet);
 declare global {
     interface HTMLElementTagNameMap {

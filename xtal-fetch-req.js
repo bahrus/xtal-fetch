@@ -1,6 +1,50 @@
 import { XtalFetchGet, bool1 } from './xtal-fetch-get.js';
 import { xc } from 'xtal-element/lib/XtalCore.js';
 import { getFullURL } from 'xtal-element/base-link-id.js';
+/**
+ * Feature rich custom element that can make fetch calls, including post requests.
+ * @element xtal-fetch-req
+ * @event error-response-changed
+ * @event error-text-changed
+ * @event fetch-in-progress-changed
+ * @event fetch-complete
+ */
+export class XtalFetchReq extends XtalFetchGet {
+    constructor() {
+        super(...arguments);
+        this.propActions = propActions;
+        this._cachedResults = {};
+    }
+    get cachedResults() {
+        return this._cachedResults;
+    }
+    debounce(func, wait, immediate) {
+        let timeout;
+        return function () {
+            const context = this, args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+                timeout = null;
+                if (!immediate)
+                    func.apply(context, args);
+            }, wait);
+            if (immediate && !timeout)
+                func.apply(context, args);
+        };
+    }
+    debounceDurationHandler() {
+        this.__loadNewUrlDebouncer = this.debounce(() => {
+            linkResult(this);
+        }, this.debounceDuration);
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        xc.mergeProps(this, slicedPropDefs, {
+            debounceDuration: 16
+        });
+    }
+}
+XtalFetchReq.is = 'xtal-fetch-req';
 export const str2 = {
     type: String,
     dry: true,
@@ -134,49 +178,5 @@ const linkResult = ({ href, fetch, reqInit, reqInitRequired, as, self }) => {
         }
     });
 };
-/**
- * Feature rich custom element that can make fetch calls, including post requests.
- * @element xtal-fetch-req
- * @event error-response-changed
- * @event error-text-changed
- * @event fetch-in-progress-changed
- * @event fetch-complete
- */
-export class XtalFetchReq extends XtalFetchGet {
-    constructor() {
-        super(...arguments);
-        this.propActions = propActions;
-        this._cachedResults = {};
-    }
-    get cachedResults() {
-        return this._cachedResults;
-    }
-    debounce(func, wait, immediate) {
-        let timeout;
-        return function () {
-            const context = this, args = arguments;
-            clearTimeout(timeout);
-            timeout = setTimeout(function () {
-                timeout = null;
-                if (!immediate)
-                    func.apply(context, args);
-            }, wait);
-            if (immediate && !timeout)
-                func.apply(context, args);
-        };
-    }
-    debounceDurationHandler() {
-        this.__loadNewUrlDebouncer = this.debounce(() => {
-            linkResult(this);
-        }, this.debounceDuration);
-    }
-    connectedCallback() {
-        super.connectedCallback();
-        xc.hydrate(this, slicedPropDefs, {
-            debounceDuration: 16
-        });
-    }
-}
-XtalFetchReq.is = 'xtal-fetch-req';
-xc.letThereBeProps(XtalFetchReq, slicedPropDefs.propDefs, 'onPropChange');
+xc.letThereBeProps(XtalFetchReq, slicedPropDefs, 'onPropChange');
 xc.define(XtalFetchReq);

@@ -3,6 +3,130 @@ import { xc, PropDef, PropDefMap, PropAction } from 'xtal-element/lib/XtalCore.j
 import { IBaseLinkContainer, getFullURL} from 'xtal-element/base-link-id.js';
 import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
 
+/**
+ * Feature rich custom element that can make fetch calls, including post requests.
+ * @element xtal-fetch-req
+ * @event error-response-changed
+ * @event error-text-changed
+ * @event fetch-in-progress-changed
+ * @event fetch-complete
+ */
+ export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqPropertiesIfc, IBaseLinkContainer {
+
+    static is = 'xtal-fetch-req';
+
+    controller: AbortController | undefined;
+
+    propActions = propActions;
+
+
+    /**
+     * Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.
+     * Supports JSON formatted attribute
+     * @type {object}
+     * @attr req-init
+     */
+    reqInit: RequestInit;
+
+    
+
+    /**
+     * Indicates whether to pull the response from a previous identical fetch request from cache.
+     * If set to true, cache is stored locally within the instance of the web component.
+     * If set to 'global', cache is retained after web component goes out of scope.
+     * @attr cache-results
+     */
+    cacheResults: '' | 'global' | undefined;
+
+
+    private _cachedResults: { [key: string]: any } = {};
+    get cachedResults() {
+        return this._cachedResults;
+    }
+
+
+    /**
+     * Indicates that no fetch request should proceed until reqInit property / attribute is set.
+     */
+    reqInitRequired: boolean;
+
+    /**
+     * How long to pause between requests
+     * @attr debounce-duration
+     * @type {Number}
+     * 
+     */
+    debounceDuration: number | undefined;
+
+    /**
+     * Error response as an object
+     * ⚡ Fires event error-response-changed
+     * @type {Object}
+     * 
+     */
+    errorResponse: Response | undefined;
+
+    /**
+     * Indicates the error text of the last request.
+     * ⚡ Fires event error-text-changed.
+     * @type {String}
+     */
+    errorText: string | undefined;
+
+
+    /**
+     * Indicates Fetch is in progress
+     * ⚡ Fires event fetch-in-progress-changed
+     * @type {Boolean}
+     */
+    fetchInProgress: boolean | undefined;
+
+    /**
+     * Indicate whether to set the innerHTML of the web component with the response from the server.  
+     * Make sure the service is protected against XSS.
+     * @attr insert-results
+     */
+    insertResults: boolean;
+
+    /**
+     * DOM ID  of link (preload) tag, typical in head element.  
+     * Used to prov
+     */
+    baseLinkId: string | undefined;
+
+
+
+
+    debounce(func: any, wait: number, immediate?: boolean) {
+        let timeout: any;
+        return function ()  {
+            const context = this, args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            }, wait);
+            if (immediate && !timeout) func.apply(context, args);
+        };
+    }
+
+    __loadNewUrlDebouncer!: any;
+    debounceDurationHandler() {
+        this.__loadNewUrlDebouncer = this.debounce(() => {
+            linkResult(this);
+        }, this.debounceDuration);
+    }
+
+    connectedCallback(){
+        super.connectedCallback();
+        xc.mergeProps<Partial<XtalFetchReqPropertiesIfc>>(this, slicedPropDefs, {
+            debounceDuration: 16
+        });
+    }
+
+
+}
+
 export const str2: PropDef = {
     type: String,
     dry: true,
@@ -140,130 +264,8 @@ const linkResult = ({href, fetch, reqInit, reqInitRequired, as, self}: XtalFetch
     });
 }
 
-/**
- * Feature rich custom element that can make fetch calls, including post requests.
- * @element xtal-fetch-req
- * @event error-response-changed
- * @event error-text-changed
- * @event fetch-in-progress-changed
- * @event fetch-complete
- */
-export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqPropertiesIfc, IBaseLinkContainer {
 
-    static is = 'xtal-fetch-req';
-
-    controller: AbortController | undefined;
-
-    propActions = propActions;
-
-
-    /**
-     * Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.
-     * Supports JSON formatted attribute
-     * @type {object}
-     * @attr req-init
-     */
-    reqInit: RequestInit;
-
-    
-
-    /**
-     * Indicates whether to pull the response from a previous identical fetch request from cache.
-     * If set to true, cache is stored locally within the instance of the web component.
-     * If set to 'global', cache is retained after web component goes out of scope.
-     * @attr cache-results
-     */
-    cacheResults: '' | 'global' | undefined;
-
-
-    private _cachedResults: { [key: string]: any } = {};
-    get cachedResults() {
-        return this._cachedResults;
-    }
-
-
-    /**
-     * Indicates that no fetch request should proceed until reqInit property / attribute is set.
-     */
-    reqInitRequired: boolean;
-
-    /**
-     * How long to pause between requests
-     * @attr debounce-duration
-     * @type {Number}
-     * 
-     */
-    debounceDuration: number | undefined;
-
-    /**
-     * Error response as an object
-     * ⚡ Fires event error-response-changed
-     * @type {Object}
-     * 
-     */
-    errorResponse: Response | undefined;
-
-    /**
-     * Indicates the error text of the last request.
-     * ⚡ Fires event error-text-changed.
-     * @type {String}
-     */
-    errorText: string | undefined;
-
-
-    /**
-     * Indicates Fetch is in progress
-     * ⚡ Fires event fetch-in-progress-changed
-     * @type {Boolean}
-     */
-    fetchInProgress: boolean | undefined;
-
-    /**
-     * Indicate whether to set the innerHTML of the web component with the response from the server.  
-     * Make sure the service is protected against XSS.
-     * @attr insert-results
-     */
-    insertResults: boolean;
-
-    /**
-     * DOM ID  of link (preload) tag, typical in head element.  
-     * Used to prov
-     */
-    baseLinkId: string | undefined;
-
-
-
-
-    debounce(func: any, wait: number, immediate?: boolean) {
-        let timeout: any;
-        return function ()  {
-            const context = this, args = arguments;
-            clearTimeout(timeout);
-            timeout = setTimeout(function () {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            }, wait);
-            if (immediate && !timeout) func.apply(context, args);
-        };
-    }
-
-    __loadNewUrlDebouncer!: any;
-    debounceDurationHandler() {
-        this.__loadNewUrlDebouncer = this.debounce(() => {
-            linkResult(this);
-        }, this.debounceDuration);
-    }
-
-    connectedCallback(){
-        super.connectedCallback();
-        xc.hydrate<Partial<XtalFetchReqPropertiesIfc>>(this, slicedPropDefs, {
-            debounceDuration: 16
-        });
-    }
-
-
-}
-xc.letThereBeProps(XtalFetchReq, slicedPropDefs.propDefs, 'onPropChange');
+xc.letThereBeProps(XtalFetchReq, slicedPropDefs, 'onPropChange');
 xc.define(XtalFetchReq);
 declare global {
     interface HTMLElementTagNameMap {

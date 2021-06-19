@@ -1,4 +1,28 @@
 import { xc } from 'xtal-element/lib/XtalCore.js';
+/**
+ * Bare-bones custom element that can make fetch calls.
+ * @element xtal-fetch-get
+ * @event result-changed
+ */
+export class XtalFetchGet extends HTMLElement {
+    constructor() {
+        super(...arguments);
+        this.propActions = propActions;
+        this.reactor = new xc.Rx(this);
+        this.self = this;
+    }
+    onPropChange(name, prop, nv) {
+        this.reactor.addToQueue(prop, nv);
+    }
+    connectedCallback() {
+        this._initDisp = this.style.display;
+        this.style.display = 'none';
+        xc.mergeProps(this, slicedPropDefs, {
+            as: 'json',
+        });
+    }
+}
+XtalFetchGet.is = 'xtal-fetch-get';
 export const bool1 = {
     type: Boolean,
     dry: true,
@@ -45,29 +69,5 @@ const linkResult = ({ href, fetch, reqInit, as, self }) => {
 const propActions = [
     linkResult
 ];
-/**
- * Bare-bones custom element that can make fetch calls.
- * @element xtal-fetch-get
- * @event result-changed
- */
-export class XtalFetchGet extends HTMLElement {
-    constructor() {
-        super(...arguments);
-        this.propActions = propActions;
-        this.reactor = new xc.Reactor(this);
-        this.self = this;
-    }
-    onPropChange(name, prop, nv) {
-        this.reactor.addToQueue(prop, nv);
-    }
-    connectedCallback() {
-        this._initDisp = this.style.display;
-        this.style.display = 'none';
-        xc.hydrate(this, slicedPropDefs, {
-            as: 'json',
-        });
-    }
-}
-XtalFetchGet.is = 'xtal-fetch-get';
-xc.letThereBeProps(XtalFetchGet, slicedPropDefs.propDefs, 'onPropChange');
+xc.letThereBeProps(XtalFetchGet, slicedPropDefs, 'onPropChange');
 xc.define(XtalFetchGet);

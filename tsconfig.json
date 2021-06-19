@@ -8,9 +8,11 @@
 		"newLine": "LF",
 		"watch": true
 	},
-	"exclude":[
-		"build",
-		"node_modules"
+	"files": [
+		"xtal-fetch-get.ts",
+		"xtal-fetch-req.ts",
+		"xtal-fetch-entities.ts",
+		"xtal-fetch.ts"
 	]
 
 }
