@@ -43,10 +43,13 @@ export const obj1 = {
     notify: true
 };
 const propDefMap = {
-    disabled: bool1, fetch: {
+    disabled: {
+        ...bool1,
+        stopReactionsIfTruthy: true,
+    },
+    fetch: {
         type: Boolean,
         dry: true,
-        stopReactionsIfTruthy: true,
     },
     as: str1, href: str1,
     value: obj1,

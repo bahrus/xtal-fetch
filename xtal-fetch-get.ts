@@ -83,10 +83,13 @@ export const obj1: PropDef = {
     notify: true
 };
 const propDefMap: PropDefMap<XtalFetchGet> = {
-    disabled: bool1, fetch: {
+    disabled: {
+        ...bool1,
+        stopReactionsIfTruthy: true,
+    }, 
+    fetch: {
         type: Boolean,
         dry: true,
-        stopReactionsIfTruthy: true,
     },
     as: str1, href: str1,
     value: obj1,
