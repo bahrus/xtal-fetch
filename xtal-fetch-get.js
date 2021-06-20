@@ -46,7 +46,7 @@ const propDefMap = {
     disabled: bool1, fetch: {
         type: Boolean,
         dry: true,
-        stopReactionsIfFalsy: true,
+        stopReactionsIfTruthy: true,
     },
     as: str1, href: str1,
     value: obj1,
