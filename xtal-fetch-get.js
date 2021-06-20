@@ -11,6 +11,9 @@ export class XtalFetchGet extends HTMLElement {
         this.reactor = new xc.Rx(this);
         this.self = this;
     }
+    attributeChangedCallback(n, ov, nv) {
+        this.disabled = nv !== null;
+    }
     onPropChange(name, prop, nv) {
         this.reactor.addToQueue(prop, nv);
     }
@@ -23,6 +26,7 @@ export class XtalFetchGet extends HTMLElement {
     }
 }
 XtalFetchGet.is = 'xtal-fetch-get';
+XtalFetchGet.observedAttributes = ['disabled'];
 export const bool1 = {
     type: Boolean,
     dry: true,
@@ -59,7 +63,7 @@ const propDefMap = {
     }
 };
 const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
-const linkResult = ({ href, fetch, reqInit, as, self }) => {
+const linkResult = ({ href, fetch, reqInit, as, disabled, self }) => {
     window.fetch(href, reqInit).then(resp => {
         resp[as]().then(result => {
             self.result = result;

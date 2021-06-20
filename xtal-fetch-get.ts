@@ -9,6 +9,10 @@ import {xc, ReactiveSurface, PropDef, PropDefMap, PropAction, IReactor} from 'xt
  export class XtalFetchGet extends HTMLElement implements XtalFetchBasePropertiesIfc, ReactiveSurface {
     
     static is = 'xtal-fetch-get';
+    static observedAttributes = ['disabled'];
+    attributeChangedCallback(n: string, ov: string, nv: string){
+        this.disabled = nv !== null;
+    }
     propActions = propActions;
     reactor: IReactor = new xc.Rx(this);
     self = this;
@@ -100,7 +104,7 @@ const propDefMap: PropDefMap<XtalFetchGet> = {
 };
 
 const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
-const linkResult = ({href, fetch, reqInit, as, self}: XtalFetchGet) => {
+const linkResult = ({href, fetch, reqInit, as, disabled, self}: XtalFetchGet) => {
     window.fetch(href, reqInit).then(resp => {
         resp[as]().then(result => {
             self.result = result;
