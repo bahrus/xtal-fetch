@@ -5,18 +5,48 @@ import { xc } from 'xtal-element/lib/XtalCore.js';
  * @event result-changed
  */
 export class XtalFetchGet extends HTMLElement {
-    constructor() {
-        super(...arguments);
-        this.propActions = propActions;
-        this.reactor = new xc.Rx(this);
-        this.self = this;
-    }
+    static is = 'xtal-fetch-get';
+    static observedAttributes = ['disabled'];
     attributeChangedCallback(n, ov, nv) {
         this.disabled = nv !== null;
     }
+    propActions = propActions;
+    reactor = new xc.Rx(this);
+    self = this;
     onPropChange(name, prop, nv) {
         this.reactor.addToQueue(prop, nv);
     }
+    disabled;
+    /**
+     * Must be true for fetch to proceed
+     * @attr
+     */
+    fetch;
+    /**
+     *  How to treat the response
+     * @attr
+     * @type {"json"|"text"}
+     */
+    as;
+    /**
+     * URL (path) to fetch.
+     * @attr
+     * @type {string}
+     *
+     *
+     */
+    href;
+    reqInit;
+    value;
+    /**
+     * ⚡ Fires event result-changed
+     * Result of fetch request
+     * @type {Object}
+     *
+     *
+     */
+    result;
+    _initDisp;
     connectedCallback() {
         this._initDisp = this.style.display;
         this.style.display = 'none';
@@ -25,8 +55,6 @@ export class XtalFetchGet extends HTMLElement {
         });
     }
 }
-XtalFetchGet.is = 'xtal-fetch-get';
-XtalFetchGet.observedAttributes = ['disabled'];
 export const bool1 = {
     type: Boolean,
     dry: true,

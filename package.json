@@ -14,8 +14,8 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "trans-render": "0.0.289",
-    "xtal-element": "0.0.401"
+    "trans-render": "0.0.290",
+    "xtal-element": "0.0.402"
   },
   "devDependencies": {
     "aggregator-fn": "0.0.27",
@@ -26,7 +26,7 @@
     "on-to-me": "0.0.23",
     "xtal-test": "0.0.51",
     "@skypack/package-check": "0.2.2",
-    "@custom-elements-manifest/analyzer": "0.2.1"
+    "@custom-elements-manifest/analyzer": "0.3.5"
   },
   "files": [
     "xtal-*.*",
