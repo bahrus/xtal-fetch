@@ -5,18 +5,19 @@ import { xc } from 'xtal-element/lib/XtalCore.js';
  * @event result-changed
  */
 export class XtalFetchGet extends HTMLElement {
-    constructor() {
-        super(...arguments);
-        this.propActions = propActions;
-        this.reactor = new xc.Rx(this);
-        this.self = this;
-    }
+    static is = 'xtal-fetch-get';
+    static observedAttributes = ['disabled'];
+    static cache = {};
     attributeChangedCallback(n, ov, nv) {
         this.disabled = nv !== null;
     }
+    propActions = propActions;
+    reactor = new xc.Rx(this);
+    self = this;
     onPropChange(name, prop, nv) {
         this.reactor.addToQueue(prop, nv);
     }
+    _initDisp;
     connectedCallback() {
         this._initDisp = this.style.display;
         this.style.display = 'none';
@@ -25,8 +26,6 @@ export class XtalFetchGet extends HTMLElement {
         });
     }
 }
-XtalFetchGet.is = 'xtal-fetch-get';
-XtalFetchGet.observedAttributes = ['disabled'];
 const linkResult = ({ href, fetch, reqInit, as, disabled, self }) => {
     window.fetch(href, reqInit).then(resp => {
         resp[as]().then(result => {

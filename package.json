@@ -26,7 +26,7 @@
     "on-to-me": "0.0.23",
     "xtal-test": "0.0.51",
     "@skypack/package-check": "0.2.2",
-    "@custom-elements-manifest/analyzer": "0.3.5"
+    "@custom-elements-manifest/analyzer": "0.4.10"
   },
   "files": [
     "xtal-*.*",

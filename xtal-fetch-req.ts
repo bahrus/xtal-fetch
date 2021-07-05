@@ -1,7 +1,7 @@
 import { XtalFetchGet, bool1} from './xtal-fetch-get.js';
 import { xc, PropDef, PropDefMap, PropAction } from 'xtal-element/lib/XtalCore.js';
 import { IBaseLinkContainer, getFullURL} from 'xtal-element/lib/base-link-id.js';
-import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
+import { XtalFetchReqProps, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
 
 /**
  * Feature rich custom element that can make fetch calls, including post requests.
@@ -11,7 +11,7 @@ import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEve
  * @event fetch-in-progress-changed
  * @event fetch-complete
  */
- export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqPropertiesIfc, IBaseLinkContainer {
+ export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqProps, IBaseLinkContainer {
 
     static is = 'xtal-fetch-req';
 
@@ -19,83 +19,10 @@ import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEve
 
     propActions = propActions;
 
-
-    /**
-     * Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.
-     * Supports JSON formatted attribute
-     * @type {object}
-     * @attr req-init
-     */
-    reqInit: RequestInit;
-
-    
-
-    /**
-     * Indicates whether to pull the response from a previous identical fetch request from cache.
-     * If set to true, cache is stored locally within the instance of the web component.
-     * If set to 'global', cache is retained after web component goes out of scope.
-     * @attr cache-results
-     */
-    cacheResults: '' | 'global' | undefined;
-
-
     private _cachedResults: { [key: string]: any } = {};
     get cachedResults() {
         return this._cachedResults;
     }
-
-
-    /**
-     * Indicates that no fetch request should proceed until reqInit property / attribute is set.
-     */
-    reqInitRequired: boolean;
-
-    /**
-     * How long to pause between requests
-     * @attr debounce-duration
-     * @type {Number}
-     * 
-     */
-    debounceDuration: number | undefined;
-
-    /**
-     * Error response as an object
-     * ⚡ Fires event error-response-changed
-     * @type {Object}
-     * 
-     */
-    errorResponse: Response | undefined;
-
-    /**
-     * Indicates the error text of the last request.
-     * ⚡ Fires event error-text-changed.
-     * @type {String}
-     */
-    errorText: string | undefined;
-
-
-    /**
-     * Indicates Fetch is in progress
-     * ⚡ Fires event fetch-in-progress-changed
-     * @type {Boolean}
-     */
-    fetchInProgress: boolean | undefined;
-
-    /**
-     * Indicate whether to set the innerHTML of the web component with the response from the server.  
-     * Make sure the service is protected against XSS.
-     * @attr insert-results
-     */
-    insertResults: boolean;
-
-    /**
-     * DOM ID  of link (preload) tag, typical in head element.  
-     * Used to prov
-     */
-    baseLinkId: string | undefined;
-
-
-
 
     debounce(func: any, wait: number, immediate?: boolean) {
         let timeout: any;
@@ -114,12 +41,12 @@ import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEve
     debounceDurationHandler() {
         this.__loadNewUrlDebouncer = this.debounce(() => {
             linkResult(this);
-        }, this.debounceDuration);
+        }, this.debounceDuration!);
     }
 
     connectedCallback(){
         super.connectedCallback();
-        xc.mergeProps<Partial<XtalFetchReqPropertiesIfc>>(this, slicedPropDefs, {
+        xc.mergeProps<Partial<XtalFetchReqProps>>(this, slicedPropDefs, {
             debounceDuration: 16
         });
     }
@@ -127,12 +54,14 @@ import { XtalFetchReqPropertiesIfc, XtalFetchReqAddedProperties, XtalFetchReqEve
 
 }
 
+export interface XtalFetchReq extends XtalFetchReqProps{}
+
 export const str2: PropDef = {
     type: String,
     dry: true,
 };
 
-export const propDefMap: PropDefMap<XtalFetchReqPropertiesIfc> = {
+export const propDefMap: PropDefMap<XtalFetchReqProps> = {
     reqInitRequired: bool1, insertResults: bool1,
     cacheResults: str2,
     debounceDuration: {
@@ -187,10 +116,9 @@ const linkResult = ({href, fetch, reqInit, reqInitRequired, as, self}: XtalFetch
     if (self.cacheResults !== undefined) {
         let val = undefined;
         if(self.cacheResults === 'global'){
-            if(XtalFetchGet[cacheSymbol] === undefined) XtalFetchGet[cacheSymbol] = {};
-            val = XtalFetchGet[cacheSymbol][href];
+            val = XtalFetchGet.cache[href!];
         }else{
-            val = self.cachedResults[self.href];
+            val = self.cachedResults[href!];
         }
         if (val) {
             self.result = val;
@@ -212,7 +140,7 @@ const linkResult = ({href, fetch, reqInit, reqInitRequired, as, self}: XtalFetch
     }
     
     
-    const fullHref = getFullURL(self, href);
+    const fullHref = getFullURL(self, href!);
 
     const sig = self.controller.signal;
     if(self.reqInit){
@@ -224,9 +152,9 @@ const linkResult = ({href, fetch, reqInit, reqInitRequired, as, self}: XtalFetch
         return;
     }
     self.fetchInProgress = true;
-    window.fetch(href, reqInit).then(resp => {
+    window.fetch(href!, reqInit).then(resp => {
         self.fetchInProgress = false;
-        resp[as]().then(result => {
+        resp[as!]().then(result => {
             if (resp.status !== 200) {
                 self.errorResponse = resp;
                 const respText = resp['text'];
@@ -237,14 +165,14 @@ const linkResult = ({href, fetch, reqInit, reqInitRequired, as, self}: XtalFetch
                 self.result = result;
                 if (self.cacheResults !== undefined) {
                     if(self.cacheResults === 'global'){
-                        XtalFetchGet[cacheSymbol] = result;
+                        XtalFetchGet.cache[href!] = result;
                     }else{
-                        self.cachedResults[href] = result;
+                        self.cachedResults[href!] = result;
                     }
                     
                 }
                 if (typeof result === 'string' && self.insertResults) {
-                    self.style.display = self._initDisp;
+                    self.style.display = self._initDisp!;
                     self.innerHTML = result;
                 }
                 const detail = {

@@ -10,6 +10,7 @@ import {xc, ReactiveSurface, PropDef, PropDefMap, PropAction, IReactor} from 'xt
     
     static is = 'xtal-fetch-get';
     static observedAttributes = ['disabled'];
+    static cache:  {[key: string]: any} = {};
     attributeChangedCallback(n: string, ov: string, nv: string){
         this.disabled = nv !== null;
     }
@@ -33,8 +34,8 @@ import {xc, ReactiveSurface, PropDef, PropDefMap, PropAction, IReactor} from 'xt
 export interface XtalFetchGet extends XtalFetchGetProps{}
 
 const linkResult = ({href, fetch, reqInit, as, disabled, self}: XtalFetchGet) => {
-    window.fetch(href, reqInit).then(resp => {
-        resp[as]().then(result => {
+    window.fetch(href!, reqInit).then(resp => {
+        resp[as!]().then(result => {
             self.result = result;
         });
     });

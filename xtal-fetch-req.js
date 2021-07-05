@@ -10,11 +10,10 @@ import { getFullURL } from 'xtal-element/lib/base-link-id.js';
  * @event fetch-complete
  */
 export class XtalFetchReq extends XtalFetchGet {
-    constructor() {
-        super(...arguments);
-        this.propActions = propActions;
-        this._cachedResults = {};
-    }
+    static is = 'xtal-fetch-req';
+    controller;
+    propActions = propActions;
+    _cachedResults = {};
     get cachedResults() {
         return this._cachedResults;
     }
@@ -32,6 +31,7 @@ export class XtalFetchReq extends XtalFetchGet {
                 func.apply(context, args);
         };
     }
+    __loadNewUrlDebouncer;
     debounceDurationHandler() {
         this.__loadNewUrlDebouncer = this.debounce(() => {
             linkResult(this);
@@ -44,7 +44,6 @@ export class XtalFetchReq extends XtalFetchGet {
         });
     }
 }
-XtalFetchReq.is = 'xtal-fetch-req';
 export const str2 = {
     type: String,
     dry: true,
@@ -99,12 +98,10 @@ const linkResult = ({ href, fetch, reqInit, reqInitRequired, as, self }) => {
     if (self.cacheResults !== undefined) {
         let val = undefined;
         if (self.cacheResults === 'global') {
-            if (XtalFetchGet[cacheSymbol] === undefined)
-                XtalFetchGet[cacheSymbol] = {};
-            val = XtalFetchGet[cacheSymbol][href];
+            val = XtalFetchGet.cache[href];
         }
         else {
-            val = self.cachedResults[self.href];
+            val = self.cachedResults[href];
         }
         if (val) {
             self.result = val;
@@ -152,7 +149,7 @@ const linkResult = ({ href, fetch, reqInit, reqInitRequired, as, self }) => {
                 self.result = result;
                 if (self.cacheResults !== undefined) {
                     if (self.cacheResults === 'global') {
-                        XtalFetchGet[cacheSymbol] = result;
+                        XtalFetchGet.cache[href] = result;
                     }
                     else {
                         self.cachedResults[href] = result;

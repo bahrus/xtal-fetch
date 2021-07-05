@@ -2,6 +2,19 @@ import { XtalFetchReq, str2, triggerDebounce, updateDebounce } from './xtal-fetc
 import { obj1 } from './xtal-fetch-get.js';
 import { xc } from 'xtal-element/lib/XtalCore.js';
 import { getFullURL } from 'xtal-element/lib/base-link-id.js';
+/**
+ *  Entire feature set for xtal-fetch, including multiple entity requests.
+ *  @element xtal-fetch-entities
+ */
+export class XtalFetchEntities extends XtalFetchReq {
+    static is = 'xtal-fetch-entities';
+    get hasAllThreeProps() {
+        return this.forEach !== undefined && this.setPath !== undefined && this.inEntities !== undefined;
+    }
+    get hasAnyThreeProps() {
+        return this.forEach !== undefined || this.setPath !== undefined || this.inEntities !== undefined;
+    }
+}
 const doFetch = ({ href, fetch, reqInit, reqInitRequired, as, self, forEach, setPath, inEntities }) => {
     const hasAllThreeProps = forEach !== undefined && setPath !== undefined && inEntities !== undefined;
     const hasAnyThreeProps = forEach !== undefined || setPath !== undefined || inEntities !== undefined;
@@ -15,7 +28,7 @@ const doFetch = ({ href, fetch, reqInit, reqInitRequired, as, self, forEach, set
     let remainingCalls = inEntities.length;
     self.fetchInProgress = true;
     let counter = 0;
-    const base = getFullURL(this, '');
+    const base = getFullURL(self, '');
     if (typeof (AbortController) !== 'undefined') {
         self.controller = new AbortController();
         const sig = self.controller.signal;
@@ -87,25 +100,12 @@ const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
 const propActions = [
     doFetch, updateDebounce
 ];
-/**
- *  Entire feature set for xtal-fetch, including multiple entity requests.
- *  @element xtal-fetch-entities
- */
-export class XtalFetchEntities extends XtalFetchReq {
-    get hasAllThreeProps() {
-        return this.forEach !== undefined && this.setPath !== undefined && this.inEntities !== undefined;
-    }
-    get hasAnyThreeProps() {
-        return this.forEach !== undefined || this.setPath !== undefined || this.inEntities !== undefined;
-    }
-}
-XtalFetchEntities.is = 'xtal-fetch-entities';
 xc.define(XtalFetchEntities);
 /**
  * Feature rich custom element that can make fetch calls, include Post requests.
  *  @element xtal-fetch
  */
 class XtalFetch extends XtalFetchEntities {
+    static is = 'xtal-fetch';
 }
-XtalFetch.is = 'xtal-fetch';
 xc.define(XtalFetch);

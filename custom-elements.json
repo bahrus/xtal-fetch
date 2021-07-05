@@ -90,21 +90,17 @@
           "members": [
             {
               "kind": "field",
+              "name": "is",
+              "static": true,
+              "default": "xtal-fetch-entities"
+            },
+            {
+              "kind": "field",
               "name": "hasAllThreeProps"
             },
             {
               "kind": "field",
               "name": "hasAnyThreeProps"
-            },
-            {
-              "kind": "field",
-              "name": "is",
-              "static": true,
-              "default": "xtal-fetch-req",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
             },
             {
               "kind": "field",
@@ -127,30 +123,6 @@
             },
             {
               "kind": "field",
-              "name": "reqInit",
-              "type": {
-                "text": "object"
-              },
-              "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "cacheResults",
-              "type": {
-                "text": "'' | 'global' | undefined"
-              },
-              "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope.",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
               "name": "_cachedResults",
               "type": {
                 "text": "{ [key: string]: any }"
@@ -164,90 +136,6 @@
             {
               "kind": "field",
               "name": "cachedResults",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reqInitRequired",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicates that no fetch request should proceed until reqInit property / attribute is set.",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "debounceDuration",
-              "type": {
-                "text": "Number"
-              },
-              "description": "How long to pause between requests",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "errorResponse",
-              "type": {
-                "text": "Object"
-              },
-              "description": "Error response as an object\r\n⚡ Fires event error-response-changed",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "errorText",
-              "type": {
-                "text": "String"
-              },
-              "description": "Indicates the error text of the last request.\r\n⚡ Fires event error-text-changed.",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "fetchInProgress",
-              "type": {
-                "text": "Boolean"
-              },
-              "description": "Indicates Fetch is in progress\r\n⚡ Fires event fetch-in-progress-changed",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "insertResults",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "baseLinkId",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "DOM ID  of link (preload) tag, typical in head element.  \r\nUsed to prov",
               "inheritedFrom": {
                 "name": "XtalFetchReq",
                 "module": "xtal-fetch-req.ts"
@@ -303,6 +191,18 @@
             },
             {
               "kind": "field",
+              "name": "cache",
+              "type": {
+                "text": "{[key: string]: any}"
+              },
+              "static": true,
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
+            },
+            {
+              "kind": "field",
               "name": "reactor",
               "type": {
                 "text": "IReactor"
@@ -350,76 +250,6 @@
             },
             {
               "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "any | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "result",
-              "type": {
-                "text": "Object"
-              },
-              "description": "⚡ Fires event result-changed\r\nResult of fetch request",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
               "name": "_initDisp",
               "type": {
                 "text": "string | null"
@@ -435,92 +265,6 @@
           },
           "tagName": "xtal-fetch-entities",
           "customElement": true,
-          "attributes": [
-            {
-              "name": "req-init",
-              "type": {
-                "text": "object"
-              },
-              "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
-              "fieldName": "reqInit",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "name": "cache-results",
-              "type": {
-                "text": "'' | 'global' | undefined"
-              },
-              "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope.",
-              "fieldName": "cacheResults",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "name": "debounce-duration",
-              "type": {
-                "text": "Number"
-              },
-              "description": "How long to pause between requests",
-              "fieldName": "debounceDuration",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "name": "insert-results",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
-              "fieldName": "insertResults",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "fieldName": "fetch",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "fieldName": "as",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "fieldName": "href",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            }
-          ],
           "events": [
             {
               "name": "error-response-changed",
@@ -552,6 +296,15 @@
             },
             {
               "name": "result-changed",
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -588,30 +341,6 @@
             },
             {
               "kind": "field",
-              "name": "forEach",
-              "type": {
-                "text": "String"
-              },
-              "description": "Comma delimited list of properties to use as input for the fetch urls"
-            },
-            {
-              "kind": "field",
-              "name": "setPath",
-              "type": {
-                "text": "String"
-              },
-              "description": "\r\nattr set-path"
-            },
-            {
-              "kind": "field",
-              "name": "inEntities",
-              "type": {
-                "text": "Array"
-              },
-              "description": "Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)"
-            },
-            {
-              "kind": "field",
               "name": "hasAllThreeProps"
             },
             {
@@ -639,30 +368,6 @@
             },
             {
               "kind": "field",
-              "name": "reqInit",
-              "type": {
-                "text": "object"
-              },
-              "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "cacheResults",
-              "type": {
-                "text": "'' | 'global' | undefined"
-              },
-              "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope.",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
               "name": "_cachedResults",
               "type": {
                 "text": "{ [key: string]: any }"
@@ -676,90 +381,6 @@
             {
               "kind": "field",
               "name": "cachedResults",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reqInitRequired",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicates that no fetch request should proceed until reqInit property / attribute is set.",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "debounceDuration",
-              "type": {
-                "text": "Number"
-              },
-              "description": "How long to pause between requests",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "errorResponse",
-              "type": {
-                "text": "Object"
-              },
-              "description": "Error response as an object\r\n⚡ Fires event error-response-changed",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "errorText",
-              "type": {
-                "text": "String"
-              },
-              "description": "Indicates the error text of the last request.\r\n⚡ Fires event error-text-changed.",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "fetchInProgress",
-              "type": {
-                "text": "Boolean"
-              },
-              "description": "Indicates Fetch is in progress\r\n⚡ Fires event fetch-in-progress-changed",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "insertResults",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "baseLinkId",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "DOM ID  of link (preload) tag, typical in head element.  \r\nUsed to prov",
               "inheritedFrom": {
                 "name": "XtalFetchReq",
                 "module": "xtal-fetch-req.ts"
@@ -815,6 +436,18 @@
             },
             {
               "kind": "field",
+              "name": "cache",
+              "type": {
+                "text": "{[key: string]: any}"
+              },
+              "static": true,
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
+            },
+            {
+              "kind": "field",
               "name": "reactor",
               "type": {
                 "text": "IReactor"
@@ -862,174 +495,10 @@
             },
             {
               "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "any | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "result",
-              "type": {
-                "text": "Object"
-              },
-              "description": "⚡ Fires event result-changed\r\nResult of fetch request",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
               "name": "_initDisp",
               "type": {
                 "text": "string | null"
               },
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "for-each",
-              "type": {
-                "text": "String"
-              },
-              "description": "Comma delimited list of properties to use as input for the fetch urls",
-              "fieldName": "forEach"
-            },
-            {
-              "name": "req-init",
-              "type": {
-                "text": "object"
-              },
-              "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
-              "fieldName": "reqInit",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "name": "cache-results",
-              "type": {
-                "text": "'' | 'global' | undefined"
-              },
-              "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope.",
-              "fieldName": "cacheResults",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "name": "debounce-duration",
-              "type": {
-                "text": "Number"
-              },
-              "description": "How long to pause between requests",
-              "fieldName": "debounceDuration",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "name": "insert-results",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
-              "fieldName": "insertResults",
-              "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
-              }
-            },
-            {
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "fieldName": "fetch",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "fieldName": "as",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "fieldName": "href",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -1077,6 +546,15 @@
                 "module": "xtal-fetch-get.ts"
               }
             }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
+            }
           ]
         }
       ],
@@ -1106,96 +584,7 @@
           "customElement": true,
           "attributes": [
             {
-              "name": "for-each",
-              "type": {
-                "text": "String"
-              },
-              "description": "Comma delimited list of properties to use as input for the fetch urls",
-              "fieldName": "forEach",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "req-init",
-              "type": {
-                "text": "object"
-              },
-              "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
-              "fieldName": "reqInit",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "cache-results",
-              "type": {
-                "text": "'' | 'global' | undefined"
-              },
-              "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope.",
-              "fieldName": "cacheResults",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "debounce-duration",
-              "type": {
-                "text": "Number"
-              },
-              "description": "How long to pause between requests",
-              "fieldName": "debounceDuration",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "insert-results",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
-              "fieldName": "insertResults",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "fieldName": "fetch",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "fieldName": "as",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "fieldName": "href",
+              "name": "disabled",
               "inheritedFrom": {
                 "name": "XtalFetchEntities",
                 "module": "xtal-fetch-entities.ts"
@@ -1208,42 +597,6 @@
               "name": "is",
               "static": true,
               "default": "xtal-fetch-entities",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "forEach",
-              "type": {
-                "text": "String"
-              },
-              "description": "Comma delimited list of properties to use as input for the fetch urls",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "setPath",
-              "type": {
-                "text": "String"
-              },
-              "description": "\r\nattr set-path",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "inEntities",
-              "type": {
-                "text": "Array"
-              },
-              "description": "Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)",
               "inheritedFrom": {
                 "name": "XtalFetchEntities",
                 "module": "xtal-fetch-entities.ts"
@@ -1286,30 +639,6 @@
             },
             {
               "kind": "field",
-              "name": "reqInit",
-              "type": {
-                "text": "object"
-              },
-              "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "cacheResults",
-              "type": {
-                "text": "'' | 'global' | undefined"
-              },
-              "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope.",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
               "name": "_cachedResults",
               "type": {
                 "text": "{ [key: string]: any }"
@@ -1323,90 +652,6 @@
             {
               "kind": "field",
               "name": "cachedResults",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reqInitRequired",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicates that no fetch request should proceed until reqInit property / attribute is set.",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "debounceDuration",
-              "type": {
-                "text": "Number"
-              },
-              "description": "How long to pause between requests",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "errorResponse",
-              "type": {
-                "text": "Object"
-              },
-              "description": "Error response as an object\r\n⚡ Fires event error-response-changed",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "errorText",
-              "type": {
-                "text": "String"
-              },
-              "description": "Indicates the error text of the last request.\r\n⚡ Fires event error-text-changed.",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "fetchInProgress",
-              "type": {
-                "text": "Boolean"
-              },
-              "description": "Indicates Fetch is in progress\r\n⚡ Fires event fetch-in-progress-changed",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "insertResults",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "baseLinkId",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "DOM ID  of link (preload) tag, typical in head element.  \r\nUsed to prov",
               "inheritedFrom": {
                 "name": "XtalFetchEntities",
                 "module": "xtal-fetch-entities.ts"
@@ -1462,6 +707,18 @@
             },
             {
               "kind": "field",
+              "name": "cache",
+              "type": {
+                "text": "{[key: string]: any}"
+              },
+              "static": true,
+              "inheritedFrom": {
+                "name": "XtalFetchEntities",
+                "module": "xtal-fetch-entities.ts"
+              }
+            },
+            {
+              "kind": "field",
               "name": "reactor",
               "type": {
                 "text": "IReactor"
@@ -1502,76 +759,6 @@
                   }
                 }
               ],
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "any | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "result",
-              "type": {
-                "text": "Object"
-              },
-              "description": "⚡ Fires event result-changed\r\nResult of fetch request",
               "inheritedFrom": {
                 "name": "XtalFetchEntities",
                 "module": "xtal-fetch-entities.ts"
@@ -1676,42 +863,6 @@
             },
             {
               "kind": "field",
-              "name": "forEach",
-              "type": {
-                "text": "String"
-              },
-              "description": "Comma delimited list of properties to use as input for the fetch urls",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "setPath",
-              "type": {
-                "text": "String"
-              },
-              "description": "\r\nattr set-path",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "inEntities",
-              "type": {
-                "text": "Array"
-              },
-              "description": "Array of entities to use as input for building the url (along with forEach value).  Also place where result should go (using setPath attribute)",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
               "name": "hasAllThreeProps",
               "inheritedFrom": {
                 "name": "XtalFetchEntities",
@@ -1747,30 +898,6 @@
             },
             {
               "kind": "field",
-              "name": "reqInit",
-              "type": {
-                "text": "object"
-              },
-              "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "cacheResults",
-              "type": {
-                "text": "'' | 'global' | undefined"
-              },
-              "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope.",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
               "name": "_cachedResults",
               "type": {
                 "text": "{ [key: string]: any }"
@@ -1784,90 +911,6 @@
             {
               "kind": "field",
               "name": "cachedResults",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reqInitRequired",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicates that no fetch request should proceed until reqInit property / attribute is set.",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "debounceDuration",
-              "type": {
-                "text": "Number"
-              },
-              "description": "How long to pause between requests",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "errorResponse",
-              "type": {
-                "text": "Object"
-              },
-              "description": "Error response as an object\r\n⚡ Fires event error-response-changed",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "errorText",
-              "type": {
-                "text": "String"
-              },
-              "description": "Indicates the error text of the last request.\r\n⚡ Fires event error-text-changed.",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "fetchInProgress",
-              "type": {
-                "text": "Boolean"
-              },
-              "description": "Indicates Fetch is in progress\r\n⚡ Fires event fetch-in-progress-changed",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "insertResults",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "baseLinkId",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "DOM ID  of link (preload) tag, typical in head element.  \r\nUsed to prov",
               "inheritedFrom": {
                 "name": "XtalFetchEntities",
                 "module": "xtal-fetch-entities.ts"
@@ -1923,6 +966,18 @@
             },
             {
               "kind": "field",
+              "name": "cache",
+              "type": {
+                "text": "{[key: string]: any}"
+              },
+              "static": true,
+              "inheritedFrom": {
+                "name": "XtalFetchEntities",
+                "module": "xtal-fetch-entities.ts"
+              }
+            },
+            {
+              "kind": "field",
               "name": "reactor",
               "type": {
                 "text": "IReactor"
@@ -1970,52 +1025,6 @@
             },
             {
               "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "any | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "result",
-              "type": {
-                "text": "Object"
-              },
-              "description": "⚡ Fires event result-changed\r\nResult of fetch request",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "kind": "field",
               "name": "_initDisp",
               "type": {
                 "text": "string | null"
@@ -2033,96 +1042,7 @@
           "customElement": true,
           "attributes": [
             {
-              "name": "for-each",
-              "type": {
-                "text": "String"
-              },
-              "description": "Comma delimited list of properties to use as input for the fetch urls",
-              "fieldName": "forEach",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "req-init",
-              "type": {
-                "text": "object"
-              },
-              "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
-              "fieldName": "reqInit",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "cache-results",
-              "type": {
-                "text": "'' | 'global' | undefined"
-              },
-              "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope.",
-              "fieldName": "cacheResults",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "debounce-duration",
-              "type": {
-                "text": "Number"
-              },
-              "description": "How long to pause between requests",
-              "fieldName": "debounceDuration",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "insert-results",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
-              "fieldName": "insertResults",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "fieldName": "fetch",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "fieldName": "as",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            },
-            {
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "fieldName": "href",
+              "name": "disabled",
               "inheritedFrom": {
                 "name": "XtalFetchEntities",
                 "module": "xtal-fetch-entities.ts"
@@ -2189,6 +1109,29 @@
           "name": "XtalFetchGet",
           "members": [
             {
+              "kind": "field",
+              "name": "is",
+              "static": true,
+              "default": "xtal-fetch-get"
+            },
+            {
+              "kind": "field",
+              "name": "cache",
+              "static": true
+            },
+            {
+              "kind": "field",
+              "name": "propActions"
+            },
+            {
+              "kind": "field",
+              "name": "reactor"
+            },
+            {
+              "kind": "field",
+              "name": "self"
+            },
+            {
               "kind": "method",
               "name": "onPropChange",
               "parameters": [
@@ -2202,11 +1145,20 @@
                   "name": "nv"
                 }
               ]
+            },
+            {
+              "kind": "field",
+              "name": "_initDisp"
             }
           ],
           "events": [
             {
               "name": "result-changed"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled"
             }
           ],
           "superclass": {
@@ -2268,6 +1220,14 @@
             },
             {
               "kind": "field",
+              "name": "cache",
+              "type": {
+                "text": "{[key: string]: any}"
+              },
+              "static": true
+            },
+            {
+              "kind": "field",
               "name": "propActions"
             },
             {
@@ -2307,59 +1267,6 @@
             },
             {
               "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed"
-            },
-            {
-              "kind": "field",
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response"
-            },
-            {
-              "kind": "field",
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch."
-            },
-            {
-              "kind": "field",
-              "name": "reqInit",
-              "type": {
-                "text": "RequestInit | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "any | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "result",
-              "type": {
-                "text": "Object"
-              },
-              "description": "⚡ Fires event result-changed\r\nResult of fetch request"
-            },
-            {
-              "kind": "field",
               "name": "_initDisp",
               "type": {
                 "text": "string | null"
@@ -2373,28 +1280,7 @@
           ],
           "attributes": [
             {
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "fieldName": "fetch"
-            },
-            {
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "fieldName": "as"
-            },
-            {
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "fieldName": "href"
+              "name": "disabled"
             }
           ],
           "superclass": {
@@ -2456,6 +1342,24 @@
           "members": [
             {
               "kind": "field",
+              "name": "is",
+              "static": true,
+              "default": "xtal-fetch-req"
+            },
+            {
+              "kind": "field",
+              "name": "controller"
+            },
+            {
+              "kind": "field",
+              "name": "propActions"
+            },
+            {
+              "kind": "field",
+              "name": "_cachedResults"
+            },
+            {
+              "kind": "field",
               "name": "cachedResults"
             },
             {
@@ -2474,22 +1378,20 @@
               ]
             },
             {
+              "kind": "field",
+              "name": "__loadNewUrlDebouncer"
+            },
+            {
               "kind": "method",
               "name": "debounceDurationHandler"
             },
             {
               "kind": "field",
-              "name": "is",
+              "name": "cache",
+              "type": {
+                "text": "{[key: string]: any}"
+              },
               "static": true,
-              "default": "xtal-fetch-get",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "propActions",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -2544,87 +1446,6 @@
             },
             {
               "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reqInit",
-              "type": {
-                "text": "RequestInit | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "any | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "result",
-              "type": {
-                "text": "Object"
-              },
-              "description": "⚡ Fires event result-changed\r\nResult of fetch request",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
               "name": "_initDisp",
               "type": {
                 "text": "string | null"
@@ -2663,36 +1484,7 @@
           "customElement": true,
           "attributes": [
             {
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "fieldName": "fetch",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "fieldName": "as",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "fieldName": "href",
+              "name": "disabled",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -2810,22 +1602,6 @@
             },
             {
               "kind": "field",
-              "name": "reqInit",
-              "type": {
-                "text": "object"
-              },
-              "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute"
-            },
-            {
-              "kind": "field",
-              "name": "cacheResults",
-              "type": {
-                "text": "'' | 'global' | undefined"
-              },
-              "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope."
-            },
-            {
-              "kind": "field",
               "name": "_cachedResults",
               "type": {
                 "text": "{ [key: string]: any }"
@@ -2835,62 +1611,6 @@
             {
               "kind": "field",
               "name": "cachedResults"
-            },
-            {
-              "kind": "field",
-              "name": "reqInitRequired",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicates that no fetch request should proceed until reqInit property / attribute is set."
-            },
-            {
-              "kind": "field",
-              "name": "debounceDuration",
-              "type": {
-                "text": "Number"
-              },
-              "description": "How long to pause between requests"
-            },
-            {
-              "kind": "field",
-              "name": "errorResponse",
-              "type": {
-                "text": "Object"
-              },
-              "description": "Error response as an object\r\n⚡ Fires event error-response-changed"
-            },
-            {
-              "kind": "field",
-              "name": "errorText",
-              "type": {
-                "text": "String"
-              },
-              "description": "Indicates the error text of the last request.\r\n⚡ Fires event error-text-changed."
-            },
-            {
-              "kind": "field",
-              "name": "fetchInProgress",
-              "type": {
-                "text": "Boolean"
-              },
-              "description": "Indicates Fetch is in progress\r\n⚡ Fires event fetch-in-progress-changed"
-            },
-            {
-              "kind": "field",
-              "name": "insertResults",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS."
-            },
-            {
-              "kind": "field",
-              "name": "baseLinkId",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "DOM ID  of link (preload) tag, typical in head element.  \r\nUsed to prov"
             },
             {
               "kind": "method",
@@ -2927,6 +1647,18 @@
             {
               "kind": "method",
               "name": "debounceDurationHandler"
+            },
+            {
+              "kind": "field",
+              "name": "cache",
+              "type": {
+                "text": "{[key: string]: any}"
+              },
+              "static": true,
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
             },
             {
               "kind": "field",
@@ -2977,76 +1709,6 @@
             },
             {
               "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "any | undefined"
-              },
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "result",
-              "type": {
-                "text": "Object"
-              },
-              "description": "⚡ Fires event result-changed\r\nResult of fetch request",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "kind": "field",
               "name": "_initDisp",
               "type": {
                 "text": "string | null"
@@ -3078,81 +1740,20 @@
               }
             }
           ],
+          "superclass": {
+            "name": "XtalFetchGet"
+          },
+          "tagName": "xtal-fetch-req",
+          "customElement": true,
           "attributes": [
             {
-              "name": "req-init",
-              "type": {
-                "text": "object"
-              },
-              "description": "Object to use for second parameter of fetch method.  Can parse the value from the attribute if the attribute is in JSON format.\r\nSupports JSON formatted attribute",
-              "fieldName": "reqInit"
-            },
-            {
-              "name": "cache-results",
-              "type": {
-                "text": "'' | 'global' | undefined"
-              },
-              "description": "Indicates whether to pull the response from a previous identical fetch request from cache.\r\nIf set to true, cache is stored locally within the instance of the web component.\r\nIf set to 'global', cache is retained after web component goes out of scope.",
-              "fieldName": "cacheResults"
-            },
-            {
-              "name": "debounce-duration",
-              "type": {
-                "text": "Number"
-              },
-              "description": "How long to pause between requests",
-              "fieldName": "debounceDuration"
-            },
-            {
-              "name": "insert-results",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicate whether to set the innerHTML of the web component with the response from the server.  \r\nMake sure the service is protected against XSS.",
-              "fieldName": "insertResults"
-            },
-            {
-              "name": "fetch",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Must be true for fetch to proceed",
-              "fieldName": "fetch",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "name": "as",
-              "type": {
-                "text": "\"json\"|\"text\""
-              },
-              "description": "How to treat the response",
-              "fieldName": "as",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            },
-            {
-              "name": "href",
-              "type": {
-                "text": "string"
-              },
-              "description": "URL (path) to fetch.",
-              "fieldName": "href",
+              "name": "disabled",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
               }
             }
-          ],
-          "superclass": {
-            "name": "XtalFetchGet"
-          },
-          "tagName": "xtal-fetch-req",
-          "customElement": true
+          ]
         },
         {
           "kind": "variable",
@@ -3165,7 +1766,7 @@
           "kind": "variable",
           "name": "propDefMap",
           "type": {
-            "text": "PropDefMap<XtalFetchReqPropertiesIfc>"
+            "text": "PropDefMap<XtalFetchReqProps>"
           }
         },
         {
