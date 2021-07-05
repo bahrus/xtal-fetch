@@ -1,11 +1,43 @@
 import { XtalFetchGet } from "./xtal-fetch-get";
 
-export interface XtalFetchBasePropertiesIfc extends Partial<HTMLElement> {
-    href?: string,
-    fetch?: boolean,
-    disabled?: boolean,
-    result?: any,
-    as?: 'text' | 'json';
+export interface XtalFetchGetProps extends HTMLElement {
+    /**
+     * URL (path) to fetch.
+     * @attr
+     * @type {string}
+     * 
+     * 
+     */
+    href?: string | undefined;
+    /**
+     * Must be true for fetch to proceed
+     * @attr
+     */
+    fetch?: boolean | undefined;
+    disabled?: boolean | undefined;
+
+    /**
+     *  How to treat the response
+     * @attr
+     * @type {"json"|"text"}
+     */
+    as? : 'json' | 'text' | undefined; 
+
+    reqInit?: RequestInit | undefined;
+
+    /**
+     * @readonly
+     */
+    value?: any | undefined;
+
+    /**
+     * ⚡ Fires event result-changed
+     * Result of fetch request
+     * @type {Object}
+     * 
+     * 
+     */
+    result?: any | undefined;
 }
 
 export interface XtalFetchReqAddedProperties{
@@ -20,7 +52,7 @@ export interface XtalFetchReqAddedProperties{
     baseLinkId: string;
 }
 
-export interface XtalFetchReqPropertiesIfc extends XtalFetchBasePropertiesIfc, XtalFetchReqAddedProperties {}
+export interface XtalFetchReqPropertiesIfc extends XtalFetchGetProps, XtalFetchReqAddedProperties {}
 
 export interface XtalFetchEntitiesAddedProperties{
     forEach: string,
@@ -28,7 +60,7 @@ export interface XtalFetchEntitiesAddedProperties{
     inEntities: any[],
 }
 
-export interface XtalFetchEntitiesPropertiesIfc extends XtalFetchBasePropertiesIfc, XtalFetchReqAddedProperties, XtalFetchEntitiesAddedProperties{}
+export interface XtalFetchEntitiesPropertiesIfc extends XtalFetchGetProps, XtalFetchReqAddedProperties, XtalFetchEntitiesAddedProperties{}
 
 export interface StandardDetail{
     value: any;
