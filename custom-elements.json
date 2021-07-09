@@ -16,6 +16,16 @@
           "kind": "class",
           "description": "",
           "name": "MyExample",
+          "members": [
+            {
+              "kind": "field",
+              "name": "myProp",
+              "type": {
+                "text": "string"
+              },
+              "default": "'myVal'"
+            }
+          ],
           "superclass": {
             "name": "HTMLElement"
           },
@@ -46,7 +56,10 @@
             {
               "kind": "field",
               "name": "myProp",
-              "default": "myVal"
+              "type": {
+                "text": "string"
+              },
+              "default": "'myVal'"
             }
           ],
           "superclass": {
@@ -91,8 +104,15 @@
             {
               "kind": "field",
               "name": "is",
+              "type": {
+                "text": "string"
+              },
               "static": true,
-              "default": "xtal-fetch-entities"
+              "default": "'xtal-fetch-entities'",
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
             },
             {
               "kind": "field",
@@ -116,9 +136,10 @@
             {
               "kind": "field",
               "name": "propActions",
+              "default": "[\r\n    triggerDebounce, updateDebounce\r\n]",
               "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -128,6 +149,7 @@
                 "text": "{ [key: string]: any }"
               },
               "privacy": "private",
+              "default": "{}",
               "inheritedFrom": {
                 "name": "XtalFetchReq",
                 "module": "xtal-fetch-req.ts"
@@ -196,6 +218,7 @@
                 "text": "{[key: string]: any}"
               },
               "static": true,
+              "default": "{}",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -207,6 +230,7 @@
               "type": {
                 "text": "IReactor"
               },
+              "default": "new xc.Rx(this)",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -215,6 +239,7 @@
             {
               "kind": "field",
               "name": "self",
+              "default": "this",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -261,7 +286,8 @@
             }
           ],
           "superclass": {
-            "name": "XtalFetchReq"
+            "name": "XtalFetchReq",
+            "module": "/xtal-fetch-req.js"
           },
           "tagName": "xtal-fetch-entities",
           "customElement": true,
@@ -336,8 +362,15 @@
             {
               "kind": "field",
               "name": "is",
+              "type": {
+                "text": "string"
+              },
               "static": true,
-              "default": "xtal-fetch-entities"
+              "default": "'xtal-fetch-entities'",
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
             },
             {
               "kind": "field",
@@ -361,9 +394,10 @@
             {
               "kind": "field",
               "name": "propActions",
+              "default": "[\r\n    triggerDebounce, updateDebounce\r\n]",
               "inheritedFrom": {
-                "name": "XtalFetchReq",
-                "module": "xtal-fetch-req.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -373,6 +407,7 @@
                 "text": "{ [key: string]: any }"
               },
               "privacy": "private",
+              "default": "{}",
               "inheritedFrom": {
                 "name": "XtalFetchReq",
                 "module": "xtal-fetch-req.ts"
@@ -441,6 +476,7 @@
                 "text": "{[key: string]: any}"
               },
               "static": true,
+              "default": "{}",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -452,6 +488,7 @@
               "type": {
                 "text": "IReactor"
               },
+              "default": "new xc.Rx(this)",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -460,6 +497,7 @@
             {
               "kind": "field",
               "name": "self",
+              "default": "this",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -506,7 +544,8 @@
             }
           ],
           "superclass": {
-            "name": "XtalFetchReq"
+            "name": "XtalFetchReq",
+            "module": "/xtal-fetch-req.js"
           },
           "tagName": "xtal-fetch-entities",
           "customElement": true,
@@ -577,29 +616,42 @@
           "kind": "class",
           "description": "",
           "name": "XtalFetchExample1",
-          "superclass": {
-            "name": "XtalFetchEntities"
-          },
-          "tagName": "xtal-fetch",
-          "customElement": true,
-          "attributes": [
-            {
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
-              }
-            }
-          ],
           "members": [
             {
               "kind": "field",
+              "name": "fetch",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "href",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"https://unpkg.com/xtal-fetch@0.0.75/demo/generated.json\""
+            },
+            {
+              "kind": "field",
+              "name": "resultChangedContract",
+              "type": {
+                "text": "object"
+              },
+              "default": "{\r\n            trigger: /* JS */ `\r\n    import 'https://unpkg.com/xtal-fetch/xtal-fetch-entities.js?module';\r\n    `,\r\n            expectedEvent: {\r\n                name: \"result-changed\",\r\n                detail: {\r\n                    value: [\r\n                        {\r\n                            _id: \"580d3fbba86e6de6accf5cd1\",\r\n                            index: 0,\r\n                            guid: \"23bc285a-1c9e-4975-9c85-f3203721444e\",\r\n                            isActive: false,\r\n                            balance: \"$3,317.88\",\r\n                            picture: \"http://placehold.it/32x32\",\r\n                            age: 37,\r\n                            eyeColor: \"brown\",\r\n                            name: \"Cooper Patel\",\r\n                            gender: \"male\",\r\n                            company: \"UNISURE\",\r\n                            email: \"cooperpatel@unisure.com\",\r\n                            phone: \"+1 (821) 531-3163\",\r\n                            address: \"962 Varick Avenue, Bentley, Delaware, 1319\",\r\n                            about: \"Aliqua reprehenderit sit reprehenderit cillum anim duis reprehenderit ea deserunt veniam aliquip pariatur aute. Anim sint ea sunt ut sunt sint incididunt dolor. Ipsum ex dolor consequat aute. Eiusmod mollit qui nulla labore Lorem aute occaecat cillum irure fugiat. Nisi proident anim quis laboris veniam aute deserunt eu ipsum culpa eiusmod duis et pariatur.\\r\\n\",\r\n                            registered: \"2015-06-20T05:36:12 +04:00\",\r\n                            latitude: -53.862758,\r\n                            longitude: -135.928028,\r\n                            tags: [\r\n                                \"et\",\r\n                                \"deserunt\",\r\n                                \"proident\",\r\n                                \"proident\",\r\n                                \"qui\",\r\n                                \"magna\",\r\n                                \"voluptate\"\r\n                            ],\r\n                            friends: [\r\n                                {\r\n                                    id: 0,\r\n                                    name: \"Stuart Massey\"\r\n                                },\r\n                                {\r\n                                    id: 1,\r\n                                    name: \"Spencer Garrett\"\r\n                                },\r\n                                {\r\n                                    id: 2,\r\n                                    name: \"Petty Houston\"\r\n                                }\r\n                            ],\r\n                            greeting: \"Hello, Cooper Patel! You have 1 unread messages.\",\r\n                            favoriteFruit: \"strawberry\"\r\n                        },\r\n                        {\r\n                            _id: \"580d3fbb28cb6eedfb381e86\",\r\n                            index: 1,\r\n                            guid: \"ce10cf67-7499-466d-bffc-6e793e280f0a\",\r\n                            isActive: false,\r\n                            balance: \"$3,285.45\",\r\n                            picture: \"http://placehold.it/32x32\",\r\n                            age: 40,\r\n                            eyeColor: \"green\",\r\n                            name: \"Randolph Cameron\",\r\n                            gender: \"male\",\r\n                            company: \"AQUACINE\",\r\n                            email: \"randolphcameron@aquacine.com\",\r\n                            phone: \"+1 (980) 496-3651\",\r\n                            address: \"143 Jackson Court, Delshire, Vermont, 1273\",\r\n                            about: \"Cillum do laboris laborum aliquip labore nisi. Do dolore irure voluptate reprehenderit consequat. Laborum cupidatat cillum dolore officia elit.\\r\\n\",\r\n                            registered: \"2014-04-02T10:49:07 +04:00\",\r\n                            latitude: 42.521681,\r\n                            longitude: -152.496821,\r\n                            tags: [\r\n                                \"sint\",\r\n                                \"fugiat\",\r\n                                \"amet\",\r\n                                \"dolore\",\r\n                                \"non\",\r\n                                \"nostrud\",\r\n                                \"labore\"\r\n                            ],\r\n                            friends: [\r\n                                {\r\n                                    id: 0,\r\n                                    name: \"Leigh Rojas\"\r\n                                },\r\n                                {\r\n                                    id: 1,\r\n                                    name: \"Hale Scott\"\r\n                                },\r\n                                {\r\n                                    id: 2,\r\n                                    name: \"Head Jones\"\r\n                                }\r\n                            ],\r\n                            greeting: \"Hello, Randolph Cameron! You have 7 unread messages.\",\r\n                            favoriteFruit: \"banana\"\r\n                        },\r\n                        {\r\n                            _id: \"580d3fbb3e4f98e9c1ed509b\",\r\n                            index: 2,\r\n                            guid: \"c973f141-319c-441f-8cb7-b7a08114b3cc\",\r\n                            isActive: true,\r\n                            balance: \"$3,205.61\",\r\n                            picture: \"http://placehold.it/32x32\",\r\n                            age: 40,\r\n                            eyeColor: \"green\",\r\n                            name: \"Vivian Jacobson\",\r\n                            gender: \"female\",\r\n                            company: \"PARLEYNET\",\r\n                            email: \"vivianjacobson@parleynet.com\",\r\n                            phone: \"+1 (903) 441-2185\",\r\n                            address: \"556 Albemarle Terrace, Stagecoach, Idaho, 4267\",\r\n                            about: \"Ex anim pariatur eu mollit voluptate. Ad qui magna amet ullamco officia fugiat dolore elit cupidatat. Aute cupidatat nostrud consectetur est aute incididunt duis aliquip. Ex laboris incididunt nulla est culpa reprehenderit dolor tempor.\\r\\n\",\r\n                            registered: \"2015-02-22T10:51:13 +05:00\",\r\n                            latitude: 28.14754,\r\n                            longitude: -84.275715,\r\n                            tags: [\r\n                                \"nostrud\",\r\n                                \"in\",\r\n                                \"laborum\",\r\n                                \"ut\",\r\n                                \"reprehenderit\",\r\n                                \"deserunt\",\r\n                                \"pariatur\"\r\n                            ],\r\n                            friends: [\r\n                                {\r\n                                    id: 0,\r\n                                    name: \"Whitney Herman\"\r\n                                },\r\n                                {\r\n                                    id: 1,\r\n                                    name: \"Schultz Cooper\"\r\n                                },\r\n                                {\r\n                                    id: 2,\r\n                                    name: \"Delaney Nicholson\"\r\n                                }\r\n                            ],\r\n                            greeting: \"Hello, Vivian Jacobson! You have 6 unread messages.\",\r\n                            favoriteFruit: \"apple\"\r\n                        }\r\n                    ]\r\n                }\r\n            }\r\n        }"
+            },
+            {
+              "kind": "field",
               "name": "is",
+              "type": {
+                "text": "string"
+              },
               "static": true,
-              "default": "xtal-fetch-entities",
+              "default": "'xtal-fetch-entities'",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -625,16 +677,17 @@
                 "text": "AbortController | undefined"
               },
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "kind": "field",
               "name": "propActions",
+              "default": "[\r\n    triggerDebounce, updateDebounce\r\n]",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -644,17 +697,18 @@
                 "text": "{ [key: string]: any }"
               },
               "privacy": "private",
+              "default": "{}",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "kind": "field",
               "name": "cachedResults",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
@@ -682,8 +736,8 @@
                 }
               ],
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
@@ -693,16 +747,16 @@
                 "text": "any"
               },
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "kind": "method",
               "name": "debounceDurationHandler",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
@@ -712,9 +766,10 @@
                 "text": "{[key: string]: any}"
               },
               "static": true,
+              "default": "{}",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -723,17 +778,19 @@
               "type": {
                 "text": "IReactor"
               },
+              "default": "new xc.Rx(this)",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
               "kind": "field",
               "name": "self",
+              "default": "this",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -760,8 +817,8 @@
                 }
               ],
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -771,8 +828,23 @@
                 "text": "string | null"
               },
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "XtalFetchEntities",
+            "module": "/xtal-fetch-entities.js"
+          },
+          "tagName": "xtal-fetch",
+          "customElement": true,
+          "attributes": [
+            {
+              "name": "disabled",
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             }
           ],
@@ -780,36 +852,36 @@
             {
               "name": "error-response-changed",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "name": "error-text-changed",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "name": "fetch-in-progress-changed",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "name": "fetch-complete",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "name": "result-changed",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             }
           ]
@@ -837,28 +909,39 @@
           "members": [
             {
               "kind": "field",
-              "name": "fetch"
+              "name": "fetch",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true"
             },
             {
               "kind": "field",
               "name": "href",
-              "default": "https://unpkg.com/xtal-fetch@0.0.75/demo/generated.json"
+              "type": {
+                "text": "string"
+              },
+              "default": "\"https://unpkg.com/xtal-fetch@0.0.75/demo/generated.json\""
             },
             {
               "kind": "field",
               "name": "resultChangedContract",
               "type": {
                 "text": "XtalFetchTest<\"result-changed\", \"result\">"
-              }
+              },
+              "default": "{\r\n    trigger: /* JS */`\r\n    import 'https://unpkg.com/xtal-fetch/xtal-fetch-entities.js?module';\r\n    `,\r\n    expectedEvent: {\r\n      name: \"result-changed\",\r\n      detail: {\r\n        value: [\r\n          {\r\n            _id: \"580d3fbba86e6de6accf5cd1\",\r\n            index: 0,\r\n            guid: \"23bc285a-1c9e-4975-9c85-f3203721444e\",\r\n            isActive: false,\r\n            balance: \"$3,317.88\",\r\n            picture: \"http://placehold.it/32x32\",\r\n            age: 37,\r\n            eyeColor: \"brown\",\r\n            name: \"Cooper Patel\",\r\n            gender: \"male\",\r\n            company: \"UNISURE\",\r\n            email: \"cooperpatel@unisure.com\",\r\n            phone: \"+1 (821) 531-3163\",\r\n            address: \"962 Varick Avenue, Bentley, Delaware, 1319\",\r\n            about:\r\n              \"Aliqua reprehenderit sit reprehenderit cillum anim duis reprehenderit ea deserunt veniam aliquip pariatur aute. Anim sint ea sunt ut sunt sint incididunt dolor. Ipsum ex dolor consequat aute. Eiusmod mollit qui nulla labore Lorem aute occaecat cillum irure fugiat. Nisi proident anim quis laboris veniam aute deserunt eu ipsum culpa eiusmod duis et pariatur.\\r\\n\",\r\n            registered: \"2015-06-20T05:36:12 +04:00\",\r\n            latitude: -53.862758,\r\n            longitude: -135.928028,\r\n            tags: [\r\n              \"et\",\r\n              \"deserunt\",\r\n              \"proident\",\r\n              \"proident\",\r\n              \"qui\",\r\n              \"magna\",\r\n              \"voluptate\"\r\n            ],\r\n            friends: [\r\n              {\r\n                id: 0,\r\n                name: \"Stuart Massey\"\r\n              },\r\n              {\r\n                id: 1,\r\n                name: \"Spencer Garrett\"\r\n              },\r\n              {\r\n                id: 2,\r\n                name: \"Petty Houston\"\r\n              }\r\n            ],\r\n            greeting: \"Hello, Cooper Patel! You have 1 unread messages.\",\r\n            favoriteFruit: \"strawberry\"\r\n          },\r\n          {\r\n            _id: \"580d3fbb28cb6eedfb381e86\",\r\n            index: 1,\r\n            guid: \"ce10cf67-7499-466d-bffc-6e793e280f0a\",\r\n            isActive: false,\r\n            balance: \"$3,285.45\",\r\n            picture: \"http://placehold.it/32x32\",\r\n            age: 40,\r\n            eyeColor: \"green\",\r\n            name: \"Randolph Cameron\",\r\n            gender: \"male\",\r\n            company: \"AQUACINE\",\r\n            email: \"randolphcameron@aquacine.com\",\r\n            phone: \"+1 (980) 496-3651\",\r\n            address: \"143 Jackson Court, Delshire, Vermont, 1273\",\r\n            about:\r\n              \"Cillum do laboris laborum aliquip labore nisi. Do dolore irure voluptate reprehenderit consequat. Laborum cupidatat cillum dolore officia elit.\\r\\n\",\r\n            registered: \"2014-04-02T10:49:07 +04:00\",\r\n            latitude: 42.521681,\r\n            longitude: -152.496821,\r\n            tags: [\r\n              \"sint\",\r\n              \"fugiat\",\r\n              \"amet\",\r\n              \"dolore\",\r\n              \"non\",\r\n              \"nostrud\",\r\n              \"labore\"\r\n            ],\r\n            friends: [\r\n              {\r\n                id: 0,\r\n                name: \"Leigh Rojas\"\r\n              },\r\n              {\r\n                id: 1,\r\n                name: \"Hale Scott\"\r\n              },\r\n              {\r\n                id: 2,\r\n                name: \"Head Jones\"\r\n              }\r\n            ],\r\n            greeting: \"Hello, Randolph Cameron! You have 7 unread messages.\",\r\n            favoriteFruit: \"banana\"\r\n          },\r\n          {\r\n            _id: \"580d3fbb3e4f98e9c1ed509b\",\r\n            index: 2,\r\n            guid: \"c973f141-319c-441f-8cb7-b7a08114b3cc\",\r\n            isActive: true,\r\n            balance: \"$3,205.61\",\r\n            picture: \"http://placehold.it/32x32\",\r\n            age: 40,\r\n            eyeColor: \"green\",\r\n            name: \"Vivian Jacobson\",\r\n            gender: \"female\",\r\n            company: \"PARLEYNET\",\r\n            email: \"vivianjacobson@parleynet.com\",\r\n            phone: \"+1 (903) 441-2185\",\r\n            address: \"556 Albemarle Terrace, Stagecoach, Idaho, 4267\",\r\n            about:\r\n              \"Ex anim pariatur eu mollit voluptate. Ad qui magna amet ullamco officia fugiat dolore elit cupidatat. Aute cupidatat nostrud consectetur est aute incididunt duis aliquip. Ex laboris incididunt nulla est culpa reprehenderit dolor tempor.\\r\\n\",\r\n            registered: \"2015-02-22T10:51:13 +05:00\",\r\n            latitude: 28.14754,\r\n            longitude: -84.275715,\r\n            tags: [\r\n              \"nostrud\",\r\n              \"in\",\r\n              \"laborum\",\r\n              \"ut\",\r\n              \"reprehenderit\",\r\n              \"deserunt\",\r\n              \"pariatur\"\r\n            ],\r\n            friends: [\r\n              {\r\n                id: 0,\r\n                name: \"Whitney Herman\"\r\n              },\r\n              {\r\n                id: 1,\r\n                name: \"Schultz Cooper\"\r\n              },\r\n              {\r\n                id: 2,\r\n                name: \"Delaney Nicholson\"\r\n              }\r\n            ],\r\n            greeting: \"Hello, Vivian Jacobson! You have 6 unread messages.\",\r\n            favoriteFruit: \"apple\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }"
             },
             {
               "kind": "field",
               "name": "is",
+              "type": {
+                "text": "string"
+              },
               "static": true,
-              "default": "xtal-fetch-entities",
+              "default": "'xtal-fetch-entities'",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -884,16 +967,17 @@
                 "text": "AbortController | undefined"
               },
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "kind": "field",
               "name": "propActions",
+              "default": "[\r\n    triggerDebounce, updateDebounce\r\n]",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -903,17 +987,18 @@
                 "text": "{ [key: string]: any }"
               },
               "privacy": "private",
+              "default": "{}",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "kind": "field",
               "name": "cachedResults",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
@@ -941,8 +1026,8 @@
                 }
               ],
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
@@ -952,16 +1037,16 @@
                 "text": "any"
               },
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "kind": "method",
               "name": "debounceDurationHandler",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
@@ -971,9 +1056,10 @@
                 "text": "{[key: string]: any}"
               },
               "static": true,
+              "default": "{}",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -982,17 +1068,19 @@
               "type": {
                 "text": "IReactor"
               },
+              "default": "new xc.Rx(this)",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
               "kind": "field",
               "name": "self",
+              "default": "this",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -1019,8 +1107,8 @@
                 }
               ],
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             },
             {
@@ -1030,13 +1118,14 @@
                 "text": "string | null"
               },
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             }
           ],
           "superclass": {
-            "name": "XtalFetchEntities"
+            "name": "XtalFetchEntities",
+            "module": "/xtal-fetch-entities.js"
           },
           "tagName": "xtal-fetch",
           "customElement": true,
@@ -1044,8 +1133,8 @@
             {
               "name": "disabled",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             }
           ],
@@ -1053,36 +1142,36 @@
             {
               "name": "error-response-changed",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "name": "error-text-changed",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "name": "fetch-in-progress-changed",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "name": "fetch-complete",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchReq",
+                "module": "xtal-fetch-req.ts"
               }
             },
             {
               "name": "result-changed",
               "inheritedFrom": {
-                "name": "XtalFetchEntities",
-                "module": "xtal-fetch-entities.ts"
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
               }
             }
           ]
@@ -1111,25 +1200,38 @@
             {
               "kind": "field",
               "name": "is",
+              "type": {
+                "text": "string"
+              },
               "static": true,
-              "default": "xtal-fetch-get"
+              "default": "'xtal-fetch-get'"
             },
             {
               "kind": "field",
               "name": "cache",
-              "static": true
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{}"
             },
             {
               "kind": "field",
-              "name": "propActions"
+              "name": "propActions",
+              "default": "[\n    linkResult\n]",
+              "type": {
+                "text": "array"
+              }
             },
             {
               "kind": "field",
-              "name": "reactor"
+              "name": "reactor",
+              "default": "new xc.Rx(this)"
             },
             {
               "kind": "field",
-              "name": "self"
+              "name": "self",
+              "default": "this"
             },
             {
               "kind": "method",
@@ -1169,11 +1271,19 @@
         },
         {
           "kind": "variable",
-          "name": "bool1"
+          "name": "bool1",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\n    type: Boolean,\n    dry: true,\n}"
         },
         {
           "kind": "variable",
-          "name": "obj1"
+          "name": "obj1",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\n    type: Object,\n    dry: true,\n    notify: true\n}"
         }
       ],
       "exports": [
@@ -1215,8 +1325,11 @@
             {
               "kind": "field",
               "name": "is",
+              "type": {
+                "text": "string"
+              },
               "static": true,
-              "default": "xtal-fetch-get"
+              "default": "'xtal-fetch-get'"
             },
             {
               "kind": "field",
@@ -1224,22 +1337,26 @@
               "type": {
                 "text": "{[key: string]: any}"
               },
-              "static": true
+              "static": true,
+              "default": "{}"
             },
             {
               "kind": "field",
-              "name": "propActions"
+              "name": "propActions",
+              "default": "[\r\n    linkResult\r\n]"
             },
             {
               "kind": "field",
               "name": "reactor",
               "type": {
                 "text": "IReactor"
-              }
+              },
+              "default": "new xc.Rx(this)"
             },
             {
               "kind": "field",
-              "name": "self"
+              "name": "self",
+              "default": "this"
             },
             {
               "kind": "method",
@@ -1294,14 +1411,16 @@
           "name": "bool1",
           "type": {
             "text": "PropDef"
-          }
+          },
+          "default": "{\r\n    type: Boolean,\r\n    dry: true,\r\n}"
         },
         {
           "kind": "variable",
           "name": "obj1",
           "type": {
             "text": "PropDef"
-          }
+          },
+          "default": "{\r\n    type: Object,\r\n    dry: true,\r\n    notify: true\r\n}"
         }
       ],
       "exports": [
@@ -1343,8 +1462,15 @@
             {
               "kind": "field",
               "name": "is",
+              "type": {
+                "text": "string"
+              },
               "static": true,
-              "default": "xtal-fetch-req"
+              "default": "'xtal-fetch-req'",
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
             },
             {
               "kind": "field",
@@ -1352,11 +1478,23 @@
             },
             {
               "kind": "field",
-              "name": "propActions"
+              "name": "propActions",
+              "default": "[\n    triggerDebounce, updateDebounce\n]",
+              "type": {
+                "text": "array"
+              },
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
             },
             {
               "kind": "field",
-              "name": "_cachedResults"
+              "name": "_cachedResults",
+              "type": {
+                "text": "object"
+              },
+              "default": "{}"
             },
             {
               "kind": "field",
@@ -1392,6 +1530,7 @@
                 "text": "{[key: string]: any}"
               },
               "static": true,
+              "default": "{}",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -1403,6 +1542,7 @@
               "type": {
                 "text": "IReactor"
               },
+              "default": "new xc.Rx(this)",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -1411,6 +1551,7 @@
             {
               "kind": "field",
               "name": "self",
+              "default": "this",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -1478,7 +1619,8 @@
             }
           ],
           "superclass": {
-            "name": "XtalFetchGet"
+            "name": "XtalFetchGet",
+            "module": "/xtal-fetch-get.js"
           },
           "tagName": "xtal-fetch-req",
           "customElement": true,
@@ -1494,11 +1636,19 @@
         },
         {
           "kind": "variable",
-          "name": "str2"
+          "name": "str2",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\n    type: String,\n    dry: true,\n}"
         },
         {
           "kind": "variable",
-          "name": "propDefMap"
+          "name": "propDefMap",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\n    reqInitRequired: bool1, insertResults: bool1,\n    cacheResults: str2,\n    debounceDuration: {\n        type: Number,\n        dry: true,\n    },\n    errorResponse: {\n        type: Object,\n        dry: true,\n        notify: true,\n        stopNotificationIfFalsy: true,\n    },\n    errorText: {\n        type: String,\n        dry: true,\n        notify: true,\n        stopNotificationIfFalsy: true,\n        reflect: true,\n    },\n    fetchInProgress: {\n        type: Boolean,\n        dry: true,\n        notify: true,\n        stopNotificationIfFalsy: true,\n        reflect: true,\n    }\n}"
         },
         {
           "kind": "variable",
@@ -1586,8 +1736,15 @@
             {
               "kind": "field",
               "name": "is",
+              "type": {
+                "text": "string"
+              },
               "static": true,
-              "default": "xtal-fetch-req"
+              "default": "'xtal-fetch-req'",
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
             },
             {
               "kind": "field",
@@ -1598,7 +1755,12 @@
             },
             {
               "kind": "field",
-              "name": "propActions"
+              "name": "propActions",
+              "default": "[\r\n    triggerDebounce, updateDebounce\r\n]",
+              "inheritedFrom": {
+                "name": "XtalFetchGet",
+                "module": "xtal-fetch-get.ts"
+              }
             },
             {
               "kind": "field",
@@ -1606,7 +1768,8 @@
               "type": {
                 "text": "{ [key: string]: any }"
               },
-              "privacy": "private"
+              "privacy": "private",
+              "default": "{}"
             },
             {
               "kind": "field",
@@ -1655,6 +1818,7 @@
                 "text": "{[key: string]: any}"
               },
               "static": true,
+              "default": "{}",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -1666,6 +1830,7 @@
               "type": {
                 "text": "IReactor"
               },
+              "default": "new xc.Rx(this)",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -1674,6 +1839,7 @@
             {
               "kind": "field",
               "name": "self",
+              "default": "this",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -1741,7 +1907,8 @@
             }
           ],
           "superclass": {
-            "name": "XtalFetchGet"
+            "name": "XtalFetchGet",
+            "module": "/xtal-fetch-get.js"
           },
           "tagName": "xtal-fetch-req",
           "customElement": true,
@@ -1760,14 +1927,16 @@
           "name": "str2",
           "type": {
             "text": "PropDef"
-          }
+          },
+          "default": "{\r\n    type: String,\r\n    dry: true,\r\n}"
         },
         {
           "kind": "variable",
           "name": "propDefMap",
           "type": {
             "text": "PropDefMap<XtalFetchReqProps>"
-          }
+          },
+          "default": "{\r\n    reqInitRequired: bool1, insertResults: bool1,\r\n    cacheResults: str2,\r\n    debounceDuration: {\r\n        type: Number,\r\n        dry: true,\r\n    },\r\n    errorResponse: {\r\n        type: Object,\r\n        dry: true,\r\n        notify: true,\r\n        stopNotificationIfFalsy: true,\r\n    },\r\n    errorText: {\r\n        type: String,\r\n        dry: true,\r\n        notify: true,\r\n        stopNotificationIfFalsy: true,\r\n        reflect: true,\r\n    },\r\n    fetchInProgress: {\r\n        type: Boolean,\r\n        dry: true,\r\n        notify: true,\r\n        stopNotificationIfFalsy: true,\r\n        reflect: true,\r\n    }\r\n}"
         },
         {
           "kind": "variable",
