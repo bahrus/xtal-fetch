@@ -33,7 +33,7 @@ import {xc, ReactiveSurface, PropDef, PropDefMap, PropAction, IReactor} from 'xt
 
 export interface XtalFetchGet extends XtalFetchGetProps{}
 
-const linkResult = ({href, fetch, reqInit, as, disabled, self}: XtalFetchGet) => {
+export const linkResult = ({href, fetch, reqInit, as, disabled, self}: XtalFetchGet) => {
     window.fetch(href!, reqInit).then(resp => {
         resp[as!]().then(result => {
             self.result = result;

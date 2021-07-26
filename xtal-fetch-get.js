@@ -26,7 +26,7 @@ export class XtalFetchGet extends HTMLElement {
         });
     }
 }
-const linkResult = ({ href, fetch, reqInit, as, disabled, self }) => {
+export const linkResult = ({ href, fetch, reqInit, as, disabled, self }) => {
     window.fetch(href, reqInit).then(resp => {
         resp[as]().then(result => {
             self.result = result;
