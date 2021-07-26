@@ -48,7 +48,7 @@ export const bool1: PropDef = {
     type: Boolean,
     dry: true,
 };
-const str1: PropDef = {
+export const str1: PropDef = {
     type: String,
     dry: true,
     reflect: true,

@@ -40,7 +40,7 @@ export const bool1 = {
     type: Boolean,
     dry: true,
 };
-const str1 = {
+export const str1 = {
     type: String,
     dry: true,
     reflect: true,
