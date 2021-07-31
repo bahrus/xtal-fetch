@@ -1,41 +1,5 @@
 import { xc } from 'xtal-element/lib/XtalCore.js';
-/**
- * Bare-bones custom element that can make fetch calls.
- * @element xtal-fetch-get
- * @event result-changed
- */
-export class XtalFetchGet extends HTMLElement {
-    static is = 'xtal-fetch-get';
-    static observedAttributes = ['disabled'];
-    static cache = {};
-    attributeChangedCallback(n, ov, nv) {
-        this.disabled = nv !== null;
-    }
-    propActions = propActions;
-    reactor = new xc.Rx(this);
-    self = this;
-    onPropChange(name, prop, nv) {
-        this.reactor.addToQueue(prop, nv);
-    }
-    _initDisp;
-    connectedCallback() {
-        this._initDisp = this.style.display;
-        this.style.display = 'none';
-        xc.mergeProps(this, slicedPropDefs, {
-            as: 'json',
-        });
-    }
-}
-export const linkResult = ({ href, fetch, reqInit, as, disabled, self }) => {
-    window.fetch(href, reqInit).then(resp => {
-        resp[as]().then(result => {
-            self.result = result;
-        });
-    });
-};
-const propActions = [
-    linkResult
-];
+//#region  Props
 export const bool1 = {
     type: Boolean,
     dry: true,
@@ -75,5 +39,43 @@ const propDefMap = {
     }
 };
 const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
+//#endregion
+/**
+ * Bare-bones custom element that can make fetch calls.
+ * @element xtal-fetch-get
+ * @event result-changed
+ */
+export class XtalFetchGet extends HTMLElement {
+    static is = 'xtal-fetch-get';
+    static observedAttributes = [...slicedPropDefs.boolNames, ...slicedPropDefs.strNames];
+    static cache = {};
+    attributeChangedCallback(n, ov, nv) {
+        xc.passAttrToProp(this, slicedPropDefs, n, ov, nv);
+    }
+    propActions = propActions;
+    reactor = new xc.Rx(this);
+    self = this;
+    onPropChange(name, prop, nv) {
+        this.reactor.addToQueue(prop, nv);
+    }
+    _initDisp;
+    connectedCallback() {
+        this._initDisp = this.style.display;
+        this.style.display = 'none';
+        xc.mergeProps(this, slicedPropDefs, {
+            as: 'json',
+        });
+    }
+}
+export const linkResult = ({ href, fetch, reqInit, as, disabled, self }) => {
+    window.fetch(href, reqInit).then(resp => {
+        resp[as]().then(result => {
+            self.result = result;
+        });
+    });
+};
+const propActions = [
+    linkResult
+];
 xc.letThereBeProps(XtalFetchGet, slicedPropDefs, 'onPropChange');
 xc.define(XtalFetchGet);

@@ -3,6 +3,44 @@ import { xc, PropDef, PropDefMap, PropAction } from 'xtal-element/lib/XtalCore.j
 import { IBaseLinkContainer, getFullURL} from 'xtal-element/lib/base-link-id.js';
 import { XtalFetchReqProps, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
 
+//#region 
+export const str2: PropDef = {
+    type: String,
+    dry: true,
+};
+
+export const propDefMap: PropDefMap<XtalFetchReqProps> = {
+    reqInitRequired: bool1, insertResults: bool1,
+    cacheResults: str2,
+    debounceDuration: {
+        type: Number,
+        dry: true,
+    },
+    errorResponse: {
+        type: Object,
+        dry: true,
+        notify: true,
+        stopNotificationIfFalsy: true,
+    },
+    errorText: {
+        type: String,
+        dry: true,
+        notify: true,
+        stopNotificationIfFalsy: true,
+        reflect: true,
+    },
+    fetchInProgress: {
+        type: Boolean,
+        dry: true,
+        notify: true,
+        stopNotificationIfFalsy: true,
+        reflect: true,
+    }
+};
+
+const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
+//#endregion
+
 /**
  * Feature rich custom element that can make fetch calls, including post requests.
  * @element xtal-fetch-req
@@ -14,6 +52,13 @@ import { XtalFetchReqProps, XtalFetchReqAddedProperties, XtalFetchReqEventNameMa
  export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqProps, IBaseLinkContainer {
 
     static is = 'xtal-fetch-req';
+
+    static observedAttributes = [...XtalFetchGet.observedAttributes, ...slicedPropDefs.strNames];
+
+    attributeChangedCallback(n: string, ov: string, nv: string){
+        super.attributeChangedCallback(n, ov, nv);
+        xc.passAttrToProp(this, slicedPropDefs, n, ov, nv);
+    }
 
     controller: AbortController | undefined;
 
@@ -56,41 +101,7 @@ import { XtalFetchReqProps, XtalFetchReqAddedProperties, XtalFetchReqEventNameMa
 
 export interface XtalFetchReq extends XtalFetchReqProps{}
 
-export const str2: PropDef = {
-    type: String,
-    dry: true,
-};
 
-export const propDefMap: PropDefMap<XtalFetchReqProps> = {
-    reqInitRequired: bool1, insertResults: bool1,
-    cacheResults: str2,
-    debounceDuration: {
-        type: Number,
-        dry: true,
-    },
-    errorResponse: {
-        type: Object,
-        dry: true,
-        notify: true,
-        stopNotificationIfFalsy: true,
-    },
-    errorText: {
-        type: String,
-        dry: true,
-        notify: true,
-        stopNotificationIfFalsy: true,
-        reflect: true,
-    },
-    fetchInProgress: {
-        type: Boolean,
-        dry: true,
-        notify: true,
-        stopNotificationIfFalsy: true,
-        reflect: true,
-    }
-};
-
-const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
 
 export const cacheSymbol = Symbol.for(XtalFetchGet.is + '_cache');
 //type prop = keyof XtalFetchReqAddedProperties;

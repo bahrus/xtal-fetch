@@ -1,49 +1,7 @@
 import { XtalFetchGet, bool1 } from './xtal-fetch-get.js';
 import { xc } from 'xtal-element/lib/XtalCore.js';
 import { getFullURL } from 'xtal-element/lib/base-link-id.js';
-/**
- * Feature rich custom element that can make fetch calls, including post requests.
- * @element xtal-fetch-req
- * @event error-response-changed
- * @event error-text-changed
- * @event fetch-in-progress-changed
- * @event fetch-complete
- */
-export class XtalFetchReq extends XtalFetchGet {
-    static is = 'xtal-fetch-req';
-    controller;
-    propActions = propActions;
-    _cachedResults = {};
-    get cachedResults() {
-        return this._cachedResults;
-    }
-    debounce(func, wait, immediate) {
-        let timeout;
-        return function () {
-            const context = this, args = arguments;
-            clearTimeout(timeout);
-            timeout = setTimeout(function () {
-                timeout = null;
-                if (!immediate)
-                    func.apply(context, args);
-            }, wait);
-            if (immediate && !timeout)
-                func.apply(context, args);
-        };
-    }
-    __loadNewUrlDebouncer;
-    debounceDurationHandler() {
-        this.__loadNewUrlDebouncer = this.debounce(() => {
-            linkResult(this);
-        }, this.debounceDuration);
-    }
-    connectedCallback() {
-        super.connectedCallback();
-        xc.mergeProps(this, slicedPropDefs, {
-            debounceDuration: 16
-        });
-    }
-}
+//#region 
 export const str2 = {
     type: String,
     dry: true,
@@ -77,6 +35,55 @@ export const propDefMap = {
     }
 };
 const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
+//#endregion
+/**
+ * Feature rich custom element that can make fetch calls, including post requests.
+ * @element xtal-fetch-req
+ * @event error-response-changed
+ * @event error-text-changed
+ * @event fetch-in-progress-changed
+ * @event fetch-complete
+ */
+export class XtalFetchReq extends XtalFetchGet {
+    static is = 'xtal-fetch-req';
+    static observedAttributes = [...XtalFetchGet.observedAttributes, ...slicedPropDefs.strNames];
+    attributeChangedCallback(n, ov, nv) {
+        super.attributeChangedCallback(n, ov, nv);
+        xc.passAttrToProp(this, slicedPropDefs, n, ov, nv);
+    }
+    controller;
+    propActions = propActions;
+    _cachedResults = {};
+    get cachedResults() {
+        return this._cachedResults;
+    }
+    debounce(func, wait, immediate) {
+        let timeout;
+        return function () {
+            const context = this, args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+                timeout = null;
+                if (!immediate)
+                    func.apply(context, args);
+            }, wait);
+            if (immediate && !timeout)
+                func.apply(context, args);
+        };
+    }
+    __loadNewUrlDebouncer;
+    debounceDurationHandler() {
+        this.__loadNewUrlDebouncer = this.debounce(() => {
+            linkResult(this);
+        }, this.debounceDuration);
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        xc.mergeProps(this, slicedPropDefs, {
+            debounceDuration: 16
+        });
+    }
+}
 export const cacheSymbol = Symbol.for(XtalFetchGet.is + '_cache');
 //type prop = keyof XtalFetchReqAddedProperties;
 export const triggerDebounce = ({ href, fetch, reqInit, reqInitRequired, as, self }) => {

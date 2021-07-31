@@ -1,49 +1,6 @@
 import { XtalFetchGetProps, XtalFetchGetEventNameMap} from './types.js';
 import {xc, ReactiveSurface, PropDef, PropDefMap, PropAction, IReactor} from 'xtal-element/lib/XtalCore.js';
-
-/**
- * Bare-bones custom element that can make fetch calls.
- * @element xtal-fetch-get
- * @event result-changed
- */
- export class XtalFetchGet extends HTMLElement implements XtalFetchGetProps, ReactiveSurface {
-    
-    static is = 'xtal-fetch-get';
-    static observedAttributes = ['disabled'];
-    static cache:  {[key: string]: any} = {};
-    attributeChangedCallback(n: string, ov: string, nv: string){
-        this.disabled = nv !== null;
-    }
-    propActions = propActions;
-    reactor: IReactor = new xc.Rx(this);
-    self = this;
-    onPropChange(name: string, prop: PropDef, nv: any){
-        this.reactor.addToQueue(prop, nv);
-    }
-
-    _initDisp!: string | null;
-    connectedCallback() {
-        this._initDisp = this.style.display;
-        this.style.display = 'none';
-        xc.mergeProps<Partial<XtalFetchGetProps>>(this, slicedPropDefs, {
-            as: 'json',
-        });
-    }
-}
-
-export interface XtalFetchGet extends XtalFetchGetProps{}
-
-export const linkResult = ({href, fetch, reqInit, as, disabled, self}: XtalFetchGet) => {
-    window.fetch(href!, reqInit).then(resp => {
-        resp[as!]().then(result => {
-            self.result = result;
-        });
-    });
-}
-const propActions = [
-    linkResult
-] as PropAction[];
-
+//#region  Props
 export const bool1: PropDef = {
     type: Boolean,
     dry: true,
@@ -84,6 +41,51 @@ const propDefMap: PropDefMap<XtalFetchGet> = {
 };
 
 const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
+//#endregion
+
+/**
+ * Bare-bones custom element that can make fetch calls.
+ * @element xtal-fetch-get
+ * @event result-changed
+ */
+ export class XtalFetchGet extends HTMLElement implements XtalFetchGetProps, ReactiveSurface {
+    
+    static is = 'xtal-fetch-get';
+    static observedAttributes = [...slicedPropDefs.boolNames, ...slicedPropDefs.strNames];
+    static cache:  {[key: string]: any} = {};
+    attributeChangedCallback(n: string, ov: string, nv: string){
+        xc.passAttrToProp(this, slicedPropDefs, n, ov, nv);
+    }
+    propActions = propActions;
+    reactor: IReactor = new xc.Rx(this);
+    self = this;
+    onPropChange(name: string, prop: PropDef, nv: any){
+        this.reactor.addToQueue(prop, nv);
+    }
+
+    _initDisp!: string | null;
+    connectedCallback() {
+        this._initDisp = this.style.display;
+        this.style.display = 'none';
+        xc.mergeProps<Partial<XtalFetchGetProps>>(this, slicedPropDefs, {
+            as: 'json',
+        });
+    }
+}
+
+export interface XtalFetchGet extends XtalFetchGetProps{}
+
+export const linkResult = ({href, fetch, reqInit, as, disabled, self}: XtalFetchGet) => {
+    window.fetch(href!, reqInit).then(resp => {
+        resp[as!]().then(result => {
+            self.result = result;
+        });
+    });
+}
+const propActions = [
+    linkResult
+] as PropAction[];
+
 
 
 xc.letThereBeProps(XtalFetchGet, slicedPropDefs, 'onPropChange');
