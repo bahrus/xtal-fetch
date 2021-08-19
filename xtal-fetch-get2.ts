@@ -47,7 +47,7 @@ const XtalFetchGet = define<XtalFetchGetCore, INotifyPropInfo>({
                 do: 'linkResult',
                 upon: ['enabled', 'fetch', 'href', 'as', 'reqInit'],
                 riff: ['enabled', 'fetch', 'href', 'as'],
-                merge: true
+                merge: true, async: true,
             }
         ],
         style:{
