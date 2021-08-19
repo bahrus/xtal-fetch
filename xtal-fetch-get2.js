@@ -14,7 +14,7 @@ export class XtalFetchGetCore extends HTMLElement {
         return { result };
     }
 }
-const XtalFetchGet = define({
+export const XtalFetchGet = define({
     config: {
         tagName: 'xtal-fetch-get',
         propDefaults: {

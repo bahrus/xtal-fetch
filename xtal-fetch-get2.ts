@@ -9,7 +9,7 @@ import {INotifyPropInfo, NotifyMixin, commonPropsInfo, INotifyMixin} from 'trans
 * @event value-changed
 */
 export class XtalFetchGetCore extends HTMLElement{
-    async linkResult(self: x){
+    async linkResult(self: this){
         const {href, reqInit, as, enabled} = self;
         const resp = await fetch(href!, reqInit);
         const result = await resp[as!]();
@@ -20,7 +20,7 @@ export interface XtalFetchGetCore extends XtalFetchGetProps, INotifyMixin{}
 
 type x = XtalFetchGetCore;
 
-const XtalFetchGet = define<XtalFetchGetCore, INotifyPropInfo>({
+export const XtalFetchGet = define<XtalFetchGetCore, INotifyPropInfo>({
     config:{
         tagName: 'xtal-fetch-get',
         propDefaults: {
@@ -56,7 +56,7 @@ const XtalFetchGet = define<XtalFetchGetCore, INotifyPropInfo>({
     },
     superclass: XtalFetchGetCore,
     mixins: [NotifyMixin]
-});
+}) as {new(): XtalFetchGetCore};
 
 declare global {
     interface HTMLElementTagNameMap {
