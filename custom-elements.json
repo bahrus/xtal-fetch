@@ -327,15 +327,6 @@
                 "module": "xtal-fetch-get.ts"
               }
             }
-          ],
-          "attributes": [
-            {
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            }
           ]
         }
       ],
@@ -580,15 +571,6 @@
             },
             {
               "name": "result-changed",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "disabled",
               "inheritedFrom": {
                 "name": "XtalFetchGet",
                 "module": "xtal-fetch-get.ts"
@@ -839,15 +821,6 @@
           },
           "tagName": "xtal-fetch",
           "customElement": true,
-          "attributes": [
-            {
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            }
-          ],
           "events": [
             {
               "name": "error-response-changed",
@@ -1129,15 +1102,6 @@
           },
           "tagName": "xtal-fetch",
           "customElement": true,
-          "attributes": [
-            {
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            }
-          ],
           "events": [
             {
               "name": "error-response-changed",
@@ -1192,6 +1156,30 @@
       "kind": "javascript-module",
       "path": "xtal-fetch-get.js",
       "declarations": [
+        {
+          "kind": "variable",
+          "name": "bool1",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\n    type: Boolean,\n    dry: true,\n}"
+        },
+        {
+          "kind": "variable",
+          "name": "str1",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\n    type: String,\n    dry: true,\n    reflect: true,\n    stopReactionsIfFalsy: true,\n}"
+        },
+        {
+          "kind": "variable",
+          "name": "obj1",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\n    type: Object,\n    dry: true,\n    notify: true\n}"
+        },
         {
           "kind": "class",
           "description": "Bare-bones custom element that can make fetch calls.",
@@ -1258,11 +1246,6 @@
               "name": "result-changed"
             }
           ],
-          "attributes": [
-            {
-              "name": "disabled"
-            }
-          ],
           "superclass": {
             "name": "HTMLElement"
           },
@@ -1270,31 +1253,16 @@
           "customElement": true
         },
         {
-          "kind": "variable",
-          "name": "bool1",
-          "type": {
-            "text": "object"
-          },
-          "default": "{\n    type: Boolean,\n    dry: true,\n}"
-        },
-        {
-          "kind": "variable",
-          "name": "obj1",
-          "type": {
-            "text": "object"
-          },
-          "default": "{\n    type: Object,\n    dry: true,\n    notify: true\n}"
+          "kind": "function",
+          "name": "linkResult",
+          "parameters": [
+            {
+              "name": "{ href, fetch, reqInit, as, disabled, self }"
+            }
+          ]
         }
       ],
       "exports": [
-        {
-          "kind": "js",
-          "name": "XtalFetchGet",
-          "declaration": {
-            "name": "XtalFetchGet",
-            "module": "xtal-fetch-get.js"
-          }
-        },
         {
           "kind": "js",
           "name": "bool1",
@@ -1305,9 +1273,33 @@
         },
         {
           "kind": "js",
+          "name": "str1",
+          "declaration": {
+            "name": "str1",
+            "module": "xtal-fetch-get.js"
+          }
+        },
+        {
+          "kind": "js",
           "name": "obj1",
           "declaration": {
             "name": "obj1",
+            "module": "xtal-fetch-get.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "XtalFetchGet",
+          "declaration": {
+            "name": "XtalFetchGet",
+            "module": "xtal-fetch-get.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "linkResult",
+          "declaration": {
+            "name": "linkResult",
             "module": "xtal-fetch-get.js"
           }
         }
@@ -1317,6 +1309,30 @@
       "kind": "javascript-module",
       "path": "xtal-fetch-get.ts",
       "declarations": [
+        {
+          "kind": "variable",
+          "name": "bool1",
+          "type": {
+            "text": "PropDef"
+          },
+          "default": "{\r\n    type: Boolean,\r\n    dry: true,\r\n}"
+        },
+        {
+          "kind": "variable",
+          "name": "str1",
+          "type": {
+            "text": "PropDef"
+          },
+          "default": "{\r\n    type: String,\r\n    dry: true,\r\n    reflect: true,\r\n    stopReactionsIfFalsy: true,\r\n}"
+        },
+        {
+          "kind": "variable",
+          "name": "obj1",
+          "type": {
+            "text": "PropDef"
+          },
+          "default": "{\r\n    type: Object,\r\n    dry: true,\r\n    notify: true\r\n}"
+        },
         {
           "kind": "class",
           "description": "Bare-bones custom element that can make fetch calls.",
@@ -1395,11 +1411,6 @@
               "name": "result-changed"
             }
           ],
-          "attributes": [
-            {
-              "name": "disabled"
-            }
-          ],
           "superclass": {
             "name": "HTMLElement"
           },
@@ -1407,31 +1418,19 @@
           "customElement": true
         },
         {
-          "kind": "variable",
-          "name": "bool1",
-          "type": {
-            "text": "PropDef"
-          },
-          "default": "{\r\n    type: Boolean,\r\n    dry: true,\r\n}"
-        },
-        {
-          "kind": "variable",
-          "name": "obj1",
-          "type": {
-            "text": "PropDef"
-          },
-          "default": "{\r\n    type: Object,\r\n    dry: true,\r\n    notify: true\r\n}"
+          "kind": "function",
+          "name": "linkResult",
+          "parameters": [
+            {
+              "name": "{href, fetch, reqInit, as, disabled, self}",
+              "type": {
+                "text": "XtalFetchGet"
+              }
+            }
+          ]
         }
       ],
       "exports": [
-        {
-          "kind": "js",
-          "name": "XtalFetchGet",
-          "declaration": {
-            "name": "XtalFetchGet",
-            "module": "xtal-fetch-get.ts"
-          }
-        },
         {
           "kind": "js",
           "name": "bool1",
@@ -1442,9 +1441,33 @@
         },
         {
           "kind": "js",
+          "name": "str1",
+          "declaration": {
+            "name": "str1",
+            "module": "xtal-fetch-get.ts"
+          }
+        },
+        {
+          "kind": "js",
           "name": "obj1",
           "declaration": {
             "name": "obj1",
+            "module": "xtal-fetch-get.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "XtalFetchGet",
+          "declaration": {
+            "name": "XtalFetchGet",
+            "module": "xtal-fetch-get.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "linkResult",
+          "declaration": {
+            "name": "linkResult",
             "module": "xtal-fetch-get.ts"
           }
         }
@@ -1454,6 +1477,22 @@
       "kind": "javascript-module",
       "path": "xtal-fetch-req.js",
       "declarations": [
+        {
+          "kind": "variable",
+          "name": "str2",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\n    type: String,\n    dry: true,\n}"
+        },
+        {
+          "kind": "variable",
+          "name": "propDefMap",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\n    reqInitRequired: bool1, insertResults: bool1,\n    cacheResults: str2,\n    debounceDuration: {\n        type: Number,\n        dry: true,\n    },\n    errorResponse: {\n        type: Object,\n        dry: true,\n        notify: true,\n        stopNotificationIfFalsy: true,\n    },\n    errorText: {\n        type: String,\n        dry: true,\n        notify: true,\n        stopNotificationIfFalsy: true,\n        reflect: true,\n    },\n    fetchInProgress: {\n        type: Boolean,\n        dry: true,\n        notify: true,\n        stopNotificationIfFalsy: true,\n        reflect: true,\n    }\n}"
+        },
         {
           "kind": "class",
           "description": "Feature rich custom element that can make fetch calls, including post requests.",
@@ -1623,32 +1662,7 @@
             "module": "/xtal-fetch-get.js"
           },
           "tagName": "xtal-fetch-req",
-          "customElement": true,
-          "attributes": [
-            {
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            }
-          ]
-        },
-        {
-          "kind": "variable",
-          "name": "str2",
-          "type": {
-            "text": "object"
-          },
-          "default": "{\n    type: String,\n    dry: true,\n}"
-        },
-        {
-          "kind": "variable",
-          "name": "propDefMap",
-          "type": {
-            "text": "object"
-          },
-          "default": "{\n    reqInitRequired: bool1, insertResults: bool1,\n    cacheResults: str2,\n    debounceDuration: {\n        type: Number,\n        dry: true,\n    },\n    errorResponse: {\n        type: Object,\n        dry: true,\n        notify: true,\n        stopNotificationIfFalsy: true,\n    },\n    errorText: {\n        type: String,\n        dry: true,\n        notify: true,\n        stopNotificationIfFalsy: true,\n        reflect: true,\n    },\n    fetchInProgress: {\n        type: Boolean,\n        dry: true,\n        notify: true,\n        stopNotificationIfFalsy: true,\n        reflect: true,\n    }\n}"
+          "customElement": true
         },
         {
           "kind": "variable",
@@ -1676,14 +1690,6 @@
       "exports": [
         {
           "kind": "js",
-          "name": "XtalFetchReq",
-          "declaration": {
-            "name": "XtalFetchReq",
-            "module": "xtal-fetch-req.js"
-          }
-        },
-        {
-          "kind": "js",
           "name": "str2",
           "declaration": {
             "name": "str2",
@@ -1695,6 +1701,14 @@
           "name": "propDefMap",
           "declaration": {
             "name": "propDefMap",
+            "module": "xtal-fetch-req.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "XtalFetchReq",
+          "declaration": {
+            "name": "XtalFetchReq",
             "module": "xtal-fetch-req.js"
           }
         },
@@ -1728,6 +1742,22 @@
       "kind": "javascript-module",
       "path": "xtal-fetch-req.ts",
       "declarations": [
+        {
+          "kind": "variable",
+          "name": "str2",
+          "type": {
+            "text": "PropDef"
+          },
+          "default": "{\r\n    type: String,\r\n    dry: true,\r\n}"
+        },
+        {
+          "kind": "variable",
+          "name": "propDefMap",
+          "type": {
+            "text": "PropDefMap<XtalFetchReqProps>"
+          },
+          "default": "{\r\n    reqInitRequired: bool1, insertResults: bool1,\r\n    cacheResults: str2,\r\n    debounceDuration: {\r\n        type: Number,\r\n        dry: true,\r\n    },\r\n    errorResponse: {\r\n        type: Object,\r\n        dry: true,\r\n        notify: true,\r\n        stopNotificationIfFalsy: true,\r\n    },\r\n    errorText: {\r\n        type: String,\r\n        dry: true,\r\n        notify: true,\r\n        stopNotificationIfFalsy: true,\r\n        reflect: true,\r\n    },\r\n    fetchInProgress: {\r\n        type: Boolean,\r\n        dry: true,\r\n        notify: true,\r\n        stopNotificationIfFalsy: true,\r\n        reflect: true,\r\n    }\r\n}"
+        },
         {
           "kind": "class",
           "description": "Feature rich custom element that can make fetch calls, including post requests.",
@@ -1911,32 +1941,7 @@
             "module": "/xtal-fetch-get.js"
           },
           "tagName": "xtal-fetch-req",
-          "customElement": true,
-          "attributes": [
-            {
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "XtalFetchGet",
-                "module": "xtal-fetch-get.ts"
-              }
-            }
-          ]
-        },
-        {
-          "kind": "variable",
-          "name": "str2",
-          "type": {
-            "text": "PropDef"
-          },
-          "default": "{\r\n    type: String,\r\n    dry: true,\r\n}"
-        },
-        {
-          "kind": "variable",
-          "name": "propDefMap",
-          "type": {
-            "text": "PropDefMap<XtalFetchReqProps>"
-          },
-          "default": "{\r\n    reqInitRequired: bool1, insertResults: bool1,\r\n    cacheResults: str2,\r\n    debounceDuration: {\r\n        type: Number,\r\n        dry: true,\r\n    },\r\n    errorResponse: {\r\n        type: Object,\r\n        dry: true,\r\n        notify: true,\r\n        stopNotificationIfFalsy: true,\r\n    },\r\n    errorText: {\r\n        type: String,\r\n        dry: true,\r\n        notify: true,\r\n        stopNotificationIfFalsy: true,\r\n        reflect: true,\r\n    },\r\n    fetchInProgress: {\r\n        type: Boolean,\r\n        dry: true,\r\n        notify: true,\r\n        stopNotificationIfFalsy: true,\r\n        reflect: true,\r\n    }\r\n}"
+          "customElement": true
         },
         {
           "kind": "variable",
@@ -1970,14 +1975,6 @@
       "exports": [
         {
           "kind": "js",
-          "name": "XtalFetchReq",
-          "declaration": {
-            "name": "XtalFetchReq",
-            "module": "xtal-fetch-req.ts"
-          }
-        },
-        {
-          "kind": "js",
           "name": "str2",
           "declaration": {
             "name": "str2",
@@ -1989,6 +1986,14 @@
           "name": "propDefMap",
           "declaration": {
             "name": "propDefMap",
+            "module": "xtal-fetch-req.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "XtalFetchReq",
+          "declaration": {
+            "name": "XtalFetchReq",
             "module": "xtal-fetch-req.ts"
           }
         },

@@ -8,20 +8,21 @@ export interface XtalFetchGetProps extends HTMLElement {
      * 
      * 
      */
-    href?: string | undefined;
+    href?: string;
     /**
      * Must be true for fetch to proceed
      * @attr
      */
-    fetch?: boolean | undefined;
-    disabled?: boolean | undefined;
+    fetch?: boolean;
+    disabled?: boolean;
+    enabled?: boolean;
 
     /**
      *  How to treat the response
      * @attr
      * @type {"json"|"text"}
      */
-    as? : 'json' | 'text' | undefined; 
+    as? : 'json' | 'text'; 
 
 
     /**
@@ -30,12 +31,12 @@ export interface XtalFetchGetProps extends HTMLElement {
      * @type {object}
      * @attr req-init
      */
-    reqInit?: RequestInit | undefined;
+    reqInit?: RequestInit;
 
     /**
      * @readonly
      */
-    value?: any | undefined;
+    value?: any;
 
     /**
      * ⚡ Fires event result-changed
@@ -44,7 +45,7 @@ export interface XtalFetchGetProps extends HTMLElement {
      * 
      * 
      */
-    result?: any | undefined;
+    result?: any;
 }
 
 export interface XtalFetchReqAddedProperties{

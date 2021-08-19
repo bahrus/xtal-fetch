@@ -90,8 +90,8 @@ const propActions = [
 
 xc.letThereBeProps(XtalFetchGet, slicedPropDefs, 'onPropChange');
 xc.define(XtalFetchGet);
-declare global {
-    interface HTMLElementTagNameMap {
-        "xtal-fetch-get": XtalFetchGet,
-    }
-}
+//declare global {
+//     interface HTMLElementTagNameMap {
+//         "xtal-fetch-get": XtalFetchGet,
+//     }
+// }

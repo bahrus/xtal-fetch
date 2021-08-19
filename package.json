@@ -14,7 +14,7 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "trans-render": "0.0.291",
+    "trans-render": "0.0.315",
     "xtal-element": "0.0.419"
   },
   "devDependencies": {
@@ -23,6 +23,7 @@
     "if-diff": "0.0.104",
     "json-file-patch": "0.0.1",
     "litter-g": "0.0.36",
+    "pass-down": "0.0.84",
     "on-to-me": "0.0.32",
     "xtal-test": "0.0.51",
     "@skypack/package-check": "0.2.2",

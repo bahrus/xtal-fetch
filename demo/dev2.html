@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <xtal-fetch-get fetch href=generated.json></xtal-fetch-get>
+    <p-d vft to=[-value]></p-d>
+    <textarea -value></textarea>
+    <script type=importmap>
+        {
+            "imports": {
+                "trans-render/": "../node_modules/trans-render/",
+                "pass-down/": "../node_modules/pass-down/",
+                "on-to-me/": "../node_modules/on-to-me/",
+                "mut-obs/": "../node_modules/mut-obs/"
+            }
+        }
+    </script>
+    <script type=module>
+        import '../xtal-fetch-get2.js';
+        import 'pass-down/p-d.js';
+    </script>
+</body>
+</html>
