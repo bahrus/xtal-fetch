@@ -1,19 +1,19 @@
 import { define } from 'trans-render/lib/define.js';
 import { NotifyMixin, commonPropsInfo } from 'trans-render/lib/mixins/notify.js';
-/**
-* Bare-bones custom element that can make fetch calls.
-* @element xtal-fetch-get
-* @event result-changed
-* @event value-changed
-*/
 export class XtalFetchGetCore extends HTMLElement {
-    async linkResult(self) {
+    async getResult(self) {
         const { href, reqInit, as, enabled } = self;
         const resp = await fetch(href, reqInit);
         const result = await resp[as]();
         return { result };
     }
 }
+/**
+* Bare-bones custom element that can make fetch calls.
+* @element xtal-fetch-get
+* @event result-changed
+* @event value-changed
+*/
 export const XtalFetchGet = define({
     config: {
         tagName: 'xtal-fetch-get',
