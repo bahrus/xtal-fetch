@@ -8,8 +8,8 @@
     "custom-elements"
   ],
   "description": "Dependency free web component wrapper around the fetch function.",
-  "main": "xtal-fetch-get.js",
-  "module": "xtal-fetch-get.js",
+  "main": "xtal-fetch.js",
+  "module": "xtal-fetch.js",
   "repository": "https://github.com/bahrus/xtal-fetch",
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
@@ -36,10 +36,9 @@
   ],
   "exports": {
     ".": "./xtal-fetch.js",
-    "./xtal-fetch-get.js": "./xtal-fetch-get.js",
-    "./xtal-fetch-req.js": "./xtal-fetch-req.js",
-    "./xtal-fetch-entities.js": "./xtal-fetch-entities.js",
-    "./xtal-fetch.js": "./xtal-fetch.js"
+    "./xtal-fetch-lite.js": "./xtal-fetch-lite.js",
+    "./xtal-fetch.js": "./xtal-fetch.js",
+    "./xtal-fetch-entities.js": "./xtal-fetch-entities.js"
   },
   "typings": "types.d.ts",
   "scripts": {
