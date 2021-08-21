@@ -1,8 +1,8 @@
-import { define } from 'trans-render/lib/define.js';
+import { CE } from 'trans-render/lib/CE.js';
 import { NotifyMixin, commonPropsInfo } from 'trans-render/lib/mixins/notify.js';
-export class XtalFetchGetCore extends HTMLElement {
+export class XtalFetchLiteCore extends HTMLElement {
     async getResult(self) {
-        const { href, reqInit, as, enabled } = self;
+        const { href, reqInit, as } = self;
         const resp = await fetch(href, reqInit);
         const result = await resp[as]();
         return { result };
@@ -14,40 +14,37 @@ export class XtalFetchGetCore extends HTMLElement {
 * @event result-changed
 * @event value-changed
 */
-export const XtalFetchGet = define({
+export const XtalFetchLite = (new CE()).def({
     config: {
-        tagName: 'xtal-fetch-get',
+        tagName: 'xtal-fetch-lite',
         propDefaults: {
             as: 'json',
             fetch: false,
             disabled: false,
             enabled: true,
+            href: '',
         },
         propChangeMethod: 'onPropChange',
         propInfo: {
             result: {
                 notify: {
                     echoTo: 'value',
-                    viaCustEvt: true,
+                    dispatch: true,
                 },
             },
             ...commonPropsInfo,
-            href: {
-                type: 'String'
+        },
+        actions: {
+            getResult: {
+                ifAllOf: ['enabled', 'fetch', 'href', 'as'],
+                andAlsoActIfKeyIn: ['reqInit'],
+                async: true,
             }
         },
-        actions: [
-            {
-                do: 'linkResult',
-                upon: ['enabled', 'fetch', 'href', 'as', 'reqInit'],
-                riff: ['enabled', 'fetch', 'href', 'as'],
-                merge: true, async: true,
-            }
-        ],
         style: {
             display: 'none'
         }
     },
-    superclass: XtalFetchGetCore,
+    superclass: XtalFetchLiteCore,
     mixins: [NotifyMixin]
 });

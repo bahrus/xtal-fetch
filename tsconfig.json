@@ -9,11 +9,8 @@
 		"watch": true
 	},
 	"files": [
-		"xtal-fetch-get.ts",
-		"xtal-fetch-get2.ts",
-		"xtal-fetch-req.ts",
-		"xtal-fetch-entities.ts",
-		"xtal-fetch.ts"
+		"xtal-fetch-lite.ts",
+		"xtal-fetch.ts",
 	]
 
 }

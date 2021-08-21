@@ -1,7 +1,7 @@
 import { XtalFetchGet, bool1} from './xtal-fetch-get.js';
 import { xc, PropDef, PropDefMap, PropAction } from 'xtal-element/lib/XtalCore.js';
 import { IBaseLinkContainer, getFullURL} from 'xtal-element/lib/base-link-id.js';
-import { XtalFetchReqProps, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.d.js';
+import { XtalFetchReqProps, XtalFetchReqAddedProperties, XtalFetchReqEventNameMap} from './types.js';
 
 //#region 
 export const str2: PropDef = {
@@ -49,7 +49,7 @@ const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
  * @event fetch-in-progress-changed
  * @event fetch-complete
  */
- export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqProps, IBaseLinkContainer {
+ export class XtalFetchReq extends XtalFetchGet implements XtalFetchReqProps {
 
     static is = 'xtal-fetch-req';
 
@@ -99,7 +99,7 @@ const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
 
 }
 
-export interface XtalFetchReq extends XtalFetchReqProps{}
+export interface XtalFetchReq extends XtalFetchReqProps, IBaseLinkContainer{}
 
 
 

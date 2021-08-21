@@ -11,7 +11,7 @@
             There was an old lady who swallowed a fly;
             <div id=flyMark mark data-covg="91%" style="display:block;"></div>
     </template>
-    <xtal-fetch-get id="fetcher" fetch href=title.json as=json></xtal-fetch-get>
+    <xtal-fetch-lite id="fetcher" fetch href=title.json as=json></xtal-fetch-lite>
     <div id=target></div>
     <script>
         fetcher.addEventListener('result-changed', e=>{
@@ -27,7 +27,7 @@
     }
     </script>
     <script  type=module>
-        import '../xtal-fetch-get.js';
+        import '../xtal-fetch-lite.js';
     </script>
 </body>
 </html>

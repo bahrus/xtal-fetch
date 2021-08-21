@@ -1,6 +1,6 @@
-import { XtalFetchGet } from "./xtal-fetch-get";
+//import { XtalFetchGet } from "./xtal-fetch-get";
 
-export interface XtalFetchGetProps extends HTMLElement {
+export interface XtalFetchLiteProps extends HTMLElement {
     /**
      * URL (path) to fetch.
      * @attr
@@ -48,6 +48,12 @@ export interface XtalFetchGetProps extends HTMLElement {
     result?: any;
 }
 
+export type pxfgp = Partial<XtalFetchLiteProps>;
+
+export interface XtalFetchLiteActions {
+    getResult(self: this): Promise<pxfgp>;
+}
+
 export interface XtalFetchReqAddedProperties{
     /**
      * Indicates whether to pull the response from a previous identical fetch request from cache.
@@ -55,7 +61,7 @@ export interface XtalFetchReqAddedProperties{
      * If set to 'global', cache is retained after web component goes out of scope.
      * @attr cache-results
      */
-    cacheResults?: '' | 'global' | undefined;
+    cacheResults?: '' | 'global';
     
     /**
      * Indicates that no fetch request should proceed until reqInit property / attribute is set.
@@ -67,41 +73,43 @@ export interface XtalFetchReqAddedProperties{
      * @type {Number}
      * 
      */
-    debounceDuration?: number | undefined;
+    debounceDuration?: number;
     /**
      * Error response as an object
      * ⚡ Fires event error-response-changed
      * @type {Object}
      * 
      */
-    errorResponse?: Response | undefined;
+    errorResponse?: Response;
     /**
      * Indicates the error text of the last request.
      * ⚡ Fires event error-text-changed.
      * @type {String}
      */
-    errorText: string | undefined;
+    errorText?: string;
     /**
      * Indicates Fetch is in progress
      * ⚡ Fires event fetch-in-progress-changed
      * @type {Boolean}
      */
-    fetchInProgress?: boolean | undefined;
+    fetchInProgress?: boolean;
     /**
      * Indicate whether to set the innerHTML of the web component with the response from the server.  
      * Make sure the service is protected against XSS.
      * @attr insert-results
      */
-    insertResults: boolean;
+    insertResults?: boolean;
 
-    /**
-     * DOM ID  of link (preload) tag, typical in head element.  
-     * Used to prov
-     */
-    baseLinkId: string | undefined;
+    // /**
+    //  * DOM ID  of link (preload) tag, typical in head element.  
+    //  * Used to prov
+    //  */
+    // baseLinkId?: string;
+
+    lastFrameHref?: string;
 }
 
-export interface XtalFetchReqProps extends XtalFetchGetProps, XtalFetchReqAddedProperties {}
+export interface XtalFetchReqProps extends XtalFetchLiteProps, XtalFetchReqAddedProperties {}
 
 export interface XtalFetchEntitiesAddedProperties{
     /**
@@ -124,7 +132,7 @@ export interface XtalFetchEntitiesAddedProperties{
     inEntities: any[] | undefined;
 }
 
-export interface XtalFetchEntitiesProps extends XtalFetchGetProps, XtalFetchReqAddedProperties, XtalFetchEntitiesAddedProperties{}
+export interface XtalFetchEntitiesProps extends XtalFetchLiteProps, XtalFetchReqAddedProperties, XtalFetchEntitiesAddedProperties{}
 
 export interface StandardDetail{
     value: any;
