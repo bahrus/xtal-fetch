@@ -1,20 +1,22 @@
 import {XtalFetchLite} from './xtal-fetch-lite.js';
 import {define} from 'trans-render/lib/define.js';
-import {INotifyPropInfo, commonPropsInfo} from 'trans-render/lib/mixins/notify.js';
-import { XtalFetchReqProps } from './types.js';
+import {INotifyPropInfo, commonPropsInfo, NotifyMixin, INotifyMixin} from 'trans-render/lib/mixins/notify.js';
+import { XtalFetchProps , XtalFetchActions} from './types.js';
 import { IBaseLinkContainer, getFullURL} from 'xtal-element/lib/base-link-id.js';
 
-export class XtalFetchReqCore extends HTMLElement{
+export class XtalFetchCore extends HTMLElement{
     static cache:  {[key: string]: any} = {};
     #cachedResults: { [key: string]: any } = {};
     #controller: AbortController | undefined;
     async getResult(self: this){
-        const {href, reqInit, as, cacheResults, insertResults} = self;
+        const {href, lastFrameHref, reqInit, as, cacheResults, insertResults} = self;
+        if(href !== lastFrameHref) return;
+        if(!insertResults) self.style.display = 'none';
         self.errorResponse = undefined;
         if (cacheResults !== undefined) {
             let val = undefined;
             if(cacheResults === 'global'){
-                val = XtalFetchReqCore.cache[href!];
+                val = XtalFetchCore.cache[href!];
             }else{
                 val = self.#cachedResults[href!];
             }
@@ -60,15 +62,15 @@ export class XtalFetchReqCore extends HTMLElement{
             }
         }else{
             const result = await resp[as!]();
-            if(typeof result === 'string' && insertResults)
-            return {
-                result: result
+            if(typeof result === 'string' && insertResults){
+                this.innerHTML = result;
             }
+            this.result = result;
         }
     }
 }
 
-export interface XtalFetchReqCore extends XtalFetchReqProps, IBaseLinkContainer{}
+export interface XtalFetchCore extends XtalFetchProps, IBaseLinkContainer{}
 
 const notify: INotifyPropInfo = {
     notify: {
@@ -76,24 +78,27 @@ const notify: INotifyPropInfo = {
     }
 };
 
-export const XtalFetchReq = define<XtalFetchReqCore, INotifyPropInfo>({
+export interface XtalFetchCoreActions extends INotifyMixin, XtalFetchActions{};
+
+export const XtalFetch = define<XtalFetchProps, INotifyPropInfo<XtalFetchProps>, XtalFetchCoreActions>({
     config:{
-        tagName: 'xtal-fetch-req',
+        tagName: 'xtal-fetch',
         propDefaults:{
             as: 'json',
             fetch: false,
             disabled: false,
             enabled: true,
             href: '',
+            debounceDuration: 0,
             lastFrameHref: '',
             insertResults: false,
-            debounceDuration: 0,
-        },  
+        },
+        propChangeMethod: 'onPropChange',
         propInfo:{
             href: {
                 notify:{
                     echoTo: 'lastFrameHref',
-                    echoDelay: 500,
+                    echoDelay: 'debounceDuration',
                 }
             },
             cacheResults: {type: 'String'},
@@ -104,9 +109,12 @@ export const XtalFetchReq = define<XtalFetchReqCore, INotifyPropInfo>({
         },
         actions:{
             getResult: {
-                ifAllOf: ['href', 'as'],
-                ifAnyOf: ['reqInit', 'cacheResults', 'insertResults']
+                ifAllOf: ['enabled', 'fetch', 'href', 'as', 'lastFrameHref'],
+                andAlsoActIfKeyIn: ['reqInit', 'cacheResults', 'insertResults']
             }
-        }
+        },
+
     },
+    superclass: XtalFetchCore,
+    mixins: [NotifyMixin],
 });

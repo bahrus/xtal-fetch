@@ -54,7 +54,7 @@ export interface XtalFetchLiteActions {
     getResult(self: this): Promise<pxfgp>;
 }
 
-export interface XtalFetchReqAddedProperties{
+export interface XtalFetchAddedProperties{
     /**
      * Indicates whether to pull the response from a previous identical fetch request from cache.
      * If set to true, cache is stored locally within the instance of the web component.
@@ -109,8 +109,11 @@ export interface XtalFetchReqAddedProperties{
     lastFrameHref?: string;
 }
 
-export interface XtalFetchReqProps extends XtalFetchLiteProps, XtalFetchReqAddedProperties {}
+export interface XtalFetchProps extends XtalFetchLiteProps, XtalFetchAddedProperties {}
 
+export interface XtalFetchActions{
+    getResult(self: this): void;
+}
 export interface XtalFetchEntitiesAddedProperties{
     /**
      * Comma delimited list of properties to use as input for the fetch urls
@@ -132,7 +135,7 @@ export interface XtalFetchEntitiesAddedProperties{
     inEntities: any[] | undefined;
 }
 
-export interface XtalFetchEntitiesProps extends XtalFetchLiteProps, XtalFetchReqAddedProperties, XtalFetchEntitiesAddedProperties{}
+export interface XtalFetchEntitiesProps extends XtalFetchLiteProps, XtalFetchAddedProperties, XtalFetchEntitiesAddedProperties{}
 
 export interface StandardDetail{
     value: any;

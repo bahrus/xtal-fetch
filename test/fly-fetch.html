@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <xtal-fetch-req fetch href="title.html" as=text  debounce-duration=100  insert-results></xtal-fetch-req>
+    <xtal-fetch debounce-duration=100 fetch href="title.html" as=text   insert-results></xtal-fetch>
     <script type=importmap>
     {
         "imports": {
@@ -17,7 +17,7 @@
     }
     </script>
     <script  type=module>
-        import '../xtal-fetch-req.js';
+        import '../xtal-fetch.js';
     </script>
 </body>
 </html>
