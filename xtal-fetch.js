@@ -5,7 +5,7 @@ export class XtalFetchCore extends HTMLElement {
     static cache = {};
     #cachedResults = {};
     #controller;
-    async getResult(self) {
+    async getResult(self, propChangeInfo, b) {
         const { href, lastFrameHref, reqInit, as, cacheResults, insertResults } = self;
         if (href !== lastFrameHref)
             return;
@@ -26,7 +26,7 @@ export class XtalFetchCore extends HTMLElement {
             }
             else if (self.fetchInProgress) {
                 setTimeout(async () => {
-                    return await self.getResult(self);
+                    return await self.getResult(self, propChangeInfo, b);
                 }, 100);
                 return;
             }
@@ -49,7 +49,7 @@ export class XtalFetchCore extends HTMLElement {
             self.reqInit = {
                 signal: sig,
             };
-            activeReqInit = self.reqInit;
+            return; //avoid duplicate requests.
         }
         self.fetchInProgress = true;
         const resp = await window.fetch(href, activeReqInit);
