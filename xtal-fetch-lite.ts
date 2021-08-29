@@ -22,7 +22,7 @@ type x = XtalFetchLiteCore;
 * @event result-changed
 * @event value-changed
 */
-export const XtalFetchLite = (new CE<XtalFetchLiteProps, INotifyPropInfo, XtalFetchLiteCoreActions>()).def({
+export const XtalFetchLite = (new CE<XtalFetchLiteProps, XtalFetchLiteCoreActions, INotifyPropInfo>()).def({
     config:{
         tagName: 'xtal-fetch-lite',
         propDefaults: {

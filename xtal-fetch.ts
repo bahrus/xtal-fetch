@@ -80,7 +80,7 @@ const notify: INotifyPropInfo = {
 
 export interface XtalFetchCoreActions extends INotifyMixin, XtalFetchActions{};
 
-export const XtalFetch = define<XtalFetchProps, INotifyPropInfo<XtalFetchProps>, XtalFetchCoreActions>({
+export const XtalFetch = define<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetchProps> >({
     config:{
         tagName: 'xtal-fetch',
         propDefaults:{
