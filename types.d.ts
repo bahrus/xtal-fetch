@@ -48,10 +48,10 @@ export interface XtalFetchLiteProps extends HTMLElement {
     result?: any;
 }
 
-export type pxfgp = Partial<XtalFetchLiteProps>;
+export type pxflp = Partial<XtalFetchLiteProps>;
 
 export interface XtalFetchLiteActions {
-    getResult(self: this): Promise<pxfgp>;
+    getResult(self: this): Promise<pxflp>;
 }
 
 export interface XtalFetchAddedProperties{
@@ -93,12 +93,14 @@ export interface XtalFetchAddedProperties{
      * @type {Boolean}
      */
     fetchInProgress?: boolean;
+
     /**
-     * Indicate whether to set the innerHTML of the web component with the response from the server.  
+     * Indicate whether to set the innerHTML or shadowRoot of the web component with the response from the server.  
      * Make sure the service is protected against XSS.
      * @attr insert-results
      */
-    insertResults?: boolean;
+    insertResultsAs?: 'innerHTML' | 'openShadow';
+
 
     // /**
     //  * DOM ID  of link (preload) tag, typical in head element.  
@@ -112,7 +114,7 @@ export interface XtalFetchAddedProperties{
 export interface XtalFetchProps extends XtalFetchLiteProps, XtalFetchAddedProperties {}
 
 export interface XtalFetchActions{
-    getResult(self: this): void;
+    getResult(self: this): Promise<Partial<this>>;
 }
 export interface XtalFetchEntitiesAddedProperties{
     /**

@@ -1,72 +1,83 @@
-import {XtalFetchLite} from './xtal-fetch-lite.js';
-import {define} from 'trans-render/lib/define.js';
-import {INotifyPropInfo, commonPropsInfo, NotifyMixin, INotifyMixin} from 'trans-render/lib/mixins/notify.js';
-import { XtalFetchProps , XtalFetchActions} from './types.js';
-import { IBaseLinkContainer, getFullURL} from 'xtal-element/lib/base-link-id.js';
+import { CE } from 'trans-render/lib/CE.js';
+import { INotifyPropInfo, commonPropsInfo, NotifyMixin, INotifyMixin } from 'trans-render/lib/mixins/notify.js';
+import { XtalFetchProps , XtalFetchActions } from './types.js';
+import { IBaseLinkContainer, getFullURL } from 'xtal-element/lib/base-link-id.js';
 
 export class XtalFetchCore extends HTMLElement{
     static cache:  {[key: string]: any} = {};
     #cachedResults: { [key: string]: any } = {};
     #controller: AbortController | undefined;
-    async getResult(self: this, propChangeInfo: any, b:  any){
-        const {href, lastFrameHref, reqInit, as, cacheResults, insertResults} = self;
+    async getResult({href, lastFrameHref, reqInit, as, cacheResults, insertResultsAs, fetchInProgress}: this){
         if(href !== lastFrameHref) return;
-        if(!insertResults) self.style.display = 'none';
-        self.errorResponse = undefined;
+        if(!insertResultsAs) this.style.display = 'none';
+        this.errorResponse = undefined;
         if (cacheResults !== undefined) {
             let val = undefined;
             if(cacheResults === 'global'){
                 val = XtalFetchCore.cache[href!];
             }else{
-                val = self.#cachedResults[href!];
+                val = this.#cachedResults[href!];
             }
             if (val) {
                 return {result: val};
-                return;
-            }else if(self.fetchInProgress){
+            }else if(fetchInProgress){
                 setTimeout(async () =>{
-                    return await self.getResult(self, propChangeInfo, b);
+                    return await this.getResult(this);
                 }, 100);
                 return;
             }
         }
-        if(self.#controller) {
-            if(self.fetchInProgress){
-                self.#controller.abort();
+        if(this.#controller) {
+            if(fetchInProgress){
+                this.#controller.abort();
             }
             
         }else{
-            self.#controller = new AbortController();
+            this.#controller = new AbortController();
         }
-        const fullHref = getFullURL(self, href!);
+        const fullHref = getFullURL(this, href!);
 
-        const sig = self.#controller.signal;
+        const sig = this.#controller.signal;
         let activeReqInit = reqInit;
         if(reqInit){
             reqInit.signal = sig;
         }else{
-            self.reqInit = {
+            this.reqInit = {
                 signal: sig,
             }
             return; //avoid duplicate requests.
         }
-        self.fetchInProgress = true;
+        this.fetchInProgress = true;
         const resp = await window.fetch(href!, activeReqInit);
-        self.fetchInProgress = false;
+        this.fetchInProgress = false;
         if(resp.status !== 200){
-            self.errorResponse = resp;
+            this.errorResponse = resp;
             const respText = resp['text'];
             if(respText){
                 const val = await respText();
-                self.errorText = val;
+                this.errorText = val;
             }
         }else{
-            const result = await resp[as!]();
-            if(typeof result === 'string' && insertResults){
-                this.innerHTML = result;
+            let result = await resp[as!]();
+            result = this.filterResult(result);
+            if(typeof result === 'string'){
+                switch(insertResultsAs){
+                    case 'innerHTML':
+                        this.innerHTML = result;
+                        break;
+                    case 'openShadow':
+                        if(this.shadowRoot === null){
+                            this.attachShadow({mode: 'open'});
+                        }
+                        this.shadowRoot!.innerHTML = result;
+                        break;
+                }
             }
-            this.result = result;
         }
+    }
+
+    filterResult(result: any): any{
+        return result;
     }
 }
 
@@ -80,7 +91,7 @@ const notify: INotifyPropInfo = {
 
 export interface XtalFetchCoreActions extends INotifyMixin, XtalFetchActions{};
 
-export const XtalFetch = define<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetchProps> >({
+const ce = new CE<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetchProps>>({
     config:{
         tagName: 'xtal-fetch',
         propDefaults:{
@@ -109,8 +120,9 @@ export const XtalFetch = define<XtalFetchProps, XtalFetchCoreActions, INotifyPro
         },
         actions:{
             getResult: {
+                ifKeyIn: ['reqInit', 'cacheResults', 'insertResults'],
                 ifAllOf: ['enabled', 'fetch', 'href', 'as', 'lastFrameHref'],
-                andAlsoActIfKeyIn: ['reqInit', 'cacheResults', 'insertResults']
+                debug: true,
             }
         },
 
