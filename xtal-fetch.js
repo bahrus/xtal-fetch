@@ -50,7 +50,16 @@ export class XtalFetchCore extends HTMLElement {
             return; //avoid duplicate requests.
         }
         this.fetchInProgress = true;
-        const resp = await window.fetch(href, activeReqInit);
+        let resp;
+        try {
+            resp = await window.fetch(href, activeReqInit);
+        }
+        catch (e) {
+            this.fetchInProgress = false;
+            this.errorText = e.message;
+            console.error(e);
+            return;
+        }
         this.fetchInProgress = false;
         if (resp.status !== 200) {
             this.errorResponse = resp;
