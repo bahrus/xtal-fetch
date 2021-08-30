@@ -1,14 +1,14 @@
-import { define } from 'trans-render/lib/define.js';
+import { CE } from 'trans-render/lib/CE.js';
 import { commonPropsInfo, NotifyMixin } from 'trans-render/lib/mixins/notify.js';
 import { getFullURL } from 'xtal-element/lib/base-link-id.js';
 export class XtalFetchCore extends HTMLElement {
     static cache = {};
     #cachedResults = {};
     #controller;
-    async getResult({ href, lastFrameHref, reqInit, as, cacheResults, insertResults, fetchInProgress }) {
+    async getResult({ href, lastFrameHref, reqInit, as, cacheResults, insertResultsAs, fetchInProgress }) {
         if (href !== lastFrameHref)
             return;
-        if (!insertResults)
+        if (!insertResultsAs)
             this.style.display = 'none';
         this.errorResponse = undefined;
         if (cacheResults !== undefined) {
@@ -21,7 +21,6 @@ export class XtalFetchCore extends HTMLElement {
             }
             if (val) {
                 return { result: val };
-                return;
             }
             else if (fetchInProgress) {
                 setTimeout(async () => {
@@ -62,11 +61,21 @@ export class XtalFetchCore extends HTMLElement {
             }
         }
         else {
-            const result = await resp[as]();
-            if (typeof result === 'string' && insertResults) {
-                this.innerHTML = result;
+            let result = await resp[as]();
+            result = this.filterResult(result);
+            if (typeof result === 'string') {
+                switch (insertResultsAs) {
+                    case 'innerHTML':
+                        this.innerHTML = result;
+                        break;
+                    case 'openShadow':
+                        if (this.shadowRoot === null) {
+                            this.attachShadow({ mode: 'open' });
+                        }
+                        this.shadowRoot.innerHTML = result;
+                        break;
+                }
             }
-            this.result = this.filterResult(result);
         }
     }
     filterResult(result) {
@@ -79,7 +88,7 @@ const notify = {
     }
 };
 ;
-export const XtalFetch = define({
+const ce = new CE({
     config: {
         tagName: 'xtal-fetch',
         propDefaults: {
@@ -90,7 +99,6 @@ export const XtalFetch = define({
             href: '',
             debounceDuration: 0,
             lastFrameHref: '',
-            insertResults: false,
         },
         propChangeMethod: 'onPropChange',
         propInfo: {
@@ -100,6 +108,7 @@ export const XtalFetch = define({
                     echoDelay: 'debounceDuration',
                 }
             },
+            insertResultsAs: { type: 'String' },
             cacheResults: { type: 'String' },
             errorResponse: notify,
             errorText: notify,
@@ -108,12 +117,12 @@ export const XtalFetch = define({
         },
         actions: {
             getResult: {
-                ifKeyIn: ['reqInit', 'cacheResults', 'insertResults'],
+                ifKeyIn: ['reqInit', 'cacheResults', 'insertResultsAs'],
                 ifAllOf: ['enabled', 'fetch', 'href', 'as', 'lastFrameHref'],
-                debug: true,
             }
         },
     },
     superclass: XtalFetchCore,
     mixins: [NotifyMixin],
 });
+export const XtalFetch = ce.classDef;

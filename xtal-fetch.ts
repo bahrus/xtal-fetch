@@ -102,7 +102,6 @@ const ce = new CE<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetc
             href: '',
             debounceDuration: 0,
             lastFrameHref: '',
-            insertResults: false,
         },
         propChangeMethod: 'onPropChange',
         propInfo:{
@@ -112,6 +111,7 @@ const ce = new CE<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetc
                     echoDelay: 'debounceDuration',
                 }
             },
+            insertResultsAs:{type: 'String'},
             cacheResults: {type: 'String'},
             errorResponse:notify,
             errorText: notify,
@@ -120,9 +120,8 @@ const ce = new CE<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetc
         },
         actions:{
             getResult: {
-                ifKeyIn: ['reqInit', 'cacheResults', 'insertResults'],
+                ifKeyIn: ['reqInit', 'cacheResults', 'insertResultsAs'],
                 ifAllOf: ['enabled', 'fetch', 'href', 'as', 'lastFrameHref'],
-                debug: true,
             }
         },
 
@@ -130,3 +129,5 @@ const ce = new CE<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetc
     superclass: XtalFetchCore,
     mixins: [NotifyMixin],
 });
+
+export const XtalFetch = ce.classDef!;
