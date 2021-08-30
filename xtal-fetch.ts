@@ -89,6 +89,15 @@ const notify: INotifyPropInfo = {
     }
 };
 
+const reflect: INotifyPropInfo = {
+    notify:{
+        dispatch: true,
+        reflect:{
+            asAttr: true,
+        }
+    }
+}
+
 export interface XtalFetchCoreActions extends INotifyMixin, XtalFetchActions{};
 
 const ce = new CE<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetchProps>>({
@@ -97,6 +106,7 @@ const ce = new CE<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetc
         propDefaults:{
             as: 'json',
             fetch: false,
+            fetchInProgress: false,
             disabled: false,
             enabled: true,
             href: '',
@@ -109,13 +119,14 @@ const ce = new CE<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetc
                 notify:{
                     echoTo: 'lastFrameHref',
                     echoDelay: 'debounceDuration',
+                    reflect:{asAttr: true}
                 }
             },
             insertResultsAs:{type: 'String'},
             cacheResults: {type: 'String'},
             errorResponse:notify,
             errorText: notify,
-            fetchInProgress: notify,
+            fetchInProgress: reflect,
             ...commonPropsInfo,
         },
         actions:{

@@ -87,6 +87,14 @@ const notify = {
         dispatch: true
     }
 };
+const reflect = {
+    notify: {
+        dispatch: true,
+        reflect: {
+            asAttr: true,
+        }
+    }
+};
 ;
 const ce = new CE({
     config: {
@@ -94,6 +102,7 @@ const ce = new CE({
         propDefaults: {
             as: 'json',
             fetch: false,
+            fetchInProgress: false,
             disabled: false,
             enabled: true,
             href: '',
@@ -106,13 +115,14 @@ const ce = new CE({
                 notify: {
                     echoTo: 'lastFrameHref',
                     echoDelay: 'debounceDuration',
+                    reflect: { asAttr: true }
                 }
             },
             insertResultsAs: { type: 'String' },
             cacheResults: { type: 'String' },
             errorResponse: notify,
             errorText: notify,
-            fetchInProgress: notify,
+            fetchInProgress: reflect,
             ...commonPropsInfo,
         },
         actions: {
