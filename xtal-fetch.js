@@ -101,6 +101,7 @@ const ce = new CE({
         tagName: 'xtal-fetch',
         propDefaults: {
             as: 'json',
+            baseLinkId: '',
             fetch: false,
             fetchInProgress: false,
             disabled: false,
@@ -123,6 +124,7 @@ const ce = new CE({
             errorResponse: notify,
             errorText: notify,
             fetchInProgress: reflect,
+            baseLinkId: reflect,
             ...commonPropsInfo,
         },
         actions: {

@@ -105,6 +105,7 @@ const ce = new CE<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetc
         tagName: 'xtal-fetch',
         propDefaults:{
             as: 'json',
+            baseLinkId: '',
             fetch: false,
             fetchInProgress: false,
             disabled: false,
@@ -127,6 +128,7 @@ const ce = new CE<XtalFetchProps, XtalFetchCoreActions, INotifyPropInfo<XtalFetc
             errorResponse:notify,
             errorText: notify,
             fetchInProgress: reflect,
+            baseLinkId: reflect,
             ...commonPropsInfo,
         },
         actions:{

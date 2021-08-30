@@ -102,11 +102,11 @@ export interface XtalFetchAddedProperties{
     insertResultsAs?: 'innerHTML' | 'openShadow';
 
 
-    // /**
-    //  * DOM ID  of link (preload) tag, typical in head element.  
-    //  * Used to prov
-    //  */
-    // baseLinkId?: string;
+    /**
+     * DOM ID  of link (preload) tag, typically in head element.  
+     * Used to prov
+     */
+    baseLinkId?: string;
 
     lastFrameHref?: string;
 }
