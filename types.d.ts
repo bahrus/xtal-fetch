@@ -115,6 +115,7 @@ export interface XtalFetchProps extends XtalFetchLiteProps, XtalFetchAddedProper
 
 export interface XtalFetchActions{
     getResult(self: this): Promise<Partial<this>>;
+    filterResult(result: any): any;
 }
 export interface XtalFetchEntitiesAddedProperties{
     /**
