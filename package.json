@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "trans-render": "0.0.369",
-    "xtal-element": "0.0.438"
+    "xtal-element": "0.0.439"
   },
   "devDependencies": {
     "aggregator-fn": "0.0.37",
