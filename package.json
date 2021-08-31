@@ -14,17 +14,17 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "trans-render": "0.0.353",
-    "xtal-element": "0.0.435"
+    "trans-render": "0.0.369",
+    "xtal-element": "0.0.438"
   },
   "devDependencies": {
     "aggregator-fn": "0.0.37",
     "for-instance": "0.0.45",
-    "if-diff": "0.0.104",
+    "if-diff": "0.0.105",
     "json-file-patch": "0.0.1",
     "litter-g": "0.0.36",
-    "pass-down": "0.0.84",
-    "on-to-me": "0.0.32",
+    "pass-down": "0.0.93",
+    "on-to-me": "0.0.35",
     "xtal-test": "0.0.51",
     "@skypack/package-check": "0.2.2",
     "@custom-elements-manifest/analyzer": "0.5.2"
