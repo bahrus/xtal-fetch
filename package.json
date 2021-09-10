@@ -14,8 +14,8 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "trans-render": "0.0.369",
-    "xtal-element": "0.0.439"
+    "trans-render": "0.0.392",
+    "xtal-element": "0.0.441"
   },
   "devDependencies": {
     "aggregator-fn": "0.0.37",
@@ -23,11 +23,11 @@
     "if-diff": "0.0.105",
     "json-file-patch": "0.0.1",
     "litter-g": "0.0.36",
-    "pass-down": "0.0.93",
+    "pass-down": "0.0.105",
     "on-to-me": "0.0.35",
     "xtal-test": "0.0.51",
     "@skypack/package-check": "0.2.2",
-    "@custom-elements-manifest/analyzer": "0.5.2"
+    "@custom-elements-manifest/analyzer": "0.5.3"
   },
   "files": [
     "xtal-*.*",

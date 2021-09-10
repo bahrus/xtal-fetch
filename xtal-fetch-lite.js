@@ -47,3 +47,4 @@ const ce = new CE({
     superclass: XtalFetchLiteCore,
     mixins: [NotifyMixin]
 });
+export const XtalFetchLite = ce.classDef;

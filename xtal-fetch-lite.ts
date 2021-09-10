@@ -53,6 +53,8 @@ const ce = new CE<XtalFetchLiteProps, XtalFetchLiteActions & INotifyMixin, INoti
     mixins: [NotifyMixin]
 });
 
+export const XtalFetchLite = ce.classDef;
+
 declare global {
     interface HTMLElementTagNameMap {
         "xtal-fetch-lite": XtalFetchLiteCore,
