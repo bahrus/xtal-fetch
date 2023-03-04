@@ -25,7 +25,7 @@
     "litter-g": "0.0.36",
     "pass-down": "0.0.105",
     "on-to-me": "0.0.35",
-    "xtal-test": "0.0.51",
+    "xtal-test": "0.0.57",
     "@skypack/package-check": "0.2.2",
     "@custom-elements-manifest/analyzer": "0.5.3"
   },
